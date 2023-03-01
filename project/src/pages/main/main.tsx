@@ -5,7 +5,7 @@ type HomeProps = {
   rentAmount: number;
 }
 
-const Home = ({ rentAmount }: HomeProps): JSX.Element => (
+const Main = ({ rentAmount }: HomeProps): JSX.Element => (
   <>
     <Header />
     <main className="page__main page__main--index">
@@ -80,4 +80,4 @@ const Home = ({ rentAmount }: HomeProps): JSX.Element => (
     </main>
   </>
 );
-export default Home;
+export default Main;

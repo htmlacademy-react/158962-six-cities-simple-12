@@ -1,11 +1,11 @@
-import Home from '../../pages/home/home';
+import Main from '../../pages/main/main';
 
 type AppProps = {
   rentAmount: number;
 }
 
-function App({rentAmount}: AppProps): JSX.Element {
-  return <Home rentAmount={rentAmount} />;
+const App = ({rentAmount}: AppProps): JSX.Element => {
+  return <Main rentAmount={rentAmount} />;
 }
 
 export default App;

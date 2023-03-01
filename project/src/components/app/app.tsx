@@ -1,5 +1,11 @@
-function App(): JSX.Element {
-  return <p>Hello, world!</p>;
+import Home from '../../pages/home/home';
+
+type AppProps = {
+  rentAmount: number;
+}
+
+function App({rentAmount}: AppProps): JSX.Element {
+  return <Home rentAmount={rentAmount} />;
 }
 
 export default App;

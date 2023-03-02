@@ -8,11 +8,11 @@ type LayoutProps = {
 }
 
 const Layout = ({children, className}: LayoutProps): JSX.Element => (
-    <div className={className}>
-      <Header />
-      {children}
-      <Outlet />
-    </div>
-  )
+  <div className={className}>
+    <Header />
+    {children}
+    <Outlet />
+  </div>
+);
 
 export default Layout;

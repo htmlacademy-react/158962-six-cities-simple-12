@@ -1,5 +1,4 @@
 import CityCard from '../../components/city-card/city-card';
-import {ReactNode} from 'react';
 import Layout from '../../components/layout';
 
 type HomeProps = {

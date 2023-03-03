@@ -1,7 +1,7 @@
 import Layout from '../../components/layout';
 
 const Favorites = (): JSX.Element => (
-  <Layout className="page">
+  <Layout className="">
     <main className="page__main page__main--favorites">
       <div className="page__favorites-container container">
         <section className="favorites">

@@ -6,6 +6,10 @@ type PrivateRouteProps = {
   authorizationStatus: AuthorizationStatus;
 };
 
-const PrivateRoute = ({ authorizationStatus, children }: PrivateRouteProps): JSX.Element => authorizationStatus === AuthorizationStatus.Auth ? children : <Navigate to={AppRoute.Login} />;
+const PrivateRoute = ({ authorizationStatus, children }: PrivateRouteProps): JSX.Element => (
+  authorizationStatus === AuthorizationStatus.Auth
+    ? children
+    : <Navigate to={AppRoute.Login} />
+);
 
 export default PrivateRoute;

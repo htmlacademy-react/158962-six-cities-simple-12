@@ -9,14 +9,15 @@ import { AppRoute, AuthorizationStatus } from '../../const';
 
 type AppProps = {
   rentAmount: number;
+  nearPlacesAmount: number;
 }
 
-const App = ({rentAmount}: AppProps): JSX.Element => (
+const App = ({rentAmount, nearPlacesAmount}: AppProps): JSX.Element => (
   <BrowserRouter>
     <Routes>
       <Route path={AppRoute.Root} element={<Main rentAmount={rentAmount} />} />
       <Route path={AppRoute.Login} element={<Login />} />
-      <Route path={AppRoute.Room} element={<Room />} />
+      <Route path={AppRoute.Room} element={<Room nearPlacesAmount={nearPlacesAmount} />} />
       <Route path={AppRoute.Favorite} element={
         <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
           <Favorites />

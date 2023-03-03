@@ -8,7 +8,7 @@ type LayoutProps = {
 }
 
 const Layout = ({children, className}: LayoutProps): JSX.Element => (
-  <div className={className}>
+  <div className={`page ${className}`}>
     <Header />
     {children}
     <Outlet />

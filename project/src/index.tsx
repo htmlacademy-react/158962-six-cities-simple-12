@@ -4,6 +4,7 @@ import App from './components/app/app';
 
 const Setting = {
   rentAmount: 5,
+  nearPlacesAmount: 3,
 } as const;
 
 const root = ReactDOM.createRoot(
@@ -12,6 +13,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App rentAmount={Setting.rentAmount} />
+    <App rentAmount={Setting.rentAmount} nearPlacesAmount={Setting.nearPlacesAmount} />
   </React.StrictMode>,
 );

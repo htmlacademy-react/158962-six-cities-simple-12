@@ -6,7 +6,7 @@ type HomeProps = {
 }
 
 const Main = ({ rentAmount }: HomeProps): JSX.Element => (
-  <Layout className="page page--gray page--main">
+  <Layout className="page--gray page--main">
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
@@ -67,7 +67,7 @@ const Main = ({ rentAmount }: HomeProps): JSX.Element => (
             </form>
             <div className="cities__places-list places__list tabs__content">
               {
-                Array.from({ length: rentAmount }, (_, i) => <CityCard key={i} />)
+                Array.from({ length: rentAmount }, (_, i) => <CityCard key={i} className={'cities__card'} />)
               }
             </div>
           </section>

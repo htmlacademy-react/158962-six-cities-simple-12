@@ -1,8 +1,7 @@
-import Header from '../header/header';
+import Layout from '../../components/layout';
 
-const Login = () => (
-  <>
-    <Header />
+const Login = (): JSX.Element => (
+  <Layout className="page--gray page--login">
     <main className="page__main page__main--login">
       <div className="page__login-container container">
         <section className="login">
@@ -33,7 +32,7 @@ const Login = () => (
         </section>
       </div>
     </main>
-  </>
+  </Layout>
 );
 
 export default Login;

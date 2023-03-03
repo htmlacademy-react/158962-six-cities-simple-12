@@ -1,13 +1,12 @@
-import Header from '../header/header';
 import CityCard from '../../components/city-card/city-card';
+import Layout from '../../components/layout';
 
 type HomeProps = {
   rentAmount: number;
 }
 
 const Main = ({ rentAmount }: HomeProps): JSX.Element => (
-  <>
-    <Header />
+  <Layout className="page--gray page--main">
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
@@ -54,7 +53,7 @@ const Main = ({ rentAmount }: HomeProps): JSX.Element => (
             <form className="places__sorting" action="#" method="get">
               <span className="places__sorting-caption">Sort by</span>
               <span className="places__sorting-type" tabIndex={0}>
-                  Popular
+                Popular
                 <svg className="places__sorting-arrow" width="7" height="4">
                   <use xlinkHref="#icon-arrow-select"></use>
                 </svg>
@@ -68,7 +67,7 @@ const Main = ({ rentAmount }: HomeProps): JSX.Element => (
             </form>
             <div className="cities__places-list places__list tabs__content">
               {
-                Array.from({ length: rentAmount }, (_, i) => <CityCard key={i} />)
+                Array.from({ length: rentAmount }, (_, i) => <CityCard key={i} className={'cities__card'} />)
               }
             </div>
           </section>
@@ -78,6 +77,6 @@ const Main = ({ rentAmount }: HomeProps): JSX.Element => (
         </div>
       </div>
     </main>
-  </>
+  </Layout>
 );
 export default Main;

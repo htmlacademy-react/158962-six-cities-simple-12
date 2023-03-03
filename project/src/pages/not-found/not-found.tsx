@@ -7,7 +7,7 @@ const NotFound = (): JSX.Element => (
     <Header />
     <div className={styles.wrapper}>
       <span className={styles.icon}>😕</span>
-      <h1 className={styles.heading}>Oops, this page doesn't exists</h1>
+      <h1 className={styles.heading}>Oops, this page doesn&rsquo;t exists</h1>
       <Link className={styles.link} to="/">Go to main page</Link>
     </div>
   </div>

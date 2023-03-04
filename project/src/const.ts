@@ -10,3 +10,5 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
+
+export const PLACES_TO_STAY:string[] = ['Paris', 'Cologne', 'Brussels', 'Hamburg', 'Dusseldorf'];

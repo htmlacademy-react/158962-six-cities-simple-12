@@ -6,27 +6,37 @@ import Room from '../../pages/room/room';
 import PrivateRoute from '../private-route/private-route';
 import Favorites from '../../pages/favorites/favorites';
 import { AppRoute, AuthorizationStatus } from '../../const';
+import { Offer } from '../../types/Offer';
+import { Review } from '../../types/Review';
 
 type AppProps = {
-  rentAmount: number;
-  nearPlacesAmount: number;
+  offers: Offer[];
+  reviews: Review[];
 }
 
-const App = ({rentAmount, nearPlacesAmount}: AppProps): JSX.Element => (
-  <BrowserRouter>
-    <Routes>
-      <Route path={AppRoute.Root} element={<Main rentAmount={rentAmount} />} />
-      <Route path={AppRoute.Login} element={<Login />} />
-      <Route path={AppRoute.Room} element={<Room nearPlacesAmount={nearPlacesAmount} />} />
-      <Route path={AppRoute.Favorite} element={
-        <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-          <Favorites />
-        </PrivateRoute>
-      }
-      />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
-  </BrowserRouter>
-);
+const App = ({ offers, reviews }: AppProps): JSX.Element => {
+  const [firstOffer] = offers;
+  return (
+    (
+      <BrowserRouter>
+        <Routes>
+          <Route path={AppRoute.Root} element={<Main offers={offers} />} />
+          <Route path={AppRoute.Login} element={<Login />} />
+          <Route path={AppRoute.Room} element={
+            <Room offer={firstOffer } reviews={reviews} />
+          }
+          />
+          <Route path={AppRoute.Favorite} element={
+            <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+              <Favorites />
+            </PrivateRoute>
+          }
+          />
+          <Route path="*" element = {<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    )
+  );
+};
 
 export default App;

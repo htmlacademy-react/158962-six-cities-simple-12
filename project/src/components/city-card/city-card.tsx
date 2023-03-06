@@ -1,35 +1,44 @@
 import { Offer } from '../../types/Offer';
-import { useState } from 'react';
+import BookmarkButton from '../bookmark-button/bookmark-button';
+import CardMark from '../card-mark/card-mark';
+import { getRating, capitalizeFirstLetter } from '../../utils';
+import cn from 'classnames';
+import { Link } from 'react-router-dom';
 
 type CityCardProps = {
   className: string;
+  classNameWrapper: string;
   offer: Offer;
-  isInRoom: boolean;
+  onActiveCardId?: (id: number | null) => void;
 }
 
-const CityCard = ({ className, offer, isInRoom}: CityCardProps): JSX.Element => {
-  const { previewImage, isPremium, price, isFavorite, title, type, } = offer;
-  const [opacity, setOpacity] = useState(false);
-  const onCityCardMouseOver = (): void => {
-    setOpacity(!opacity);
-    console.log(offer.id);
+const CityCard = ({ className, classNameWrapper, offer, onActiveCardId }: CityCardProps): JSX.Element => {
+  const { previewImage, isPremium, price, isFavorite, title, type, rating, id} = offer;
+
+  const cityCardMouseOverHandler = (cityCardId: number): void => {
+    onActiveCardId && onActiveCardId(cityCardId);
+  };
+
+  const cityCardMouseLeaveHandler = (): void => {
+    onActiveCardId && onActiveCardId(null);
   };
 
   return (
-    <article onMouseOver={onCityCardMouseOver} className={`${className} place-card`}>
+    <article className={cn('place-card', className)}>
       {
         isPremium &&
-        <div className="place-card__mark">
-          <span>Premium</span>
-        </div>
+        <CardMark />
       }
-      <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
+      <div className={cn('place-card__image-wrapper', classNameWrapper)}>
+        <a href="#"
+          onMouseOver={() => cityCardMouseOverHandler(id)}
+          onMouseLeave={cityCardMouseLeaveHandler}
+        >
           <img className="place-card__image"
             src={previewImage}
             width="260"
             height="200"
-            alt="Place image"
+            alt={title}
           />
         </a>
       </div>
@@ -41,26 +50,21 @@ const CityCard = ({ className, offer, isInRoom}: CityCardProps): JSX.Element => 
           </div>
 
           {
-            isFavorite && !isInRoom &&
-            <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
-              <svg className="place-card__bookmark-icon" width="18" height="19">
-                <use xlinkHref="#icon-bookmark"></use>
-              </svg>
-              <span className="visually-hidden">In bookmarks</span>
-            </button>
+            isFavorite &&
+            <BookmarkButton />
           }
 
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: '80%'}}></span>
+            <span style={{width: `${getRating(rating)}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link key={id} to={`/room/${id}`}>{title}</Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{capitalizeFirstLetter(type)}</p>
       </div>
     </article>
   );

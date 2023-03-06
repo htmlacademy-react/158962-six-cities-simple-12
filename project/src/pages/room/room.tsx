@@ -1,10 +1,12 @@
-import Layout from '../../components/layout';
+import Layout from '../../components/layout/layout';
 import CityCard from '../../components/city-card/city-card';
 import { Offer } from '../../types/Offer';
 import { Review } from '../../types/Review';
 import ReviewsForm from '../../components/reviews-form/reviews-form';
-import {offers} from '../../mocks/offers';
-import { formatDate } from '../../utils';
+import { offers } from '../../mocks/offers';
+import dayjs from 'dayjs';
+import Map from '../../components/map/map';
+import { capitalizeFirstLetter, getRating } from '../../utils';
 
 type RoomProps = {
   offer: Offer;
@@ -49,14 +51,14 @@ const Room = ({ offer, reviews }: RoomProps): JSX.Element => {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: '80%'}}></span>
+                  <span style={{width: `${getRating(rating)}%`}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">{rating}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {type}
+                  {capitalizeFirstLetter(type)}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
                   {bedrooms} Bedrooms
@@ -110,7 +112,7 @@ const Room = ({ offer, reviews }: RoomProps): JSX.Element => {
                 <ul className="reviews__list">
                   {
                     reviews.map((item, i) => {
-                      const date = formatDate(item.date);
+                      const date = dayjs(item.date).format('MMMM YYYY');
                       return (
                         <li key={item.id} className="reviews__item">
                           <div className="reviews__user user">
@@ -127,7 +129,7 @@ const Room = ({ offer, reviews }: RoomProps): JSX.Element => {
                           <div className="reviews__info">
                             <div className="reviews__rating rating">
                               <div className="reviews__stars rating__stars">
-                                <span style={{width: '80%'}}></span>
+                                <span style={{width: `${getRating(rating)}%`}}></span>
                                 <span className="visually-hidden">Rating</span>
                               </div>
                             </div>
@@ -145,7 +147,7 @@ const Room = ({ offer, reviews }: RoomProps): JSX.Element => {
               </section>
             </div>
           </div>
-          <section className="property__map map"></section>
+          <Map className="property__map" />
         </section>
         <div className="container">
           <section className="near-places places">
@@ -157,8 +159,8 @@ const Room = ({ offer, reviews }: RoomProps): JSX.Element => {
                     <CityCard
                       key={item.id}
                       offer={item}
-                      isInRoom
-                      className={'near-places__card'}
+                      className="near-places__card"
+                      classNameWrapper="near-places__image-wrapper"
                     />
                   )
                 )

@@ -1,4 +1,4 @@
-import Layout from '../../components/layout';
+import Layout from '../../components/layout/layout';
 
 const Login = (): JSX.Element => (
   <Layout className="page--gray page--login">

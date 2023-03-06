@@ -15,11 +15,11 @@ type CityCardProps = {
 const CityCard = ({ className, classNameWrapper, offer, onActiveCardId }: CityCardProps): JSX.Element => {
   const { previewImage, isPremium, price, isFavorite, title, type, rating, id} = offer;
 
-  const cityCardMouseOverHandler = (cityCardId: number): void => {
+  const handleCityCardOnMouseOver = (cityCardId: number): void => {
     onActiveCardId && onActiveCardId(cityCardId);
   };
 
-  const cityCardMouseLeaveHandler = (): void => {
+  const handleCityCardOnMouseLeave = (): void => {
     onActiveCardId && onActiveCardId(null);
   };
 
@@ -31,8 +31,8 @@ const CityCard = ({ className, classNameWrapper, offer, onActiveCardId }: CityCa
       }
       <div className={cn('place-card__image-wrapper', classNameWrapper)}>
         <a href="#"
-          onMouseOver={() => cityCardMouseOverHandler(id)}
-          onMouseLeave={cityCardMouseLeaveHandler}
+          onMouseOver={() => handleCityCardOnMouseOver(id)}
+          onMouseLeave={handleCityCardOnMouseLeave}
         >
           <img className="place-card__image"
             src={previewImage}

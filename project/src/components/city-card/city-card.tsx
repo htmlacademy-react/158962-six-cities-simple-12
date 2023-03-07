@@ -1,9 +1,10 @@
 import { Offer } from '../../types/Offer';
 import BookmarkButton from '../bookmark-button/bookmark-button';
 import CardMark from '../card-mark/card-mark';
-import { getRating, capitalizeFirstLetter } from '../../utils';
+import { capitalizeFirstLetter, getRatingWidth } from '../../utils';
 import cn from 'classnames';
-import { Link } from 'react-router-dom';
+import { generatePath, Link } from 'react-router-dom';
+import { AppRoute, SCALE } from '../../const';
 
 type CityCardProps = {
   className: string;
@@ -13,15 +14,7 @@ type CityCardProps = {
 }
 
 const CityCard = ({ className, classNameWrapper, offer, onActiveCardId }: CityCardProps): JSX.Element => {
-  const { previewImage, isPremium, price, isFavorite, title, type, rating, id} = offer;
-
-  const handleCityCardOnMouseOver = (cityCardId: number): void => {
-    onActiveCardId && onActiveCardId(cityCardId);
-  };
-
-  const handleCityCardOnMouseLeave = (): void => {
-    onActiveCardId && onActiveCardId(null);
-  };
+  const { previewImage, isPremium, price, title, type, isFavorite, rating, id} = offer;
 
   return (
     <article className={cn('place-card', className)}>
@@ -31,8 +24,8 @@ const CityCard = ({ className, classNameWrapper, offer, onActiveCardId }: CityCa
       }
       <div className={cn('place-card__image-wrapper', classNameWrapper)}>
         <a href="#"
-          onMouseOver={() => handleCityCardOnMouseOver(id)}
-          onMouseLeave={handleCityCardOnMouseLeave}
+          onMouseOver={() => onActiveCardId?.(id)}
+          onMouseLeave={() => onActiveCardId?.(null)}
         >
           <img className="place-card__image"
             src={previewImage}
@@ -48,21 +41,16 @@ const CityCard = ({ className, classNameWrapper, offer, onActiveCardId }: CityCa
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-
-          {
-            isFavorite &&
-            <BookmarkButton />
-          }
-
+          <BookmarkButton className={isFavorite && 'place-card__bookmark-button--active'} />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${getRating(rating)}%`}}></span>
+            <span style={{width: `${getRatingWidth(rating, SCALE)}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link key={id} to={`/room/${id}`}>{title}</Link>
+          <Link to={generatePath(AppRoute.Room, { id: `${id}`})}>{title}</Link>
         </h2>
         <p className="place-card__type">{capitalizeFirstLetter(type)}</p>
       </div>

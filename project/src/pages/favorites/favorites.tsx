@@ -29,9 +29,9 @@ const Favorites = ({ offers }:FavoritesProps): JSX.Element => {
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
               {
-                groupedOffers.map(([city, relatedOffers], i) => (
+                groupedOffers.map(([city, relatedOffers]) => (
                   <li className="favorites__locations-items"
-                    key={`${i}-${city}`}
+                    key={`${city}`}
                   >
                     <div className="favorites__locations locations locations--current">
                       <div className="locations__item">
@@ -44,7 +44,7 @@ const Favorites = ({ offers }:FavoritesProps): JSX.Element => {
                       {
                         relatedOffers.map((item: Offer) => (
                           <CityCard className="favorites__card"
-                            key={`${i}-${city}`}
+                            key={`${city}`}
                             classNameWrapper="favorites__image-wrapper"
                             offer={item}
                           />

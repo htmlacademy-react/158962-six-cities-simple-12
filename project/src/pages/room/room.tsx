@@ -6,7 +6,8 @@ import ReviewsForm from '../../components/reviews-form/reviews-form';
 import { offers } from '../../mocks/offers';
 import dayjs from 'dayjs';
 import Map from '../../components/map/map';
-import { capitalizeFirstLetter, getRating } from '../../utils';
+import { capitalizeFirstLetter, getRatingWidth } from '../../utils';
+import { SCALE } from '../../const';
 
 type RoomProps = {
   offer: Offer;
@@ -51,7 +52,7 @@ const Room = ({ offer, reviews }: RoomProps): JSX.Element => {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: `${getRating(rating)}%`}}></span>
+                  <span style={{width: `${getRatingWidth(rating, SCALE)}%`}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">{rating}</span>
@@ -129,7 +130,7 @@ const Room = ({ offer, reviews }: RoomProps): JSX.Element => {
                           <div className="reviews__info">
                             <div className="reviews__rating rating">
                               <div className="reviews__stars rating__stars">
-                                <span style={{width: `${getRating(rating)}%`}}></span>
+                                <span style={{width: `${getRatingWidth(item.rating, SCALE)}%`}}></span>
                                 <span className="visually-hidden">Rating</span>
                               </div>
                             </div>

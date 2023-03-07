@@ -44,7 +44,7 @@ export const offers: Offer[] = [
     maxAdults: 4,
     previewImage: 'img/apartment-01.jpg',
     price: 110,
-    rating: 4.2,
+    rating: 2.2,
     title: 'Beautiful & luxurious studio at great location1',
     type: 'apartment'
   },
@@ -120,7 +120,7 @@ export const offers: Offer[] = [
     images: [
       'img/apartment-03.jpg',
     ],
-    isFavorite: true,
+    isFavorite: false,
     isPremium: false,
     location: {
       latitude: 52.35514938496378,
@@ -159,7 +159,7 @@ export const offers: Offer[] = [
     images: [
       'img/apartment-02.jpg',
     ],
-    isFavorite: false,
+    isFavorite: true,
     isPremium: false,
     location: {
       latitude: 60.35514938496378,

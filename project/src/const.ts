@@ -1,5 +1,4 @@
 import { SortItem } from './types/SortItem';
-import { Form } from './types/Form';
 
 export enum AppRoute {
   Root = '/',
@@ -23,11 +22,12 @@ export const LIST:SortItem[] = [
   {name: 'Top rated first', sortProperty: 'top',},
 ];
 
-export const STARS_LIST: Form[] = [
-  { name: 'terribly', id: 1, checked: false },
-  { name: 'badly', id: 2, checked: false },
-  { name: 'not bad', id: 3, checked: false },
-  { name: 'good', id: 4, checked: false },
+export const ratingStars = [
   { name: 'perfect', id: 5, checked: false },
+  { name: 'good', id: 4, checked: false },
+  { name: 'not bad', id: 3, checked: false },
+  { name: 'badly', id: 2, checked: false },
+  { name: 'terribly', id: 1, checked: false },
 ];
 
+export const SCALE = 0.05;

@@ -2,7 +2,7 @@ import Layout from '../../components/layout/layout';
 import { Offer } from '../../types/Offer';
 import OffersList from '../../components/offers-list/offers-list';
 import Sort from '../../components/sort/sort';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import LocationTabs from '../../components/location-tabs/location-tabs';
 import Map from '../../components/map/map';
 

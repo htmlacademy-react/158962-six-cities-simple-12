@@ -26,7 +26,7 @@ const Sort = (): JSX.Element => {
           {
             LIST.map((sortItem, i) => (
               <li onClick={() => onSortItemClick(i, sortItem.name)}
-                key={`${sortItem.name}-${i}`}
+                key={`${sortItem.name}`}
                 className={cn('places__option', activeClass === i && 'places__option--active')}
                 tabIndex={0}
               >{sortItem.name}

@@ -3,7 +3,7 @@ import { SortItem } from './types/SortItem';
 export enum AppRoute {
   Root = '/',
   Login = '/login',
-  Room = '/room/:id',
+  Offer = '/offer/:id',
   Favorite = '/favorites',
 }
 
@@ -22,12 +22,12 @@ export const LIST:SortItem[] = [
   {name: 'Top rated first', sortProperty: 'top',},
 ];
 
-export const ratingStars = [
-  { name: 'perfect', id: 5, checked: false },
-  { name: 'good', id: 4, checked: false },
-  { name: 'not bad', id: 3, checked: false },
-  { name: 'badly', id: 2, checked: false },
-  { name: 'terribly', id: 1, checked: false },
+export const RATING_STARS = [
+  { name: 'perfect', id: 5 },
+  { name: 'good', id: 4 },
+  { name: 'not bad', id: 3 },
+  { name: 'badly', id: 2 },
+  { name: 'terribly', id: 1 },
 ];
 
-export const SCALE = 0.05;
+export const MAX_RATING = 5;

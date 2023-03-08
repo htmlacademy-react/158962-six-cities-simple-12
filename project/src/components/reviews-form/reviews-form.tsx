@@ -1,33 +1,25 @@
 import React, { useState, ChangeEvent } from 'react';
-import { ratingStars } from '../../const';
+import { RATING_STARS } from '../../const';
 
 const ReviewsForm = (): JSX.Element => {
-  const [activeRating, setActiveRating] = useState<number | null>(null);
-  const [checkedRadio, setCheckedRadio] = useState(false);
+  const [rating, setRating] = useState('0');
   const [comment, setComment] = useState('');
-
-  const handleRatingChange = (id: number | null, checked: boolean) => ratingStars.map((item) =>
-    item.id === id ? { ...item, checked } : item
-  );
-
-  const newRatingStars = handleRatingChange(activeRating, checkedRadio);
 
   return (
     <form className="reviews__form form" action="#" method="post">
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {
-          newRatingStars.map(({ id, name, checked }) => (
+          RATING_STARS.map(({ id, name }) => (
             <React.Fragment key={`${id}-${name}`}>
               <input className="form__rating-input visually-hidden"
                 name="rating"
                 value={id}
                 id={`${id}-star`}
                 type="radio"
-                checked={id === activeRating && checked}
+                checked={id === Number(rating)}
                 onChange={(evt: ChangeEvent<HTMLInputElement>) => {
-                  setCheckedRadio(evt.target.checked);
-                  setActiveRating(Number(evt.target.value));
+                  setRating(evt.target.value);
                 } }
               />
               <label htmlFor={`${id}-star`}

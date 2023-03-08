@@ -4,7 +4,7 @@ import CardMark from '../card-mark/card-mark';
 import { capitalizeFirstLetter, getRatingWidth } from '../../utils';
 import cn from 'classnames';
 import { generatePath, Link } from 'react-router-dom';
-import { AppRoute, SCALE } from '../../const';
+import { AppRoute, MAX_RATING } from '../../const';
 
 type CityCardProps = {
   className: string;
@@ -23,7 +23,7 @@ const CityCard = ({ className, classNameWrapper, offer, onActiveCardId }: CityCa
         <CardMark />
       }
       <div className={cn('place-card__image-wrapper', classNameWrapper)}>
-        <a href="#"
+        <Link to={generatePath(AppRoute.Offer, { id: `${id}`})}
           onMouseOver={() => onActiveCardId?.(id)}
           onMouseLeave={() => onActiveCardId?.(null)}
         >
@@ -33,7 +33,7 @@ const CityCard = ({ className, classNameWrapper, offer, onActiveCardId }: CityCa
             height="200"
             alt={title}
           />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -41,16 +41,16 @@ const CityCard = ({ className, classNameWrapper, offer, onActiveCardId }: CityCa
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <BookmarkButton className={isFavorite && 'place-card__bookmark-button--active'} />
+          <BookmarkButton isFavorite={isFavorite} />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${getRatingWidth(rating, SCALE)}%`}}></span>
+            <span style={{width: `${getRatingWidth(rating, MAX_RATING)}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={generatePath(AppRoute.Room, { id: `${id}`})}>{title}</Link>
+          <Link to={generatePath(AppRoute.Offer, { id: `${id}`})}>{title}</Link>
         </h2>
         <p className="place-card__type">{capitalizeFirstLetter(type)}</p>
       </div>

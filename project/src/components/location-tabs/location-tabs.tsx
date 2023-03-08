@@ -13,7 +13,7 @@ const LocationTabs = ({ onTabLinkClick, activeClass }: LocationTabProps): JSX.El
     <ul className="locations__list tabs__list">
       {
         CITIES.map((city, i) => (
-          <li key={`${city}`}
+          <li key={city}
             className="locations__item"
           >
             <a onClick={(evt) => {

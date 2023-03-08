@@ -19,7 +19,7 @@ const App = ({offers, reviews }: AppProps): JSX.Element => (
     <Routes>
       <Route path={AppRoute.Root} element={<Main offers={offers} />} />
       <Route path={AppRoute.Login} element={<Login />} />
-      <Route path={AppRoute.Room} element={
+      <Route path={AppRoute.Offer} element={
         <Room offer={offers[0]} reviews={reviews} />
       }
       />

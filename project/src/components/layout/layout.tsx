@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import {ReactNode} from 'react';
-import Header from './header/header';
+import Header from '../header/header';
 
 type LayoutProps = {
   className: string;

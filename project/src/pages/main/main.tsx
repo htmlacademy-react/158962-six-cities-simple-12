@@ -1,5 +1,5 @@
 import Layout from '../../components/layout/layout';
-import { Offer } from '../../types/Offer';
+import { Offer, City } from '../../types/Offer';
 import OffersList from '../../components/offers-list/offers-list';
 import Sort from '../../components/sort/sort';
 import React, { useState } from 'react';
@@ -12,6 +12,9 @@ type HomeProps = {
 
 const Main = ({ offers }: HomeProps): JSX.Element => {
   const [activeClass, setActiveClass] = useState(0);
+  const [selectedPoint, setSelectedPoint] = useState<City | undefined>(
+    undefined
+  );
 
   const handleCityTabClick = (id: number): void => {
     setActiveClass(id);
@@ -31,7 +34,7 @@ const Main = ({ offers }: HomeProps): JSX.Element => {
               <OffersList offers={offers} />
             </section>
             <div className="cities__right-section">
-              <Map className="cities__map" />
+              <Map offers={offers} className="cities__map"  selectedPoint={selectedPoint}/>
             </div>
           </div>
         </div>

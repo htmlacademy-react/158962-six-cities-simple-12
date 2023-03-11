@@ -9,7 +9,5 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <React.StrictMode>
-    <App offers={offers} reviews={reviews} />
-  </React.StrictMode>,
+  <App offers={offers} reviews={reviews} />,
 );

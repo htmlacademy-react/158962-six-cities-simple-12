@@ -5,8 +5,8 @@ export const offers: Offer[] = [
     bedrooms: 4,
     city: {
       location: {
-        latitude: 52.370216,
-        longitude: 4.895168,
+        latitude: 52.3909553943508,
+        longitude: 4.85309666406198,
         zoom: 10
       },
       name: 'Amsterdam'
@@ -37,8 +37,8 @@ export const offers: Offer[] = [
     isFavorite: true,
     isPremium: true,
     location: {
-      latitude: 52.35514938496378,
-      longitude: 4.673877537499948,
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
       zoom: 8
     },
     maxAdults: 4,
@@ -53,11 +53,11 @@ export const offers: Offer[] = [
     bedrooms: 3,
     city: {
       location: {
-        latitude: 52.370216,
-        longitude: 4.895168,
+        latitude: 52.3609553943508,
+        longitude: 4.85309666406198,
         zoom: 10
       },
-      name: 'Spain'
+      name: 'Amsterdam'
     },
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Spain.',
     goods: [
@@ -80,8 +80,8 @@ export const offers: Offer[] = [
     isFavorite: true,
     isPremium: false,
     location: {
-      latitude: 80.35514938496378,
-      longitude: 6.673877537499948,
+      latitude: 52.3609553943508,
+      longitude: 4.85309666406198,
       zoom: 8
     },
     maxAdults: 4,
@@ -96,11 +96,11 @@ export const offers: Offer[] = [
     bedrooms: 3,
     city: {
       location: {
-        latitude: 52.370216,
-        longitude: 4.895168,
+        latitude: 52.3909553943508,
+        longitude: 4.929309666406198,
         zoom: 10
       },
-      name: 'Prague'
+      name: 'Amsterdam'
     },
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Prague.',
     goods: [
@@ -123,8 +123,8 @@ export const offers: Offer[] = [
     isFavorite: false,
     isPremium: false,
     location: {
-      latitude: 52.35514938496378,
-      longitude: 4.673877537499948,
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
       zoom: 8
     },
     maxAdults: 4,
@@ -139,11 +139,11 @@ export const offers: Offer[] = [
     bedrooms: 2,
     city: {
       location: {
-        latitude: 52.370216,
-        longitude: 4.895168,
+        latitude: 52.3809553943508,
+        longitude: 4.939309666406198,
         zoom: 10
       },
-      name: 'Italy'
+      name: 'Amsterdam'
     },
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Italy.',
     goods: [
@@ -162,52 +162,14 @@ export const offers: Offer[] = [
     isFavorite: true,
     isPremium: false,
     location: {
-      latitude: 60.35514938496378,
-      longitude: 1.673877537499948,
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
       zoom: 10
     },
     maxAdults: 2,
     previewImage: 'img/apartment-02.jpg',
     price: 300,
     rating: 2.8,
-    title: 'Beautiful & luxurious studio at great location4',
-    type: 'flat'
-  },
-  {
-    bedrooms: 2,
-    city: {
-      location: {
-        latitude: 52.370216,
-        longitude: 4.895168,
-        zoom: 10
-      },
-      name: 'Italy'
-    },
-    description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Italy.',
-    goods: [
-      'Heating'
-    ],
-    host: {
-      avatarUrl: 'img/2.png',
-      id: 5,
-      isPro: true,
-      name: 'Angelina'
-    },
-    id: 5,
-    images: [
-      'img/apartment-02.jpg',
-    ],
-    isFavorite: false,
-    isPremium: false,
-    location: {
-      latitude: 60.35514938496378,
-      longitude: 1.673877537499948,
-      zoom: 10
-    },
-    maxAdults: 2,
-    previewImage: 'img/apartment-02.jpg',
-    price: 600,
-    rating: 3.8,
     title: 'Beautiful & luxurious studio at great location4',
     type: 'flat'
   },

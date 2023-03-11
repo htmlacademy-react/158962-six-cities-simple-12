@@ -6,7 +6,7 @@ import Room from '../../pages/room/room';
 import PrivateRoute from '../private-route/private-route';
 import Favorites from '../../pages/favorites/favorites';
 import {AppRoute, AuthorizationStatus} from '../../const';
-import {Offer, City} from '../../types/Offer';
+import { Offer } from '../../types/Offer';
 import {Review} from '../../types/Review';
 
 type AppProps = {

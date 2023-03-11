@@ -148,7 +148,7 @@ const Room = ({ offer, reviews }: RoomProps): JSX.Element => {
               </section>
             </div>
           </div>
-          <Map className="property__map"  offers={offers}/>
+          <Map className="property__map" offers={offers}/>
         </section>
         <div className="container">
           <section className="near-places places">

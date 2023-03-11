@@ -30,6 +30,6 @@ const useMap = (mapRef: MutableRefObject<HTMLElement | null>, city: City): Map |
   }, [mapRef, map, city]);
 
   return map;
-}
+};
 
 export default useMap;

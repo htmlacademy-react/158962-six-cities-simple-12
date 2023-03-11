@@ -49,9 +49,10 @@ const Map = ({ className, selectedPoint, offers }: MapProps): JSX.Element => {
 
   return (
     <section style={{height: '375px'}}
-             ref={mapRef}
-             className={cn('map', className)} />
-  )
+      ref={mapRef}
+      className={cn('map', className)}
+    />
+  );
 };
 
 export default Map;

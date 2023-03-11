@@ -34,7 +34,7 @@ const Main = ({ offers }: HomeProps): JSX.Element => {
               <OffersList offers={offers} />
             </section>
             <div className="cities__right-section">
-              <Map offers={offers} className="cities__map"  selectedPoint={selectedPoint}/>
+              <Map offers={offers} className="cities__map" selectedPoint={selectedPoint}/>
             </div>
           </div>
         </div>

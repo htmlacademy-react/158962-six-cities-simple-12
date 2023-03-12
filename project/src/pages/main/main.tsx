@@ -1,8 +1,8 @@
 import Layout from '../../components/layout/layout';
-import { Offer, City } from '../../types/Offer';
+import { Offer } from '../../types/Offer';
 import OffersList from '../../components/offers-list/offers-list';
 import Sort from '../../components/sort/sort';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import LocationTabs from '../../components/location-tabs/location-tabs';
 import Map from '../../components/map/map';
 
@@ -12,9 +12,17 @@ type HomeProps = {
 
 const Main = ({ offers }: HomeProps): JSX.Element => {
   const [activeClass, setActiveClass] = useState(0);
-  const [selectedPoint, setSelectedPoint] = useState<City | undefined>(
+  const [activeCardId, setActiveCardId] = useState<number | null>(null);
+  const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(
     undefined
   );
+
+  useEffect(() => {
+    const currentPoint = offers.find((offer) =>
+      offer.id === activeCardId,
+    );
+    setSelectedPoint(currentPoint);
+  },[activeCardId]);
 
   const handleCityTabClick = (id: number): void => {
     setActiveClass(id);
@@ -31,7 +39,7 @@ const Main = ({ offers }: HomeProps): JSX.Element => {
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{offers.length} places to stay in Amsterdam</b>
               <Sort />
-              <OffersList offers={offers} />
+              <OffersList offers={offers} onActiveCardId={setActiveCardId} />
             </section>
             <div className="cities__right-section">
               <Map offers={offers} className="cities__map" selectedPoint={selectedPoint}/>

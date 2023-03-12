@@ -1,5 +1,5 @@
 import Layout from '../../components/layout/layout';
-import CityCard from '../../components/city-card/city-card';
+import OfferCard from '../../components/offer-card/offer-card';
 import { Offer } from '../../types/Offer';
 import { Review } from '../../types/Review';
 import ReviewsForm from '../../components/reviews-form/reviews-form';
@@ -157,7 +157,7 @@ const Room = ({ offer, reviews }: RoomProps): JSX.Element => {
               {
                 offers.slice(0, 3).map((item) =>
                   (
-                    <CityCard
+                    <OfferCard
                       key={item.id}
                       offer={item}
                       className="near-places__card"

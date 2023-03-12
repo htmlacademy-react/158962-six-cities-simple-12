@@ -6,14 +6,14 @@ import cn from 'classnames';
 import { generatePath, Link } from 'react-router-dom';
 import { AppRoute, MAX_RATING } from '../../const';
 
-type CityCardProps = {
+type OfferCardProps = {
   className: string;
   classNameWrapper: string;
   offer: Offer;
   onActiveCardId?: (id: number | null) => void;
 }
 
-const CityCard = ({ className, classNameWrapper, offer, onActiveCardId }: CityCardProps): JSX.Element => {
+const OfferCard = ({ className, classNameWrapper, offer, onActiveCardId }: OfferCardProps): JSX.Element => {
   const { previewImage, isPremium, price, title, type, isFavorite, rating, id} = offer;
 
   return (
@@ -24,6 +24,8 @@ const CityCard = ({ className, classNameWrapper, offer, onActiveCardId }: CityCa
       }
       <div className={cn('place-card__image-wrapper', classNameWrapper)}>
         <Link to={generatePath(AppRoute.Offer, { id: `${id}`})}
+          //onMouseOver={() => onActiveCardId?.(id)}
+          //onMouseLeave={() => onActiveCardId?.(null)}
           onMouseOver={() => onActiveCardId?.(id)}
           onMouseLeave={() => onActiveCardId?.(null)}
         >
@@ -58,4 +60,4 @@ const CityCard = ({ className, classNameWrapper, offer, onActiveCardId }: CityCa
   );
 };
 
-export default CityCard;
+export default OfferCard;

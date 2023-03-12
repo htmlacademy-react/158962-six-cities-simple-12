@@ -1,15 +1,15 @@
 import cn from 'classnames';
 import React, { useRef, useEffect } from 'react';
-import {Icon, Marker} from 'leaflet';
+import { Icon, Marker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { City, Offer } from '../../types/Offer';
+import { Offer } from '../../types/Offer';
 import useMap from '../../hooks/useMap';
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../const';
 
 type MapProps = {
   className: string;
   offers: Offer[];
-  selectedPoint?: City | undefined;
+  selectedPoint?: Offer | undefined;
 }
 
 const defaultCustomIcon = new Icon({
@@ -26,7 +26,7 @@ const currentCustomIcon = new Icon({
 
 const Map = ({ className, selectedPoint, offers }: MapProps): JSX.Element => {
   const mapRef = useRef(null);
-  const map = useMap(mapRef, offers[0].city);
+  const map = useMap(mapRef, offers[0]);
 
   useEffect(() => {
     if (map) {
@@ -38,7 +38,7 @@ const Map = ({ className, selectedPoint, offers }: MapProps): JSX.Element => {
 
         marker
           .setIcon(
-            selectedPoint !== undefined && offer.title === selectedPoint.name
+            selectedPoint !== undefined && offer.id === selectedPoint.id
               ? currentCustomIcon
               : defaultCustomIcon
           )
@@ -48,7 +48,7 @@ const Map = ({ className, selectedPoint, offers }: MapProps): JSX.Element => {
   }, [map, offers, selectedPoint]);
 
   return (
-    <section style={{height: '375px'}}
+    <section style={{height: '584px'}}
       ref={mapRef}
       className={cn('map', className)}
     />

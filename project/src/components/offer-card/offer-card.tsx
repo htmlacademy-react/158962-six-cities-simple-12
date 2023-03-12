@@ -24,8 +24,6 @@ const OfferCard = ({ className, classNameWrapper, offer, onActiveCardId }: Offer
       }
       <div className={cn('place-card__image-wrapper', classNameWrapper)}>
         <Link to={generatePath(AppRoute.Offer, { id: `${id}`})}
-          //onMouseOver={() => onActiveCardId?.(id)}
-          //onMouseLeave={() => onActiveCardId?.(null)}
           onMouseOver={() => onActiveCardId?.(id)}
           onMouseLeave={() => onActiveCardId?.(null)}
         >

@@ -3,6 +3,9 @@ import { Map } from 'leaflet';
 import leaflet from 'leaflet';
 import { Offer } from '../types/Offer';
 
+const URL_TEMPLATE = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
+const TILE_LAYER_ATTRIBUTION = '\'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="\'https://carto.com/attributions">CARTO</a>\'';
+
 const useMap = (mapRef: MutableRefObject<HTMLElement | null>, offer: Offer): Map | null => {
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef(false);
@@ -19,9 +22,9 @@ const useMap = (mapRef: MutableRefObject<HTMLElement | null>, offer: Offer): Map
 
       leaflet
         .tileLayer(
-          'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+          URL_TEMPLATE,
           {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            attribution: TILE_LAYER_ATTRIBUTION,
           },
         )
         .addTo(instance);

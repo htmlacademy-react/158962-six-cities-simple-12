@@ -9,16 +9,14 @@ type OffersListProps = {
 const OffersList = ({ offers, onActiveCardId }: OffersListProps): JSX.Element => (
   <div className="cities__places-list places__list">
     {
-      offers.map((offer) =>
-        (
-          <OfferCard
-            key={offer.id}
-            onActiveCardId={onActiveCardId}
-            offer={offer}
-            classNameWrapper="cities__image-wrapper"
-            className="cities__card"
-          />
-        )
+      offers.map((offer) => (
+        <OfferCard
+          key={offer.id}
+          onActiveCardId={onActiveCardId}
+          offer={offer}
+          classNameWrapper="cities__image-wrapper"
+          className="cities__card"
+        />)
       )
     }
   </div>

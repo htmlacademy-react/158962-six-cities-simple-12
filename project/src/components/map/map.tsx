@@ -9,22 +9,22 @@ import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../const';
 type MapProps = {
   className: string;
   offers: Offer[];
-  selectedPoint?: Offer | undefined;
+  selectedPointId?: number | null;
 }
 
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40]
+  iconSize: [27, 39],
+  iconAnchor: [13, 39]
 });
 
 const currentCustomIcon = new Icon({
   iconUrl: URL_MARKER_CURRENT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40]
+  iconSize: [27, 39],
+  iconAnchor: [13, 39]
 });
 
-const Map = ({ className, selectedPoint, offers }: MapProps): JSX.Element => {
+const Map = ({ className, selectedPointId, offers }: MapProps): JSX.Element => {
   const mapRef = useRef(null);
   const map = useMap(mapRef, offers[0]);
 
@@ -38,14 +38,14 @@ const Map = ({ className, selectedPoint, offers }: MapProps): JSX.Element => {
 
         marker
           .setIcon(
-            selectedPoint !== undefined && offer.id === selectedPoint.id
+            selectedPointId !== undefined && offer.id === selectedPointId
               ? currentCustomIcon
               : defaultCustomIcon
           )
           .addTo(map);
       });
     }
-  }, [map, offers, selectedPoint]);
+  }, [map, offers, selectedPointId]);
 
   return (
     <section style={{height: '584px'}}

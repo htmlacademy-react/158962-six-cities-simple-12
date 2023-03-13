@@ -14,15 +14,11 @@ const Main = ({ offers }: HomeProps): JSX.Element => {
   const [activeClass, setActiveClass] = useState(0);
   const [activeCardId, setActiveCardId] = useState<number | null>(null);
 
-  const handleCityTabClick = (id: number): void => {
-    setActiveClass(id);
-  };
-
   return (
     <Layout className="page--gray page--main">
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
-        <LocationTabs onTabLinkClick={handleCityTabClick} activeClass={activeClass} />
+        <LocationTabs onTabLinkClick={(i) => setActiveClass(i)} activeClass={activeClass} />
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">

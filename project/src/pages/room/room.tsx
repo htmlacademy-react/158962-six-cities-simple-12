@@ -4,10 +4,10 @@ import { Offer } from '../../types/Offer';
 import { Review } from '../../types/Review';
 import ReviewsForm from '../../components/reviews-form/reviews-form';
 import { offers } from '../../mocks/offers';
-import dayjs from 'dayjs';
 import Map from '../../components/map/map';
 import { capitalizeFirstLetter, getRatingWidth } from '../../utils';
 import { MAX_RATING } from '../../const';
+import Reviews from '../../components/reviews/reviews';
 
 type RoomProps = {
   offer: Offer;
@@ -110,45 +110,12 @@ const Room = ({ offer, reviews }: RoomProps): JSX.Element => {
               </div>
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-                <ul className="reviews__list">
-                  {
-                    reviews.map((item, i) => {
-                      const date = dayjs(item.date).format('MMMM YYYY');
-                      return (
-                        <li key={item.id} className="reviews__item">
-                          <div className="reviews__user user">
-                            <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                              <img className="reviews__avatar user__avatar"
-                                src={item.user.avatarUrl}
-                                width="54"
-                                height="54"
-                                alt="Reviews avatar"
-                              />
-                            </div>
-                            <span className="reviews__user-name">{item.user.name}</span>
-                          </div>
-                          <div className="reviews__info">
-                            <div className="reviews__rating rating">
-                              <div className="reviews__stars rating__stars">
-                                <span style={{width: `${getRatingWidth(item.rating, MAX_RATING)}%`}}></span>
-                                <span className="visually-hidden">Rating</span>
-                              </div>
-                            </div>
-                            <p className="reviews__text">
-                              {item.comment}
-                            </p>
-                            <time className="reviews__time" dateTime="2019-04-24">{date}</time>
-                          </div>
-                        </li>
-                      );
-                    })
-                  }
-                </ul>
+                <Reviews reviews={reviews} />
                 <ReviewsForm />
               </section>
             </div>
           </div>
-          <Map className="property__map" offers={offers}/>
+          <Map className="property__map" offers={offers.slice(0, 3)}/>
         </section>
         <div className="container">
           <section className="near-places places">

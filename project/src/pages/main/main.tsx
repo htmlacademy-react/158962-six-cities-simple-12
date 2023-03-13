@@ -12,6 +12,7 @@ type HomeProps = {
 
 const Main = ({ offers }: HomeProps): JSX.Element => {
   const [activeClass, setActiveClass] = useState(0);
+  const [activeCardId, setActiveCardId] = useState<number | null>(null);
 
   const handleCityTabClick = (id: number): void => {
     setActiveClass(id);
@@ -28,10 +29,10 @@ const Main = ({ offers }: HomeProps): JSX.Element => {
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{offers.length} places to stay in Amsterdam</b>
               <Sort />
-              <OffersList offers={offers} />
+              <OffersList offers={offers} onActiveCardId={setActiveCardId} />
             </section>
             <div className="cities__right-section">
-              <Map className="cities__map" />
+              <Map offers={offers} className="cities__map" selectedPointId={activeCardId}/>
             </div>
           </div>
         </div>

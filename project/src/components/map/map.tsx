@@ -50,7 +50,7 @@ const Map = ({ className, selectedPointId, offers }: MapProps): JSX.Element => {
     }
 
     return () => {
-      adLayer.clearLayers();
+      map?.removeLayer(adLayer);
     };
   }, [adLayer, offers, selectedPointId]);
 

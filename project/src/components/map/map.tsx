@@ -1,6 +1,6 @@
 import cn from 'classnames';
 import React, { useRef, useEffect } from 'react';
-import { Icon, Marker } from 'leaflet';
+import leaflet, {Icon, Marker} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Offer } from '../../types/Offer';
 import useMap from '../../hooks/useMap';
@@ -28,9 +28,11 @@ const currentCustomIcon = new Icon({
 const Map = ({ className, selectedPointId, offers }: MapProps): JSX.Element => {
   const mapRef = useRef(null);
   const map = useMap(mapRef, offers[0]);
+  const adLayer = leaflet.layerGroup();
 
   useEffect(() => {
     if (map) {
+      adLayer.addTo(map);
       offers.forEach((offer) => {
         const marker = new Marker({
           lat: offer.city.location.latitude,
@@ -43,10 +45,14 @@ const Map = ({ className, selectedPointId, offers }: MapProps): JSX.Element => {
               ? currentCustomIcon
               : defaultCustomIcon
           )
-          .addTo(map);
+          .addTo(adLayer);
       });
     }
-  }, [map, offers, selectedPointId]);
+
+    return () => {
+      adLayer.clearLayers();
+    };
+  }, [adLayer, offers, selectedPointId]);
 
   return (
     <section style={{height: '584px'}}

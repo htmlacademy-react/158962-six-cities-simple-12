@@ -6,7 +6,7 @@ import ReviewsForm from '../../components/reviews-form/reviews-form';
 import { offers } from '../../mocks/offers';
 import Map from '../../components/map/map';
 import { capitalizeFirstLetter, getRatingWidth } from '../../utils';
-import { MAX_RATING } from '../../const';
+import { MAX_RATING, CARD_AMOUNT } from '../../const';
 import Reviews from '../../components/reviews/reviews';
 
 type RoomProps = {
@@ -15,8 +15,10 @@ type RoomProps = {
 }
 
 const Room = ({ offer, reviews }: RoomProps): JSX.Element => {
-  const { host: userInfo, images, type, isPremium, title, bedrooms, rating, maxAdults, goods, price, description } = offer;
+  const { host: userInfo, images, type, isPremium, title, bedrooms, rating, maxAdults, goods, price, description, id } = offer;
   const avatarProClass = userInfo.isPro ? 'property__avatar-wrapper--pro' : '';
+  const offersForRenderOnMap = offers.slice(0, CARD_AMOUNT);
+  offersForRenderOnMap.push(offer);
 
   return (
     <Layout className="">
@@ -115,14 +117,14 @@ const Room = ({ offer, reviews }: RoomProps): JSX.Element => {
               </section>
             </div>
           </div>
-          <Map className="property__map" offers={offers.slice(0, 3)}/>
+          <Map selectedPointId={id} className="property__map" offers={offersForRenderOnMap}/>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
               {
-                offers.slice(0, 3).map((item) =>
+                offers.slice(0, CARD_AMOUNT).map((item) =>
                   (
                     <OfferCard
                       key={item.id}

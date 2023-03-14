@@ -9,6 +9,8 @@ type ReviewItemProps = {
 
 const ReviewItem = ({ review }: ReviewItemProps): JSX.Element => {
   const date = dayjs(review.date).format('MMMM YYYY');
+  const attrDate = dayjs(review.date).format('YYYY MM DD');
+
   return (
     <li key={review.id} className="reviews__item">
       <div className="reviews__user user">
@@ -32,7 +34,7 @@ const ReviewItem = ({ review }: ReviewItemProps): JSX.Element => {
         <p className="reviews__text">
           {review.comment}
         </p>
-        <time className="reviews__time" dateTime="2019-04-24">{date}</time> {/*dont forget format date!!*/}
+        <time className="reviews__time" dateTime={attrDate}>{date}</time>
       </div>
     </li>
   );

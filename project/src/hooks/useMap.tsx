@@ -20,8 +20,6 @@ const useMap = (mapRef: MutableRefObject<HTMLElement | null>, offer: Offer): Map
         zoom: offer.city.location.zoom
       });
 
-      console.log('instance', instance);
-
       leaflet
         .tileLayer(
           URL_TEMPLATE,

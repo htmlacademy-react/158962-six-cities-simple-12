@@ -4,10 +4,10 @@ import { Offer } from '../../types/Offer';
 import { Review } from '../../types/Review';
 import ReviewsForm from '../../components/reviews-form/reviews-form';
 import { offers } from '../../mocks/offers';
-import dayjs from 'dayjs';
 import Map from '../../components/map/map';
 import { capitalizeFirstLetter, getRatingWidth } from '../../utils';
-import { MAX_RATING } from '../../const';
+import { MAX_RATING, CARD_AMOUNT } from '../../const';
+import Reviews from '../../components/reviews/reviews';
 
 type RoomProps = {
   offer: Offer;
@@ -15,8 +15,10 @@ type RoomProps = {
 }
 
 const Room = ({ offer, reviews }: RoomProps): JSX.Element => {
-  const { host: userInfo, images, type, isPremium, title, bedrooms, rating, maxAdults, goods, price, description } = offer;
+  const { host: userInfo, images, type, isPremium, title, bedrooms, rating, maxAdults, goods, price, description, id } = offer;
   const avatarProClass = userInfo.isPro ? 'property__avatar-wrapper--pro' : '';
+  const offersForRenderOnMap = offers.slice(0, CARD_AMOUNT);
+  offersForRenderOnMap.push(offer);
 
   return (
     <Layout className="">
@@ -110,52 +112,19 @@ const Room = ({ offer, reviews }: RoomProps): JSX.Element => {
               </div>
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-                <ul className="reviews__list">
-                  {
-                    reviews.map((item, i) => {
-                      const date = dayjs(item.date).format('MMMM YYYY');
-                      return (
-                        <li key={item.id} className="reviews__item">
-                          <div className="reviews__user user">
-                            <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                              <img className="reviews__avatar user__avatar"
-                                src={item.user.avatarUrl}
-                                width="54"
-                                height="54"
-                                alt="Reviews avatar"
-                              />
-                            </div>
-                            <span className="reviews__user-name">{item.user.name}</span>
-                          </div>
-                          <div className="reviews__info">
-                            <div className="reviews__rating rating">
-                              <div className="reviews__stars rating__stars">
-                                <span style={{width: `${getRatingWidth(item.rating, MAX_RATING)}%`}}></span>
-                                <span className="visually-hidden">Rating</span>
-                              </div>
-                            </div>
-                            <p className="reviews__text">
-                              {item.comment}
-                            </p>
-                            <time className="reviews__time" dateTime="2019-04-24">{date}</time>
-                          </div>
-                        </li>
-                      );
-                    })
-                  }
-                </ul>
+                <Reviews reviews={reviews} />
                 <ReviewsForm />
               </section>
             </div>
           </div>
-          <Map className="property__map" offers={offers}/>
+          <Map selectedPointId={id} className="property__map" offers={offersForRenderOnMap}/>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
               {
-                offers.slice(0, 3).map((item) =>
+                offers.slice(0, CARD_AMOUNT).map((item) =>
                   (
                     <OfferCard
                       key={item.id}

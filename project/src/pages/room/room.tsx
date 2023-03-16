@@ -8,6 +8,7 @@ import Map from '../../components/map/map';
 import { capitalizeFirstLetter, getRatingWidth } from '../../utils';
 import { MAX_RATING, CARD_AMOUNT } from '../../const';
 import Reviews from '../../components/reviews/reviews';
+import cn from 'classnames';
 
 type RoomProps = {
   offer: Offer;
@@ -16,7 +17,6 @@ type RoomProps = {
 
 const Room = ({ offer, reviews }: RoomProps): JSX.Element => {
   const { host: userInfo, images, type, isPremium, title, bedrooms, rating, maxAdults, goods, price, description, id } = offer;
-  const avatarProClass = userInfo.isPro ? 'property__avatar-wrapper--pro' : '';
   const offersForRenderOnMap = offers.slice(0, CARD_AMOUNT);
   offersForRenderOnMap.push(offer);
 
@@ -88,7 +88,7 @@ const Room = ({ offer, reviews }: RoomProps): JSX.Element => {
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
-                  <div className={`property__avatar-wrapper user__avatar-wrapper ${avatarProClass}`}>
+                  <div className={cn('property__avatar-wrapper user__avatar-wrapper', userInfo.isPro && 'property__avatar-wrapper--pro')}>
                     <img className="property__avatar user__avatar"
                       src={userInfo.avatarUrl}
                       width="74"

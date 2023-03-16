@@ -173,4 +173,89 @@ export const offers: Offer[] = [
     title: 'Beautiful & luxurious studio at great location4',
     type: 'flat'
   },
+
+  {
+    bedrooms: 2,
+    city: {
+      location: {
+        latitude: 48.8534,
+        longitude: 2.3488,
+        zoom: 10
+      },
+      name: 'Paris'
+    },
+    description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Paris.',
+    goods: [
+      'Heating',
+      'Washing machine',
+      'Baby seat',
+      'Dishwasher',
+      'Cabel TV',
+    ],
+    host: {
+      avatarUrl: 'img/avatar-angelina.jpg',
+      id: 5,
+      isPro: true,
+      name: 'Irene'
+    },
+    id: 5,
+    images: [
+      'img/apartment-03.jpg',
+    ],
+    isFavorite: true,
+    isPremium: false,
+    location: {
+      latitude: 52.3609553943508,
+      longitude: 4.85309666406198,
+      zoom: 8
+    },
+    maxAdults: 4,
+    previewImage: 'img/apartment-02.jpg',
+    price: 90,
+    rating: 4.8,
+    title: 'Beautiful & luxurious studio at great location2',
+    type: 'apartment'
+  },
+  {
+    bedrooms: 2,
+    city: {
+      location: {
+        latitude: 50.9333,
+        longitude: 6.95,
+        zoom: 10
+      },
+      name: 'Cologne'
+    },
+    description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Paris.',
+    goods: [
+      'Heating',
+      'Washing machine',
+      'Baby seat',
+      'Dishwasher',
+      'Cabel TV',
+    ],
+    host: {
+      avatarUrl: 'img/avatar-angelina.jpg',
+      id: 6,
+      isPro: true,
+      name: 'Irene'
+    },
+    id: 6,
+    images: [
+      'img/apartment-03.jpg',
+    ],
+    isFavorite: true,
+    isPremium: false,
+    location: {
+      latitude: 50.9333,
+      longitude: 6.95,
+      zoom: 8
+    },
+    maxAdults: 4,
+    previewImage: 'img/apartment-02.jpg',
+    price: 90,
+    rating: 4.8,
+    title: 'Beautiful & luxurious studio at great location2',
+    type: 'apartment'
+  },
 ];

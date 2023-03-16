@@ -1,6 +1,6 @@
 import cn from 'classnames';
 import React, { useRef, useEffect } from 'react';
-import leaflet, {Icon, Marker} from 'leaflet';
+import leaflet, { Icon, Marker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Offer } from '../../types/Offer';
 import useMap from '../../hooks/useMap';
@@ -11,6 +11,8 @@ type MapProps = {
   offers: Offer[];
   selectedPointId?: number | null;
 }
+
+type Bounds = [number, number][];
 
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
@@ -32,8 +34,10 @@ const Map = ({ className, selectedPointId, offers }: MapProps): JSX.Element => {
 
   useEffect(() => {
     if (map) {
+      const bounds: Bounds = [];
       adLayer.addTo(map);
       offers.forEach((offer) => {
+        bounds.push([offer.city.location.latitude, offer.city.location.longitude]);
         const marker = new Marker({
           lat: offer.city.location.latitude,
           lng: offer.city.location.longitude
@@ -47,6 +51,10 @@ const Map = ({ className, selectedPointId, offers }: MapProps): JSX.Element => {
           )
           .addTo(adLayer);
       });
+
+      if (bounds.length !== 0) {
+        map.fitBounds(bounds);
+      }
     }
 
     return () => {

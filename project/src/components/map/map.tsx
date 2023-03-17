@@ -36,16 +36,16 @@ const Map = ({ className, selectedPointId, offers }: MapProps): JSX.Element => {
     if (map) {
       const bounds: Bounds = [];
       adLayer.addTo(map);
-      offers.forEach((offer) => {
-        bounds.push([offer.city.location.latitude, offer.city.location.longitude]);
+      offers.forEach(({id, city}) => {
+        bounds.push([city.location.latitude, city.location.longitude]);
         const marker = new Marker({
-          lat: offer.city.location.latitude,
-          lng: offer.city.location.longitude
+          lat: city.location.latitude,
+          lng: city.location.longitude
         });
 
         marker
           .setIcon(
-            selectedPointId !== undefined && offer.id === selectedPointId
+            selectedPointId !== undefined && id === selectedPointId
               ? currentCustomIcon
               : defaultCustomIcon
           )
@@ -60,7 +60,7 @@ const Map = ({ className, selectedPointId, offers }: MapProps): JSX.Element => {
     return () => {
       map?.removeLayer(adLayer);
     };
-  }, [adLayer, offers, selectedPointId]);
+  }, [map, offers, selectedPointId]);
 
   return (
     <section style={{height: '584px'}}

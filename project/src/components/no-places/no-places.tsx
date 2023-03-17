@@ -2,7 +2,7 @@ type NoPlacesProps = {
   activeCity: string;
 }
 
-const NoPlaces = ({ activeCity }: NoPlacesProps):JSX.Element => (
+const NoPlaces = ({ activeCity }: NoPlacesProps): JSX.Element => (
   <>
     <section className="cities__no-places">
       <div className="cities__status-wrapper tabs__content">

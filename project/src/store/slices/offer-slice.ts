@@ -2,9 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { Offer } from '../../types/Offer';
 import { offers } from '../../mocks/offers';
-import { CITIES } from '../../const';
-
-const [CITY_BY_DEFAULT, ] = CITIES;
+import { DEFAULT } from '../../const';
 
 export type offerSliceState = {
   offers: Offer[];
@@ -13,7 +11,7 @@ export type offerSliceState = {
 
 const initialState: offerSliceState = {
   offers: offers,
-  city: CITY_BY_DEFAULT,
+  city: DEFAULT,
 };
 
 export const offerSlice = createSlice( {

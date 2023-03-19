@@ -3,6 +3,8 @@ import { CITIES } from '../../const';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { setActiveCity } from '../../store/slices/offer-slice';
+import { setSortType } from '../../store/slices/sort-slice';
+import { LIST } from '../../const';
 
 type LocationTabsProps = {
   activeCity: string;
@@ -23,6 +25,7 @@ const LocationTabs = ({ activeCity }: LocationTabsProps): JSX.Element => {
                 onClick={(evt) => {
                   evt.preventDefault();
                   dispatch(setActiveCity(city));
+                  dispatch(setSortType(LIST[0]));
                 }}
                 href="#"
               >

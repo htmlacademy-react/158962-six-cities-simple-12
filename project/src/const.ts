@@ -14,6 +14,7 @@ export enum AuthorizationStatus {
 }
 
 export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+export const [DEFAULT] = CITIES;
 
 export const LIST:SortItem[] = [
   {name: 'Popular', sortProperty: 'rating',},
@@ -21,6 +22,7 @@ export const LIST:SortItem[] = [
   {name: 'Price: low to high', sortProperty: '-price',},
   {name: 'Top rated first', sortProperty: 'top',},
 ];
+export const DEFAULT_SORT = 'Popular';
 
 export const RATING_STARS = [
   { name: 'perfect', id: 5 },

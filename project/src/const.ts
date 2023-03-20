@@ -1,4 +1,4 @@
-import { SortItem } from './types/SortItem';
+import { Sort } from './types/Sort';
 
 export enum AppRoute {
   Root = '/',
@@ -16,20 +16,46 @@ export enum AuthorizationStatus {
 export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 export const [DEFAULT] = CITIES;
 
-export const LIST:SortItem[] = [
-  {name: 'Popular', sortProperty: 'rating',},
-  {name: 'Price: high to low', sortProperty: 'price',},
-  {name: 'Price: low to high', sortProperty: '-price',},
-  {name: 'Top rated first', sortProperty: 'top',},
-];
-export const DEFAULT_SORT = 'Popular';
+export const SORT_LIST: Sort = {
+  DEFAULT: {
+    name: 'Popular',
+    sortProperty: 'default',
+  },
+  PRICE_HIGH: {
+    name: 'Price: high to low',
+    sortProperty: 'price',
+  },
+  PRICE_LOW: {
+    name: 'Price: low to high',
+    sortProperty: '-price',
+  },
+  RATING: {
+    name: 'Top rated first',
+    sortProperty: 'rating',
+  },
+};
 
 export const RATING_STARS = [
-  { name: 'perfect', id: 5 },
-  { name: 'good', id: 4 },
-  { name: 'not bad', id: 3 },
-  { name: 'badly', id: 2 },
-  { name: 'terribly', id: 1 },
+  {
+    name: 'perfect',
+    id: 5
+  },
+  {
+    name: 'good',
+    id: 4
+  },
+  {
+    name: 'not bad',
+    id: 3
+  },
+  {
+    name: 'badly',
+    id: 2
+  },
+  {
+    name: 'terribly',
+    id: 1
+  },
 ];
 
 export const MAX_RATING = 5;

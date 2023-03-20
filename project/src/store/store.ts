@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import offerSlice from './slices/offer-slice';
-import sortSlice from './slices/sort-slice';
+import appSlice from './slices/app-slice';
 
 export const store = configureStore({
   reducer: {
     offer: offerSlice,
-    sort: sortSlice,
+    sort: appSlice,
   },
 });
 

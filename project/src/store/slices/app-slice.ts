@@ -1,33 +1,29 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-
-export type SortItems = {
-  name: string;
-  sortProperty: 'rating' | 'price' | '-price' | 'top';
-}
+import { SortItem } from '../../types/Sort';
 
 type SortSliceState = {
-  sort: SortItems;
+  sort: SortItem;
 }
 
 const initialState: SortSliceState = {
   sort: {
     name: 'Popular',
-    sortProperty: 'rating'
+    sortProperty: 'default'
   }
 };
 
-export const sortSlice = createSlice({
+export const appSlice = createSlice({
   name: 'sort',
   initialState,
   reducers: {
-    setSortType(state, action: PayloadAction<SortItems>) {
+    changeSortType(state, action: PayloadAction<SortItem>) {
       state.sort = action.payload;
     },
   },
 });
 
-export const { setSortType } = sortSlice.actions;
+export const { changeSortType } = appSlice.actions;
 export const selectSort = (state:RootState) => state.sort;
-export default sortSlice.reducer;
+export default appSlice.reducer;
 

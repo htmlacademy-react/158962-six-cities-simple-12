@@ -18,12 +18,12 @@ export const offerSlice = createSlice( {
   name: 'offer',
   initialState,
   reducers: {
-    setActiveCity(state, action: PayloadAction<string>) {
+    changeCity(state, action: PayloadAction<string>) {
       state.city = action.payload;
     },
   }
 });
 
-export const { setActiveCity } = offerSlice.actions;
+export const { changeCity } = offerSlice.actions;
 export const selectOfferCards = (state:RootState) => state.offer;
 export default offerSlice.reducer;

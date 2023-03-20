@@ -6,34 +6,20 @@ import LocationTabs from '../../components/location-tabs/location-tabs';
 import Map from '../../components/map/map';
 import { useSelector } from 'react-redux';
 import { selectOfferCards } from '../../store/slices/offer-slice';
-import { selectSort } from '../../store/slices/sort-slice';
+import { selectSort } from '../../store/slices/app-slice';
 import cn from 'classnames';
 import NoPlaces from '../../components/no-places/no-places';
-import { Offer } from '../../types/Offer';
+import { sortOffers } from '../../utils';
+
 
 const Main = (): JSX.Element => {
   const [activeCardId, setActiveCardId] = useState<number | null>(null);
   const { offers, city: activeCity } = useSelector(selectOfferCards);
   const { sort } = useSelector(selectSort);
 
-  const sortOffers = (coll: Offer[]): Offer[] => {
-    switch (sort.sortProperty) {
-      case 'price':
-        return coll.sort((itemA, itemB) => itemB.price - itemA.price);
-
-      case '-price':
-        return coll.sort((itemA, itemB) => itemA.price - itemB.price);
-
-      case 'top':
-        return coll.sort((itemA, itemB) => itemB.rating - itemA.rating);
-
-      default:
-        return coll;
-    }
-  };
 
   const filteredOffers = offers.filter((item) => item.city.name === activeCity);
-  const sortedOffers = sortOffers(filteredOffers);
+  const sortedOffers = sortOffers(filteredOffers, sort);
   const isEmpty = filteredOffers.length === 0;
 
   return (

@@ -2,7 +2,9 @@ import cn from 'classnames';
 import { CITIES } from '../../const';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { setActiveCity } from '../../store/slices/offer-slice';
+import { changeCity } from '../../store/slices/offer-slice';
+import { changeSortType } from '../../store/slices/app-slice';
+import { SORT_LIST } from '../../const';
 
 type LocationTabsProps = {
   activeCity: string;
@@ -22,7 +24,8 @@ const LocationTabs = ({ activeCity }: LocationTabsProps): JSX.Element => {
               <a className={cn('locations__item-link tabs__item', city === activeCity && 'tabs__item--active')}
                 onClick={(evt) => {
                   evt.preventDefault();
-                  dispatch(setActiveCity(city));
+                  dispatch(changeCity(city));
+                  dispatch(changeSortType(SORT_LIST.DEFAULT));
                 }}
                 href="#"
               >

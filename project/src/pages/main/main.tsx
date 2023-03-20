@@ -6,14 +6,20 @@ import LocationTabs from '../../components/location-tabs/location-tabs';
 import Map from '../../components/map/map';
 import { useSelector } from 'react-redux';
 import { selectOfferCards } from '../../store/slices/offer-slice';
+import { selectSort } from '../../store/slices/app-slice';
 import cn from 'classnames';
 import NoPlaces from '../../components/no-places/no-places';
+import { sortOffers } from '../../utils';
+
 
 const Main = (): JSX.Element => {
   const [activeCardId, setActiveCardId] = useState<number | null>(null);
   const { offers, city: activeCity } = useSelector(selectOfferCards);
+  const { sort } = useSelector(selectSort);
+
 
   const filteredOffers = offers.filter((item) => item.city.name === activeCity);
+  const sortedOffers = sortOffers(filteredOffers, sort);
   const isEmpty = filteredOffers.length === 0;
 
   return (
@@ -31,8 +37,8 @@ const Main = (): JSX.Element => {
                       <h2 className="visually-hidden">Places</h2>
                       <b className="places__found">{filteredOffers.length} places to stay in {activeCity}</b>
 
-                      <Sort />
-                      <OffersList offers={filteredOffers} onActiveCardId={setActiveCardId} />
+                      <Sort sort={sort}/>
+                      <OffersList offers={sortedOffers} onActiveCardId={setActiveCardId} />
 
                     </section>
                     <div className="cities__right-section">

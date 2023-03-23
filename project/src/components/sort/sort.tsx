@@ -4,7 +4,7 @@ import cn from 'classnames';
 import { changeSortType } from '../../store/slices/app-slice';
 import { useDispatch } from 'react-redux';
 import { SortItem } from '../../types/Sort';
-import useOnClickOutside from '../../hooks/useOnClickOutside';
+import useOnClickOutside from '../../hooks/use-on-click-outside';
 
 type SortProps = {
   sort: SortItem;

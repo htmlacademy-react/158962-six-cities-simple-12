@@ -1,10 +1,11 @@
 import cn from 'classnames';
 import React, { useRef, useEffect } from 'react';
-import leaflet, { Icon, Marker } from 'leaflet';
+import leaflet, {DomEvent, Icon, Marker} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Offer } from '../../types/Offer';
-import useMap from '../../hooks/useMap';
+import useMap from '../../hooks/use-map';
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../const';
+import off = DomEvent.off;
 
 type MapProps = {
   className: string;
@@ -36,22 +37,23 @@ const Map = ({ className, selectedPointId, offers }: MapProps): JSX.Element => {
     if (map) {
       const bounds: Bounds = [];
       adLayer.addTo(map);
-      offers.forEach(({id, city}) => {
-        bounds.push([city.location.latitude, city.location.longitude]);
+      offers.forEach((item) => {
+        bounds.push([item.location.latitude, item.location.longitude]);
         const marker = new Marker({
-          lat: city.location.latitude,
-          lng: city.location.longitude
+          lat: item.location.latitude,
+          lng: item.location.longitude
         });
 
         marker
           .setIcon(
-            selectedPointId !== undefined && id === selectedPointId
+            selectedPointId !== undefined && item.id === selectedPointId
               ? currentCustomIcon
               : defaultCustomIcon
           )
           .addTo(adLayer);
       });
 
+      console.log(bounds)
       if (bounds.length !== 0) {
         map.fitBounds(bounds);
       }

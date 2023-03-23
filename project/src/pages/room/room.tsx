@@ -9,6 +9,9 @@ import { capitalizeFirstLetter, getRatingWidth } from '../../utils';
 import { MAX_RATING, CARD_AMOUNT } from '../../const';
 import Reviews from '../../components/reviews/reviews';
 import cn from 'classnames';
+import axios from 'axios';
+import { useParams, useNavigate } from 'react-router-dom'
+
 
 type RoomProps = {
   offer: Offer;
@@ -19,6 +22,8 @@ const Room = ({ offer, reviews }: RoomProps): JSX.Element => {
   const { host: userInfo, images, type, isPremium, title, bedrooms, rating, maxAdults, goods, price, description, id } = offer;
   const offersForRenderOnMap = offers.slice(0, CARD_AMOUNT);
   offersForRenderOnMap.push(offer);
+  const { roomId } = useParams();
+  const navigate = useNavigate();
 
   return (
     <Layout className="">

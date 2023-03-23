@@ -1,18 +1,28 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../store';
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+//import axios, {AxiosInstance} from 'axios';
+import { RootState, api } from '../store';
 import { Offer } from '../../types/Offer';
-import { offers } from '../../mocks/offers';
-import { DEFAULT } from '../../const';
+import {APIRoute, DEFAULT, Status } from '../../const';
 
 export type offerSliceState = {
   offers: Offer[];
   city: string;
+  status: Status;
 }
 
 const initialState: offerSliceState = {
-  offers: offers,
+  offers: [],
   city: DEFAULT,
+  status: Status.LOADING,
 };
+
+export const fetchOffers = createAsyncThunk<Offer[]>(
+  'data/fetchOffers',
+  async () => {
+    const { data } = await api.get<Offer[]>(APIRoute.Offers);
+    return data as Offer[];
+  }
+)
 
 export const offerSlice = createSlice( {
   name: 'offer',
@@ -21,6 +31,27 @@ export const offerSlice = createSlice( {
     changeCity(state, action: PayloadAction<string>) {
       state.city = action.payload;
     },
+
+    setItems(state, action: PayloadAction<Offer[]>) {
+      state.offers = action.payload;
+    },
+  },
+
+  extraReducers: (builder) => {
+    builder.addCase(fetchOffers.pending, (state) => {
+      state.status = Status.LOADING;
+      state.offers = [];
+    });
+
+    builder.addCase(fetchOffers.fulfilled, (state, action) => {
+      state.offers = action.payload;
+      state.status = Status.SUCCESS;
+    });
+
+    builder.addCase(fetchOffers.rejected, (state) => {
+      state.status = Status.ERROR;
+      state.offers = [];
+    });
   }
 });
 

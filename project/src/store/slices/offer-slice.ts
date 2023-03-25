@@ -20,7 +20,7 @@ export const fetchOffers = createAsyncThunk<Offer[]>(
   'data/fetchOffers',
   async () => {
     const { data } = await api.get<Offer[]>(APIRoute.Offers);
-    return data as Offer[];
+    return data;
   }
 )
 
@@ -57,4 +57,5 @@ export const offerSlice = createSlice( {
 
 export const { changeCity } = offerSlice.actions;
 export const selectOfferCards = (state:RootState) => state.offer;
+export const getOfferLoadingStatus = (state: RootState) => state.offer.status;
 export default offerSlice.reducer;

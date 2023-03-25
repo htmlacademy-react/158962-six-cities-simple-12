@@ -26,7 +26,7 @@ const Main = (): JSX.Element => {
 
   useEffect( () => {
     getOffers();
-  }, [dispatch]);
+  }, []);
 
   const filteredOffers = offers.filter((item) => item.city.name === activeCity);
   const sortedOffers = sortOffers(filteredOffers, sort);
@@ -38,33 +38,34 @@ const Main = (): JSX.Element => {
         <h1 className="visually-hidden">Cities</h1>
         <LocationTabs activeCity={activeCity} />
         {
-          status === 'error' ?
-            <Error /> : (
-              status === 'loading' ?
-                <Spinner /> :
-                <div className="cities">
-                  <div className={cn('cities__places-container container', isEmpty && 'cities__places-container--empty')}>
-                    {
-                      isEmpty ?
-                        <NoPlaces activeCity={activeCity} /> : (
-                          <>
-                            <section className="cities__places places">
-                              <h2 className="visually-hidden">Places</h2>
-                              <b className="places__found">{filteredOffers.length} places to stay in {activeCity}</b>
+          status === 'error' && <Error />
+        }
 
-                              <Sort sort={sort}/>
-                              <OffersList offers={sortedOffers} onActiveCardId={setActiveCardId} />
+        {
+          status === 'loading' ?
+            <Spinner /> :
+            <div className="cities">
+              <div className={cn('cities__places-container container', isEmpty && 'cities__places-container--empty')}>
+                {
+                  isEmpty ?
+                    <NoPlaces activeCity={activeCity} /> : (
+                      <>
+                        <section className="cities__places places">
+                          <h2 className="visually-hidden">Places</h2>
+                          <b className="places__found">{filteredOffers.length} places to stay in {activeCity}</b>
 
-                            </section>
-                            <div className="cities__right-section">
-                              <Map offers={filteredOffers} className="cities__map" selectedPointId={activeCardId}/>
-                            </div>
-                          </>
-                        )
-                    }
-                  </div>
-                </div>
-            )
+                          <Sort sort={sort}/>
+                          <OffersList offers={sortedOffers} onActiveCardId={setActiveCardId} />
+
+                        </section>
+                        <div className="cities__right-section">
+                          <Map offers={filteredOffers} className="cities__map" selectedPointId={activeCardId}/>
+                        </div>
+                      </>
+                    )
+                }
+              </div>
+            </div>
         }
       </main>
     </Layout>

@@ -78,3 +78,5 @@ export const URL_MARKER_DEFAULT = '/img/pin.svg';
 export const URL_MARKER_CURRENT = '/img/pin-active.svg';
 
 export const CARD_AMOUNT = 3;
+export const EMAIL_REGEXP = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
+export const PASSWORD_REGEXP = /^(?=.*[0-9])(?=.*[a-z]){6,}/g;

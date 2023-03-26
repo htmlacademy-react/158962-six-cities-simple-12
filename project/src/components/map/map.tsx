@@ -1,6 +1,6 @@
 import cn from 'classnames';
 import React, { useRef, useEffect } from 'react';
-import leaflet, {DomEvent, Icon, Marker} from 'leaflet';
+import leaflet, {Icon, Marker} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Offer } from '../../types/Offer';
 import useMap from '../../hooks/use-map';

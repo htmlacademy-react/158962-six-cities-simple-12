@@ -37,7 +37,7 @@ const App = ({ offers, reviews }: AppProps): JSX.Element => {
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 };
 
 export default App;

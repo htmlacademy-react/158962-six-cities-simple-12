@@ -20,11 +20,11 @@ const Main = (): JSX.Element => {
   const { sort } = useAppSelector(selectSort);
   const dispatch = useAppDispatch();
 
-  const getOffers = async () => {
-    dispatch(fetchOffers());
-  }
-
   useEffect( () => {
+    const getOffers = async () => {
+      await dispatch(fetchOffers());
+    };
+
     getOffers();
   }, []);
 

@@ -22,7 +22,7 @@ export const fetchOffers = createAsyncThunk<Offer[]>(
     const { data } = await api.get<Offer[]>(APIRoute.Offers);
     return data;
   }
-)
+);
 
 export const offerSlice = createSlice( {
   name: 'offer',

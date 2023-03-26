@@ -74,9 +74,14 @@ export const RATING_STARS = [
 export const MAX_RATING = 5;
 
 export const URL_MARKER_DEFAULT = '/img/pin.svg';
-
 export const URL_MARKER_CURRENT = '/img/pin-active.svg';
 
 export const CARD_AMOUNT = 3;
+
 export const EMAIL_REGEXP = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
 export const PASSWORD_REGEXP = /^(?=.*[0-9])(?=.*[a-z]){6,}/g;
+
+export const LOGIN_FIELDS:Record<string, string> = {
+  email: 'E-mail',
+  password: 'password',
+};

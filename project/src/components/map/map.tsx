@@ -1,11 +1,10 @@
 import cn from 'classnames';
 import React, { useRef, useEffect } from 'react';
-import leaflet, {DomEvent, Icon, Marker} from 'leaflet';
+import leaflet, {Icon, Marker} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Offer } from '../../types/Offer';
 import useMap from '../../hooks/use-map';
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../const';
-import off = DomEvent.off;
 
 type MapProps = {
   className: string;
@@ -53,7 +52,6 @@ const Map = ({ className, selectedPointId, offers }: MapProps): JSX.Element => {
           .addTo(adLayer);
       });
 
-      console.log(bounds)
       if (bounds.length !== 0) {
         map.fitBounds(bounds);
       }

@@ -74,8 +74,8 @@ const LoginForm = () => {
             <label className="visually-hidden">{label}</label>
             <div className={styles.error}>
               {formData[name].error && (
-                  <div className={styles.error}>{formData[name].errorText}</div>
-                )}
+                <div className={styles.error}>{formData[name].errorText}</div>
+              )}
             </div>
             <input className={cn('login__input form__input', { [styles.inputError]: formData[name].error })}
               type={name}

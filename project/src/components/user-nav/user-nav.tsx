@@ -25,22 +25,22 @@ const UserNav = () => {
         </li>
         <li className="header__nav-item">
           {isAuth ?
-              <Link
-                className="header__nav-link"
-                onClick={(evt) => {
-                  evt.preventDefault();
-                  dispatch(logoutAction());
-                }}
-                to={AppRoute.Root}
-              >
-                <span className="header__signout">Sign out</span>
-              </Link> :
-              <Link
-                className="header__nav-link"
-                to={AppRoute.Login}
-              >
-                <span className="header__signout">Sign in</span>
-              </Link>}
+            <Link
+              className="header__nav-link"
+              onClick={(evt) => {
+                evt.preventDefault();
+                dispatch(logoutAction());
+              }}
+              to={AppRoute.Root}
+            >
+              <span className="header__signout">Sign out</span>
+            </Link> :
+            <Link
+              className="header__nav-link"
+              to={AppRoute.Login}
+            >
+              <span className="header__signout">Sign in</span>
+            </Link>}
         </li>
       </ul>
     </nav>

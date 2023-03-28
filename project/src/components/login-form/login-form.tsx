@@ -30,39 +30,22 @@ const LoginForm = () => {
 
   const dispatch = useAppDispatch();
 
-  const isFieldsGroupValid = () => formData.email.error || formData.password.error;
+  const isFieldsGroupValid = Object.values(formData)
+    .map((value) => value.error)
+    .every((elem) => !elem);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    const isValid = (inputValue: string, matchedValue: RegExp) => matchedValue.test(inputValue);
 
     setFormData({
       ...formData,
       [name]: {
         ...formData[name],
+        error: !isValid(value, formData[name].regex),
         value: value,
       }
     });
-
-    const isValid = (inputValue: string, matchedValue: RegExp) => matchedValue.test(inputValue);
-
-    if (!isValid(value, formData[name].regex)) {
-      setFormData({
-        ...formData,
-        [name]: {
-          ...formData[name],
-          error: true,
-          value: value
-        }
-      });
-    } else {
-      setFormData({
-        ...formData,
-        [name]: {
-          ...formData[name],
-          error: false,
-          value: value},
-      });
-    }
   };
 
   const onSubmit = (authData: AuthData) => {
@@ -90,19 +73,15 @@ const LoginForm = () => {
           <div key={name} className="login__input-wrapper form__input-wrapper">
             <label className="visually-hidden">{label}</label>
             <div className={styles.error}>
-              {
-                formData[name].error && (
+              {formData[name].error && (
                   <div className={styles.error}>{formData[name].errorText}</div>
-                )
-              }
+                )}
             </div>
-            <input className={cn('login__input form__input', formData[name].error && styles.inputError)}
+            <input className={cn('login__input form__input', { [styles.inputError]: formData[name].error })}
               type={name}
               name={name}
               value={formData[name].value}
-              onChange={(evt: ChangeEvent<HTMLInputElement>) => {
-                handleInputChange(evt);
-              } }
+              onChange={handleInputChange}
               placeholder={label}
               required
             />
@@ -112,7 +91,7 @@ const LoginForm = () => {
 
       <button
         className="login__submit form__submit button"
-        disabled={isFieldsGroupValid()}
+        disabled={!isFieldsGroupValid}
         type="submit"
       >Sign in
       </button>

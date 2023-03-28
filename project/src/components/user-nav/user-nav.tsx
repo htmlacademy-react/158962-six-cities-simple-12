@@ -14,30 +14,24 @@ const UserNav = () => {
         <li className="header__nav-item user">
           <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorite}>
             <div className="header__avatar-wrapper user__avatar-wrapper">
-              {
-                isAuth &&
-                <img src={avatar} alt="" />
-              }
+              {isAuth && <img src={avatar} alt="" />}
             </div>
-            {
-              isAuth &&
+            {isAuth &&
               <>
                 <span className="header__user-name user__name">{login}</span>
                 <span className="header__favorite-count">3</span>
-              </>
-            }
+              </>}
           </Link>
         </li>
         <li className="header__nav-item">
-          {
-            isAuth ?
+          {isAuth ?
               <Link
                 className="header__nav-link"
                 onClick={(evt) => {
                   evt.preventDefault();
                   dispatch(logoutAction());
                 }}
-                to={'/'}
+                to={AppRoute.Root}
               >
                 <span className="header__signout">Sign out</span>
               </Link> :
@@ -46,8 +40,7 @@ const UserNav = () => {
                 to={AppRoute.Login}
               >
                 <span className="header__signout">Sign in</span>
-              </Link>
-          }
+              </Link>}
         </li>
       </ul>
     </nav>

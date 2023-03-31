@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import {RootState, api, AppDispatch} from '../store';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {RootState, AppDispatch} from '../store';
 import { Offer } from '../../types/Offer';
 import {APIRoute, Status } from '../../const';
 import {AxiosInstance} from 'axios';
@@ -56,5 +56,5 @@ export const singleOfferSlice = createSlice( {
 
 
 export const selectSingleOfferStatus = (state: RootState) => state.singleOffer.status;
-export  const selectSingleOffer = (state: RootState) => state.singleOffer.offer;
+export const selectSingleOffer = (state: RootState) => state.singleOffer.offer;
 export default singleOfferSlice.reducer;

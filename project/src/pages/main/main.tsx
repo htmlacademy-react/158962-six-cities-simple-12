@@ -42,7 +42,7 @@ const Main = (): JSX.Element => {
         }
 
         {
-          offersStatus === 'loading' || offersStatus === 'idle'  ?
+          offersStatus === 'loading' || offersStatus === 'idle' ?
             <Spinner /> :
             <div className="cities">
               <div className={cn('cities__places-container container', isEmpty && 'cities__places-container--empty')}>

@@ -31,7 +31,7 @@ const LoginForm = () => {
   const dispatch = useAppDispatch();
 
   const isFieldsGroupValid = Object.values(formData)
-    .some((value) => value.error)
+    .some((value) => value.error);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

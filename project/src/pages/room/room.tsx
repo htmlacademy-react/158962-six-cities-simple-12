@@ -13,12 +13,11 @@ import Error from '../../components/error/error';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import {selectSingleOfferStatus, selectSingleOffer, fetchSingleOffer} from '../../store/slices/single-offer-slice';
 import {fetchNearbyOffers, selectNearbyOffers, selectNearbyOffersStatus} from '../../store/slices/nearby-offers-slice';
-import {fetchComments, selectCommentsStatus, selectComments} from '../../store/slices/comments-slice';
+import {fetchComments, selectComments} from '../../store/slices/comments-slice';
 
 const Room = (): JSX.Element => {
   const offerStatus = useAppSelector(selectSingleOfferStatus);
   const nearbyOffersStatus = useAppSelector(selectNearbyOffersStatus);
-  const commentsStatus = useAppSelector(selectCommentsStatus);
 
   const singleOffer = useAppSelector(selectSingleOffer);
   const nearbyOffers = useAppSelector(selectNearbyOffers);
@@ -39,13 +38,13 @@ const Room = (): JSX.Element => {
   if (offerStatus === 'error' || nearbyOffersStatus === 'error') {
     return (
       <Error />
-    )
+    );
   }
 
-  if (singleOffer === null  || offerStatus === 'loading' || nearbyOffersStatus === 'loading') {
+  if (singleOffer === null || offerStatus === 'loading' || nearbyOffersStatus === 'loading') {
     return (
       <Spinner />
-    )
+    );
   }
 
   const {

@@ -56,5 +56,5 @@ export const nearbyOffersSlice = createSlice( {
 
 
 export const selectNearbyOffersStatus = (state: RootState) => state.nearbyOffers.status;
-export  const selectNearbyOffers = (state: RootState) => state.nearbyOffers.offers;
+export const selectNearbyOffers = (state: RootState) => state.nearbyOffers.offers;
 export default nearbyOffersSlice.reducer;

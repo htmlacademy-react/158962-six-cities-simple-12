@@ -31,18 +31,16 @@ const LoginForm = () => {
   const dispatch = useAppDispatch();
 
   const isFieldsGroupValid = Object.values(formData)
-    .map((value) => value.error)
-    .every((elem) => !elem);
+    .some((value) => value.error)
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    const isValid = (inputValue: string, matchedValue: RegExp) => matchedValue.test(inputValue);
 
     setFormData({
       ...formData,
       [name]: {
         ...formData[name],
-        error: !isValid(value, formData[name].regex),
+        error: !formData[name].regex.test(value),
         value: value,
       }
     });
@@ -91,7 +89,7 @@ const LoginForm = () => {
 
       <button
         className="login__submit form__submit button"
-        disabled={!isFieldsGroupValid}
+        disabled={isFieldsGroupValid}
         type="submit"
       >Sign in
       </button>

@@ -17,9 +17,12 @@ export enum APIRoute {
   Offers = '/hotels',
   Login = '/login',
   Logout = '/logout',
+  Comments = '/comments',
+  Favorite = '/favorite',
 }
 
 export enum Status {
+  IDLE = 'idle',
   LOADING = 'loading',
   SUCCESS = 'success',
   ERROR = 'error',

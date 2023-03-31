@@ -5,7 +5,8 @@ import { useState, useEffect } from 'react';
 import LocationTabs from '../../components/location-tabs/location-tabs';
 import Map from '../../components/map/map';
 import { useAppSelector, useAppDispatch } from '../../hooks';
-import { selectOfferCards, fetchOffers } from '../../store/slices/offer-slice';
+import { selectOfferCards, fetchOffers, selectOffersStatus, selectOffersCity } from '../../store/slices/offer-slice';
+import { checkAuthAction } from '../../store/slices/user-slice';
 import { selectSort } from '../../store/slices/app-slice';
 import cn from 'classnames';
 import NoPlaces from '../../components/no-places/no-places';
@@ -16,17 +17,16 @@ import Error from '../../components/error/error';
 
 const Main = (): JSX.Element => {
   const [activeCardId, setActiveCardId] = useState<number | null>(null);
-  const { offers, city: activeCity, status } = useAppSelector(selectOfferCards);
+  const offers = useAppSelector(selectOfferCards);
+  const offersStatus = useAppSelector(selectOffersStatus);
+  const activeCity = useAppSelector(selectOffersCity);
   const { sort } = useAppSelector(selectSort);
   const dispatch = useAppDispatch();
 
   useEffect( () => {
-    const getOffers = async () => {
-      await dispatch(fetchOffers());
-    };
-
-    getOffers();
-  }, []);
+    dispatch(fetchOffers());
+    dispatch(checkAuthAction());
+  }, [dispatch]);
 
   const filteredOffers = offers.filter((item) => item.city.name === activeCity);
   const sortedOffers = sortOffers(filteredOffers, sort);
@@ -38,11 +38,11 @@ const Main = (): JSX.Element => {
         <h1 className="visually-hidden">Cities</h1>
         <LocationTabs activeCity={activeCity} />
         {
-          status === 'error' && <Error />
+          offersStatus === 'error' && <Error />
         }
 
         {
-          status === 'loading' ?
+          offersStatus === 'loading' || offersStatus === 'idle'  ?
             <Spinner /> :
             <div className="cities">
               <div className={cn('cities__places-container container', isEmpty && 'cities__places-container--empty')}>

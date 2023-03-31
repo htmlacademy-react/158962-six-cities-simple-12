@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-//import axios, {AxiosInstance} from 'axios';
-import { RootState, api } from '../store';
+import {RootState, api, AppDispatch} from '../store';
 import { Offer } from '../../types/Offer';
 import {APIRoute, DEFAULT, Status } from '../../const';
+import {AxiosInstance} from 'axios';
+import {toast} from 'react-toastify';
 
 export type offerSliceState = {
   offers: Offer[];
@@ -13,14 +14,24 @@ export type offerSliceState = {
 const initialState: offerSliceState = {
   offers: [],
   city: DEFAULT,
-  status: Status.LOADING,
+  status: Status.IDLE,
 };
 
-export const fetchOffers = createAsyncThunk<Offer[]>(
+
+export const fetchOffers = createAsyncThunk<Offer[], undefined, {
+  dispatch: AppDispatch;
+  state: RootState;
+  extra: AxiosInstance;
+}>(
   'data/fetchOffers',
   async () => {
-    const { data } = await api.get<Offer[]>(APIRoute.Offers);
-    return data;
+    try {
+      const { data } = await api.get<Offer[]>(APIRoute.Offers);
+      return data;
+    } catch (e) {
+      toast.error('Cannot get offers');
+      throw e;
+    }
   }
 );
 
@@ -31,16 +42,11 @@ export const offerSlice = createSlice( {
     changeCity(state, action: PayloadAction<string>) {
       state.city = action.payload;
     },
-
-    setItems(state, action: PayloadAction<Offer[]>) {
-      state.offers = action.payload;
-    },
   },
 
   extraReducers: (builder) => {
     builder.addCase(fetchOffers.pending, (state) => {
       state.status = Status.LOADING;
-      state.offers = [];
     });
 
     builder.addCase(fetchOffers.fulfilled, (state, action) => {
@@ -50,12 +56,12 @@ export const offerSlice = createSlice( {
 
     builder.addCase(fetchOffers.rejected, (state) => {
       state.status = Status.ERROR;
-      state.offers = [];
     });
   }
 });
 
 export const { changeCity } = offerSlice.actions;
-export const selectOfferCards = (state:RootState) => state.offer;
-export const getOfferLoadingStatus = (state: RootState) => state.offer.status;
+export const selectOfferCards = (state:RootState) => state.offer.offers;
+export const selectOffersStatus = (state: RootState) => state.offer.status;
+export const selectOffersCity = (state: RootState) => state.offer.city;
 export default offerSlice.reducer;

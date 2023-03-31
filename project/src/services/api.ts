@@ -32,7 +32,7 @@ export const createAPI = (): AxiosInstance => {
     },
   );
 
-  api.interceptors.response.use(
+  /*api.interceptors.response.use(
     (response) => response,
     (error: AxiosError<{error: string}>) => {
       if (error.response && shouldDisplayError(error.response)) {
@@ -41,7 +41,7 @@ export const createAPI = (): AxiosInstance => {
 
       throw error;
     }
-  );
+  );*/
 
 
   return api;

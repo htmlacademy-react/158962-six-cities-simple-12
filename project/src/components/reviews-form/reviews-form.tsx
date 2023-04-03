@@ -1,12 +1,44 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, {useState, ChangeEvent, FormEvent} from 'react';
 import { RATING_STARS } from '../../const';
+import {postComment, selectCommentsStatus, CommentData} from '../../store/slices/comments-slice';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 
-const ReviewsForm = (): JSX.Element => {
+type ReviewsFormProps = {
+  offerId: number;
+}
+
+const ReviewsForm = ({offerId}: ReviewsFormProps): JSX.Element => {
   const [rating, setRating] = useState('0');
   const [comment, setComment] = useState('');
 
+  const dispatch = useAppDispatch();
+
+  const status = useAppSelector(selectCommentsStatus);
+
+  const isValidTextarea = comment.length >= 50 && comment.length <= 300;
+  const isRatingValid = rating !== '0';
+  const validForm = !isValidTextarea || !isRatingValid || status.isLoading;
+
+  const onSubmit = (commentData: CommentData) => {
+    dispatch(postComment(commentData));
+  };
+
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    onSubmit({
+      rating: rating,
+      comment: comment,
+      id: offerId,
+    });
+    setRating('0');
+    setComment('');
+  };
+
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form className="reviews__form form"
+          action=""
+          onSubmit={handleSubmit}
+          method="post">
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {
@@ -17,6 +49,7 @@ const ReviewsForm = (): JSX.Element => {
                 value={id}
                 id={`${id}-star`}
                 type="radio"
+                disabled={status.isLoading}
                 checked={id === Number(rating)}
                 onChange={(evt: ChangeEvent<HTMLInputElement>) => {
                   setRating(evt.target.value);
@@ -37,6 +70,7 @@ const ReviewsForm = (): JSX.Element => {
       <textarea className="reviews__textarea form__textarea"
         id="review"
         name="review"
+        disabled={status.isLoading}
         value={comment}
         onChange={(evt: ChangeEvent<HTMLTextAreaElement>) => setComment(evt.target.value)}
         placeholder="Tell how was your stay, what you like and what can be improved"
@@ -49,7 +83,9 @@ const ReviewsForm = (): JSX.Element => {
           and describe your stay with at least{' '}
           <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>
+        <button className="reviews__submit form__submit button"
+                disabled={validForm}
+                type="submit" >Submit</button>
       </div>
     </form>
   );

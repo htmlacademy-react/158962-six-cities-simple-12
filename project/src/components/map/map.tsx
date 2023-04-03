@@ -10,6 +10,7 @@ type MapProps = {
   className: string;
   offers: Offer[];
   selectedPointId?: number | null;
+  height: string;
 }
 
 type Bounds = [number, number][];
@@ -27,7 +28,7 @@ const currentCustomIcon = new Icon({
 });
 
 
-const Map = ({ className, selectedPointId, offers }: MapProps): JSX.Element => {
+const Map = ({ className, selectedPointId, offers, height }: MapProps): JSX.Element => {
   const mapRef = useRef(null);
   const map = useMap(mapRef, offers[0]);
   const adLayer = leaflet.layerGroup();
@@ -63,7 +64,7 @@ const Map = ({ className, selectedPointId, offers }: MapProps): JSX.Element => {
   }, [map, offers, selectedPointId]);
 
   return (
-    <section style={{height: '584px'}}
+    <section style={{height}}
       ref={mapRef}
       className={cn('map', className)}
     />

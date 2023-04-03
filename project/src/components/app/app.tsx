@@ -7,34 +7,44 @@ import PrivateRoute from '../private-route/private-route';
 import Favorites from '../../pages/favorites/favorites';
 import {AppRoute} from '../../const';
 import { Offer } from '../../types/Offer';
-import { getAuthorizationStatus} from '../../store/slices/user-slice';
-import {useAppSelector} from '../../hooks';
+import {checkAuthAction, selectAuthorizationStatus} from '../../store/slices/user-slice';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {useEffect, Suspense} from 'react';
+import Spinner from '../spinner/spinner';
 
 type AppProps = {
   offers: Offer[];
 }
 
 const App = ({ offers }: AppProps): JSX.Element => {
-  const { authorizationStatus } = useAppSelector(getAuthorizationStatus);
+  const authorizationStatus = useAppSelector(selectAuthorizationStatus);
+  const dispatch = useAppDispatch();
+
+  useEffect( () => {
+    dispatch(checkAuthAction());
+  }, [dispatch]);
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path={AppRoute.Root} element={<Main />} />
-        <Route path={AppRoute.Login} element={<Login />} />
-        <Route path={AppRoute.Offer} element={
-          <Room />
-        }
-        />
-        <Route path={AppRoute.Favorite} element={
-          <PrivateRoute authorizationStatus={authorizationStatus}>
-            <Favorites offers={offers} />
-          </PrivateRoute>
-        }
-        />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+    <Suspense fallback={<Spinner/>}>
+      <BrowserRouter>
+        <Routes>
+          <Route path={AppRoute.Root} element={<Main />} />
+          <Route path={AppRoute.Login} element={<Login />} />
+          <Route path={AppRoute.Offer} element={
+            <Room />
+          }
+          />
+          <Route path={AppRoute.Favorite} element={
+            <PrivateRoute authorizationStatus={authorizationStatus}>
+              <Favorites offers={offers} />
+            </PrivateRoute>
+          }
+          />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </Suspense>
+
   );
 };
 

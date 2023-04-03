@@ -12,7 +12,7 @@ export type singleOfferSliceState = {
 
 const initialState: singleOfferSliceState = {
   offer: null,
-  status: Status.IDLE,
+  status: Status.Idle,
 };
 
 
@@ -40,16 +40,16 @@ export const singleOfferSlice = createSlice( {
 
   extraReducers: (builder) => {
     builder.addCase(fetchSingleOffer.pending, (state) => {
-      state.status = Status.LOADING;
+      state.status = Status.Loading;
     });
 
     builder.addCase(fetchSingleOffer.fulfilled, (state, action) => {
       state.offer = action.payload;
-      state.status = Status.SUCCESS;
+      state.status = Status.Success;
     });
 
     builder.addCase(fetchSingleOffer.rejected, (state) => {
-      state.status = Status.ERROR;
+      state.status = Status.Error;
     });
   }
 });

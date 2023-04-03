@@ -69,7 +69,7 @@ export const loginAction = createAsyncThunk<UserData, AuthData, {
     }
   },
 );
-// dont need status here
+
 export const logoutAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
   state: RootState;
@@ -118,5 +118,7 @@ export const userSlice = createSlice({
   }
 });
 
-export const getAuthorizationStatus = (state: RootState) => state.user;
+export const selectAuthorizationStatus = (state: RootState) => state.user.authorizationStatus;
+export const selectLogin = (state: RootState) => state.user.login;
+export const selectAvatar = (state: RootState) => state.user.avatar;
 export default userSlice.reducer;

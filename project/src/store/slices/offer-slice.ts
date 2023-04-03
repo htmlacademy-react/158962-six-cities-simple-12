@@ -1,9 +1,10 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import {createSlice, PayloadAction, createAsyncThunk, createSelector} from '@reduxjs/toolkit';
 import {RootState, api, AppDispatch} from '../store';
 import { Offer } from '../../types/Offer';
 import {APIRoute, DEFAULT, Status } from '../../const';
 import {AxiosInstance} from 'axios';
 import {toast} from 'react-toastify';
+import {selectNearbyOffersStatus} from './nearby-offers-slice';
 
 export type offerSliceState = {
   offers: Offer[];
@@ -14,7 +15,7 @@ export type offerSliceState = {
 const initialState: offerSliceState = {
   offers: [],
   city: DEFAULT,
-  status: Status.IDLE,
+  status: Status.Idle,
 };
 
 
@@ -46,22 +47,28 @@ export const offerSlice = createSlice( {
 
   extraReducers: (builder) => {
     builder.addCase(fetchOffers.pending, (state) => {
-      state.status = Status.LOADING;
+      state.status = Status.Loading;
     });
 
     builder.addCase(fetchOffers.fulfilled, (state, action) => {
       state.offers = action.payload;
-      state.status = Status.SUCCESS;
+      state.status = Status.Success;
     });
 
     builder.addCase(fetchOffers.rejected, (state) => {
-      state.status = Status.ERROR;
+      state.status = Status.Error;
     });
   }
 });
 
 export const { changeCity } = offerSlice.actions;
 export const selectOfferCards = (state:RootState) => state.offer.offers;
-export const selectOffersStatus = (state: RootState) => state.offer.status;
+export const selectStatus = (state: RootState) => state.offer.status;
 export const selectOffersCity = (state: RootState) => state.offer.city;
+
+export const selectOffersStatus = createSelector([selectStatus, selectNearbyOffersStatus], (status, nearStatus) => ({
+  isLoadingOffers: status === Status.Loading || status === Status.Idle,
+  isLoadingOffersNearby: nearStatus === Status.Loading || nearStatus === Status.Idle,
+  isError: status === Status.Error || nearStatus === Status.Error,
+}))
 export default offerSlice.reducer;

@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import { getAuthorizationStatus, logoutAction } from '../../store/slices/user-slice';
+import { selectAuthorizationStatus, logoutAction, selectAvatar, selectLogin } from '../../store/slices/user-slice';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 
 const UserNav = () => {
   const dispatch = useAppDispatch();
-  const { authorizationStatus, login, avatar } = useAppSelector(getAuthorizationStatus);
+  const login = useAppSelector(selectLogin);
+  const avatar = useAppSelector(selectAvatar);
+  const authorizationStatus = useAppSelector(selectAuthorizationStatus);
   const isAuth = authorizationStatus === AuthorizationStatus.Auth;
 
   return (

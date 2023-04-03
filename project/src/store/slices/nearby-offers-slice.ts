@@ -12,7 +12,7 @@ export type nearbyOffersSliceState = {
 
 const initialState: nearbyOffersSliceState = {
   offers: [],
-  status: Status.IDLE,
+  status: Status.Idle,
 };
 
 
@@ -40,16 +40,16 @@ export const nearbyOffersSlice = createSlice( {
 
   extraReducers: (builder) => {
     builder.addCase(fetchNearbyOffers.pending, (state) => {
-      state.status = Status.LOADING;
+      state.status = Status.Loading;
     });
 
     builder.addCase(fetchNearbyOffers.fulfilled, (state, action) => {
       state.offers = action.payload;
-      state.status = Status.SUCCESS;
+      state.status = Status.Success;
     });
 
     builder.addCase(fetchNearbyOffers.rejected, (state) => {
-      state.status = Status.ERROR;
+      state.status = Status.Error;
     });
   }
 });

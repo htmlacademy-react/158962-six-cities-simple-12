@@ -1,9 +1,10 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {createSlice, createAsyncThunk, createSelector} from '@reduxjs/toolkit';
 import {RootState, AppDispatch} from '../store';
 import { Offer } from '../../types/Offer';
-import {APIRoute, Status } from '../../const';
+import {APIRoute, Status, NameSpace } from '../../const';
 import {AxiosInstance} from 'axios';
 import {toast} from 'react-toastify';
+import {selectNearbyOffersStatus} from './nearby-offers-slice';
 
 export type singleOfferSliceState = {
   offer: Offer | null;
@@ -34,7 +35,7 @@ export const fetchSingleOffer = createAsyncThunk<Offer, number, {
 );
 
 export const singleOfferSlice = createSlice( {
-  name: 'singleOffer',
+  name: NameSpace.SingleOffer,
   initialState,
   reducers: {},
 
@@ -55,6 +56,13 @@ export const singleOfferSlice = createSlice( {
 });
 
 
-export const selectSingleOfferStatus = (state: RootState) => state.singleOffer.status;
-export const selectSingleOffer = (state: RootState) => state.singleOffer.offer;
+export const selectStatus = (state: RootState) => state[NameSpace.SingleOffer].status;
+export const selectSingleOffer = (state: RootState) => state[NameSpace.SingleOffer].offer;
+
+export const selectOfferStatus = createSelector([selectStatus, selectNearbyOffersStatus], (status, nearStatus) => ({
+  isLoading: [Status.Loading, Status.Idle].includes(status) || [Status.Loading, Status.Idle].includes(nearStatus),
+  isError: status === Status.Error || nearStatus === Status.Error,
+  isSuccess: status === Status.Success,
+}));
+
 export default singleOfferSlice.reducer;

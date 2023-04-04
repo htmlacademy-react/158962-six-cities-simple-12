@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import {RootState, AppDispatch} from '../store';
 import { Offer } from '../../types/Offer';
-import {APIRoute, Status } from '../../const';
+import {APIRoute, NameSpace, Status} from '../../const';
 import {AxiosInstance} from 'axios';
 import {toast} from 'react-toastify';
 
@@ -34,7 +34,7 @@ export const fetchNearbyOffers = createAsyncThunk<Offer[], number, {
 );
 
 export const nearbyOffersSlice = createSlice( {
-  name: 'nearbyOffers',
+  name: NameSpace.NearbyOffers,
   initialState,
   reducers: {},
 
@@ -55,6 +55,6 @@ export const nearbyOffersSlice = createSlice( {
 });
 
 
-export const selectNearbyOffersStatus = (state: RootState) => state.nearbyOffers.status;
-export const selectNearbyOffers = (state: RootState) => state.nearbyOffers.offers;
+export const selectNearbyOffersStatus = (state: RootState) => state[NameSpace.NearbyOffers].status;
+export const selectNearbyOffers = (state: RootState) => state[NameSpace.NearbyOffers].offers;
 export default nearbyOffersSlice.reducer;

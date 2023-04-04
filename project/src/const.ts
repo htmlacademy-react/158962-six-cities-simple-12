@@ -84,7 +84,19 @@ export const CARD_AMOUNT = 6;
 export const EMAIL_REGEXP = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
 export const PASSWORD_REGEXP = /^(?=.*[0-9])(?=.*[a-z]){6,}/g;
 
+export const MIN_COMMENT_LENGTH = 50;
+export const MAX_COMMENT_LENGTH = 300;
+
 export const LOGIN_FIELDS:Record<string, string> = {
   email: 'E-mail',
-  password: 'password',
+  password: 'Password',
 };
+
+export enum NameSpace {
+  Offers = 'OFFERS',
+  SingleOffer = 'SINGLE_OFFER',
+  User = 'USER',
+  Sort = 'SORT',
+  Comments = 'COMMENTS',
+  NearbyOffers = 'NEARBY_OFFERS',
+}

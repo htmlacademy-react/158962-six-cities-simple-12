@@ -17,7 +17,7 @@ import Error from '../../components/error/error';
 const Main = (): JSX.Element => {
   const [activeCardId, setActiveCardId] = useState<number | null>(null);
   const offers = useAppSelector(selectOfferCards);
-  const status = useAppSelector(selectOffersStatus)
+  const status = useAppSelector(selectOffersStatus);
   const activeCity = useAppSelector(selectOffersCity);
   const { sort } = useAppSelector(selectSort);
   const dispatch = useAppDispatch();
@@ -36,8 +36,8 @@ const Main = (): JSX.Element => {
     return <Error />;
   }
 
-  if (status.isLoadingOffers) {
-    return  <Spinner />;
+  if (status.isLoading) {
+    return <Spinner />;
   }
 
   return (

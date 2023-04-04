@@ -3,10 +3,8 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import App from './components/app/app';
-import { offers } from './mocks/offers';
-import {checkAuthAction} from './store/slices/user-slice';
-
-store.dispatch(checkAuthAction());
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -15,7 +13,8 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App offers={offers} />
+      <App />
+      <ToastContainer />
     </Provider>
   </React.StrictMode>,
 );

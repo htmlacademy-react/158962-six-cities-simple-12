@@ -1,10 +1,9 @@
 import {createSlice, PayloadAction, createAsyncThunk, createSelector} from '@reduxjs/toolkit';
 import {RootState, api, AppDispatch} from '../store';
 import { Offer } from '../../types/Offer';
-import {APIRoute, DEFAULT, Status } from '../../const';
+import {APIRoute, DEFAULT, NameSpace, Status} from '../../const';
 import {AxiosInstance} from 'axios';
 import {toast} from 'react-toastify';
-import {selectNearbyOffersStatus} from './nearby-offers-slice';
 
 export type offerSliceState = {
   offers: Offer[];
@@ -37,7 +36,7 @@ export const fetchOffers = createAsyncThunk<Offer[], undefined, {
 );
 
 export const offerSlice = createSlice( {
-  name: 'offer',
+  name: NameSpace.Offers,
   initialState,
   reducers: {
     changeCity(state, action: PayloadAction<string>) {
@@ -62,13 +61,13 @@ export const offerSlice = createSlice( {
 });
 
 export const { changeCity } = offerSlice.actions;
-export const selectOfferCards = (state:RootState) => state.offer.offers;
-export const selectStatus = (state: RootState) => state.offer.status;
-export const selectOffersCity = (state: RootState) => state.offer.city;
+export const selectOfferCards = (state:RootState) => state[NameSpace.Offers].offers;
+export const selectStatus = (state: RootState) => state[NameSpace.Offers].status;
+export const selectOffersCity = (state: RootState) => state[NameSpace.Offers].city;
 
-export const selectOffersStatus = createSelector([selectStatus, selectNearbyOffersStatus], (status, nearStatus) => ({
-  isLoadingOffers: status === Status.Loading || status === Status.Idle,
-  isLoadingOffersNearby: nearStatus === Status.Loading || nearStatus === Status.Idle,
-  isError: status === Status.Error || nearStatus === Status.Error,
-}))
+export const selectOffersStatus = createSelector([selectStatus], (status) => ({
+  isLoading: status === Status.Loading || status === Status.Idle,
+  isError: status === Status.Error,
+  isSuccess: status === Status.Success,
+}));
 export default offerSlice.reducer;

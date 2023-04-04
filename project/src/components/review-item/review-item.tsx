@@ -10,7 +10,6 @@ type ReviewItemProps = {
 const ReviewItem = ({ review }: ReviewItemProps): JSX.Element => {
   const date = dayjs(review.date).format('MMMM YYYY');
   const attrDate = dayjs(review.date).format('YYYY MM DD');
-  console.log(review)
 
   return (
     <li key={review.id} className="reviews__item">

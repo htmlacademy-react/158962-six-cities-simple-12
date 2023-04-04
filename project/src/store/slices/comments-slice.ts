@@ -1,9 +1,10 @@
 import {createSlice, createAsyncThunk, createSelector} from '@reduxjs/toolkit';
 import {RootState, AppDispatch} from '../store';
 import { Review } from '../../types/Review';
-import {APIRoute, Status } from '../../const';
+import {APIRoute, NameSpace, Status} from '../../const';
 import {AxiosInstance} from 'axios';
 import {toast} from 'react-toastify';
+import {sortByDate} from '../../utils';
 
 export type commentsSliceState = {
   comments: Review[];
@@ -47,17 +48,17 @@ export const postComment = createAsyncThunk<Review[], CommentData, {
   'data/postComment',
   async ({rating,comment, id}, {extra: api}) => {
     try {
-      const { data } = await api.post<Review[]>(`${APIRoute.Comments}/${id}`, {rating, comment});
+      const { data } = await api.post<Review[]>(`${APIRoute.Comments}${id}`, {rating, comment});
       return data;
     } catch (e) {
-      toast.error('Cannot push comments');
+      toast.error('Cannot send comment');
       throw e;
     }
   }
 );
 
 export const commentsSlice = createSlice( {
-  name: 'comments',
+  name: NameSpace.Comments,
   initialState,
   reducers: {},
 
@@ -91,11 +92,16 @@ export const commentsSlice = createSlice( {
 });
 
 
-export const selectStatus = (state: RootState) => state.comments.status;
-export const selectComments = (state: RootState) => state.comments.comments;
+export const selectStatus = (state: RootState) => state[NameSpace.Comments].status;
+export const selectComments = (state: RootState) => state[NameSpace.Comments].comments;
 
 export const selectCommentsStatus = createSelector([selectStatus], (status) => ({
   isLoading: status === Status.Loading || status === Status.Idle,
   isError: status === Status.Error,
-}))
+  isSuccess: status === Status.Success,
+}));
+
+export const selectSortedComments = createSelector([selectComments], (comments) => ({
+  comments: sortByDate([...comments]).slice(0, 10),
+}));
 export default commentsSlice.reducer;

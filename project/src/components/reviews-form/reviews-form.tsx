@@ -1,6 +1,6 @@
 import React, {useState, ChangeEvent, FormEvent} from 'react';
-import { RATING_STARS } from '../../const';
-import {postComment, selectCommentsStatus, CommentData} from '../../store/slices/comments-slice';
+import { RATING_STARS, MIN_COMMENT_LENGTH, MAX_COMMENT_LENGTH } from '../../const';
+import {postComment, selectCommentsStatus } from '../../store/slices/comments-slice';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 
 type ReviewsFormProps = {
@@ -15,57 +15,54 @@ const ReviewsForm = ({offerId}: ReviewsFormProps): JSX.Element => {
 
   const status = useAppSelector(selectCommentsStatus);
 
-  const isValidTextarea = comment.length >= 50 && comment.length <= 300;
+  const isValidTextarea = comment.length >= MIN_COMMENT_LENGTH && comment.length <= MAX_COMMENT_LENGTH;
   const isRatingValid = rating !== '0';
   const validForm = !isValidTextarea || !isRatingValid || status.isLoading;
 
-  const onSubmit = (commentData: CommentData) => {
-    dispatch(postComment(commentData));
-  };
-
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    onSubmit({
+    dispatch(postComment({
       rating: rating,
       comment: comment,
       id: offerId,
-    });
-    setRating('0');
-    setComment('');
+    }));
+    if (status.isSuccess) {
+      setRating('0');
+      setComment('');
+    }
   };
 
   return (
     <form className="reviews__form form"
-          action=""
-          onSubmit={handleSubmit}
-          method="post">
+      action=""
+      onSubmit={handleSubmit}
+      method="post"
+    >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
-        {
-          RATING_STARS.map(({ id, name }) => (
-            <React.Fragment key={`${id}-${name}`}>
-              <input className="form__rating-input visually-hidden"
-                name="rating"
-                value={id}
-                id={`${id}-star`}
-                type="radio"
-                disabled={status.isLoading}
-                checked={id === Number(rating)}
-                onChange={(evt: ChangeEvent<HTMLInputElement>) => {
-                  setRating(evt.target.value);
-                } }
-              />
-              <label htmlFor={`${id}-star`}
-                className="reviews__rating-label form__rating-label"
-                title={name}
-              >
-                <svg className="form__star-image" width="37" height="33">
-                  <use xlinkHref="#icon-star"></use>
-                </svg>
-              </label>
-            </React.Fragment>)
-          )
-        }
+        {RATING_STARS.map(({ id, name }) => (
+          <React.Fragment key={name}>
+            <input className="form__rating-input visually-hidden"
+              name="rating"
+              value={id}
+              id={`${id}-star`}
+              type="radio"
+              disabled={status.isLoading}
+              checked={id === Number(rating)}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) => {
+                setRating(evt.target.value);
+              }}
+            />
+            <label htmlFor={`${id}-star`}
+              className="reviews__rating-label form__rating-label"
+              title={name}
+            >
+              <svg className="form__star-image" width="37" height="33">
+                <use xlinkHref="#icon-star"></use>
+              </svg>
+            </label>
+          </React.Fragment>)
+        )}
       </div>
       <textarea className="reviews__textarea form__textarea"
         id="review"
@@ -84,8 +81,10 @@ const ReviewsForm = ({offerId}: ReviewsFormProps): JSX.Element => {
           <b className="reviews__text-amount">50 characters</b>.
         </p>
         <button className="reviews__submit form__submit button"
-                disabled={validForm}
-                type="submit" >Submit</button>
+          disabled={validForm}
+          type="submit"
+        >Submit
+        </button>
       </div>
     </form>
   );

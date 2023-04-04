@@ -2,7 +2,7 @@ import styles from './login.module.css';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { EMAIL_REGEXP, PASSWORD_REGEXP, LOGIN_FIELDS } from '../../const';
-import { AuthData, loginAction } from '../../store/slices/user-slice';
+import { loginAction } from '../../store/slices/user-slice';
 import cn from 'classnames';
 
 type Field = {
@@ -46,16 +46,12 @@ const LoginForm = () => {
     });
   };
 
-  const onSubmit = (authData: AuthData) => {
-    dispatch(loginAction(authData));
-  };
-
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    onSubmit({
+    dispatch(loginAction({
       login: formData.email.value,
       password: formData.password.value,
-    });
+    }));
   };
 
   return (

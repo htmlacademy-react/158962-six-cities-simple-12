@@ -5,37 +5,35 @@ import OfferCard from '../../components/offer-card/offer-card';
 import ReviewsForm from '../../components/reviews-form/reviews-form';
 import Map from '../../components/map/map';
 import { capitalizeFirstLetter, getRatingWidth } from '../../utils';
-import {MAX_RATING, CARD_AMOUNT, AuthorizationStatus} from '../../const';
+import {MAX_RATING, CARD_AMOUNT} from '../../const';
 import Reviews from '../../components/reviews/reviews';
 import cn from 'classnames';
 import Spinner from '../../components/spinner/spinner';
 import Error from '../../components/error/error';
 import { useAppSelector, useAppDispatch } from '../../hooks';
-import {selectSingleOffer, fetchSingleOffer} from '../../store/slices/single-offer-slice';
+import {selectSingleOffer, fetchSingleOffer, selectOfferStatus} from '../../store/slices/single-offer-slice';
 import {fetchNearbyOffers, selectNearbyOffers} from '../../store/slices/nearby-offers-slice';
-import {selectOffersStatus} from '../../store/slices/offer-slice';
-import {fetchComments, selectComments} from '../../store/slices/comments-slice';
-import {selectAuthorizationStatus} from '../../store/slices/user-slice';
+import {fetchComments, selectSortedComments} from '../../store/slices/comments-slice';
+import {getIsAuth} from '../../store/slices/user-slice';
 
 const Room = (): JSX.Element => {
-  const status = useAppSelector(selectOffersStatus);
+  const status = useAppSelector(selectOfferStatus);
 
   const singleOffer = useAppSelector(selectSingleOffer);
   const nearbyOffers = useAppSelector(selectNearbyOffers);
-  const comments = useAppSelector(selectComments);
 
-  const authorizationStatus = useAppSelector(selectAuthorizationStatus);
-  const isAuth = authorizationStatus === AuthorizationStatus.Auth;
+  const isAuth = useAppSelector(getIsAuth);
 
   const dispatch = useAppDispatch();
   const offerId = Number(useParams().id);
 
   useEffect(() => {
     dispatch(fetchSingleOffer(offerId));
-    dispatch(fetchComments(offerId));
     dispatch(fetchNearbyOffers(offerId));
+    dispatch(fetchComments(offerId));
   }, [offerId, dispatch]);
 
+  const sortedComments = useAppSelector(selectSortedComments);
 
   if (status.isError) {
     return (
@@ -43,7 +41,7 @@ const Room = (): JSX.Element => {
     );
   }
 
-  if (singleOffer === null || status.isLoadingOffersNearby) {
+  if (singleOffer === null || status.isLoading) {
     return (
       <Spinner />
     );
@@ -81,10 +79,10 @@ const Room = (): JSX.Element => {
           <div className="property__container container">
             <div className="property__wrapper">
               {isPremium && (
-                  <div className="property__mark">
-                    <span>Premium</span>
-                  </div>
-                )}
+                <div className="property__mark">
+                  <span>Premium</span>
+                </div>
+              )}
               <div className="property__name-wrapper">
                 <h1 className="property__name">
                   {title}
@@ -143,8 +141,8 @@ const Room = (): JSX.Element => {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
-                <Reviews reviews={comments} />
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{sortedComments.comments.length}</span></h2>
+                <Reviews reviews={sortedComments.comments} />
                 {isAuth && <ReviewsForm offerId={offerId} />}
               </section>
             </div>
@@ -161,8 +159,8 @@ const Room = (): JSX.Element => {
                   offer={item}
                   className="near-places__card"
                   classNameWrapper="near-places__image-wrapper"
-                  />)
-                )}
+                />)
+              )}
             </div>
           </section>
         </div>

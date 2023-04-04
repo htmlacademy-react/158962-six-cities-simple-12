@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import {APIRoute, AppRoute, AuthorizationStatus} from '../../const';
+import {APIRoute, AppRoute, AuthorizationStatus, NameSpace} from '../../const';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {RootState, AppDispatch} from '../store';
 import {AxiosInstance} from 'axios';
@@ -88,7 +88,7 @@ export const logoutAction = createAsyncThunk<void, undefined, {
 );
 
 export const userSlice = createSlice({
-  name: 'user',
+  name: NameSpace.User,
   initialState,
   reducers: {},
 
@@ -118,7 +118,8 @@ export const userSlice = createSlice({
   }
 });
 
-export const selectAuthorizationStatus = (state: RootState) => state.user.authorizationStatus;
-export const selectLogin = (state: RootState) => state.user.login;
-export const selectAvatar = (state: RootState) => state.user.avatar;
+export const selectAuthorizationStatus = (state: RootState) => state[NameSpace.User].authorizationStatus;
+export const selectLogin = (state: RootState) => state[NameSpace.User].login;
+export const selectAvatar = (state: RootState) => state[NameSpace.User].avatar;
+export const getIsAuth = (state: RootState) => state[NameSpace.User].authorizationStatus === AuthorizationStatus.Auth;
 export default userSlice.reducer;

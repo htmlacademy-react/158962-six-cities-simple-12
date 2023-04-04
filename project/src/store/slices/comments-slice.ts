@@ -5,6 +5,7 @@ import {APIRoute, NameSpace, Status} from '../../const';
 import {AxiosInstance} from 'axios';
 import {toast} from 'react-toastify';
 import {sortByDate} from '../../utils';
+import dayjs from 'dayjs';
 
 export type commentsSliceState = {
   comments: Review[];
@@ -101,7 +102,7 @@ export const selectCommentsStatus = createSelector([selectStatus], (status) => (
   isSuccess: status === Status.Success,
 }));
 
-export const selectSortedComments = createSelector([selectComments], (comments) => ({
-  comments: sortByDate([...comments]).slice(0, 10),
-}));
+export const selectSortedComments = createSelector([selectComments], (comments) => (
+  [...comments].sort((itemA, itemB) => dayjs(itemB.date).diff(dayjs(itemA.date)))
+));
 export default commentsSlice.reducer;

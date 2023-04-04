@@ -141,8 +141,8 @@ const Room = (): JSX.Element => {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{sortedComments.comments.length}</span></h2>
-                <Reviews reviews={sortedComments.comments} />
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{sortedComments.length}</span></h2>
+                <Reviews reviews={sortedComments} />
                 {isAuth && <ReviewsForm offerId={offerId} />}
               </section>
             </div>

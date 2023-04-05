@@ -1,52 +1,88 @@
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import Layout from '../../components/layout/layout';
 import OfferCard from '../../components/offer-card/offer-card';
-import { Offer } from '../../types/Offer';
-import { Review } from '../../types/Review';
 import ReviewsForm from '../../components/reviews-form/reviews-form';
-import { offers } from '../../mocks/offers';
 import Map from '../../components/map/map';
 import { capitalizeFirstLetter, getRatingWidth } from '../../utils';
-import { MAX_RATING, CARD_AMOUNT } from '../../const';
+import {MAX_RATING, CARD_AMOUNT} from '../../const';
 import Reviews from '../../components/reviews/reviews';
 import cn from 'classnames';
+import Spinner from '../../components/spinner/spinner';
+import Error from '../../components/error/error';
+import { useAppSelector, useAppDispatch } from '../../hooks';
+import {selectSingleOffer, fetchSingleOffer, selectOfferStatus} from '../../store/slices/single-offer-slice';
+import {fetchNearbyOffers, selectNearbyOffers} from '../../store/slices/nearby-offers-slice';
+import {fetchComments, selectSortedComments} from '../../store/slices/comments-slice';
+import {getIsAuth} from '../../store/slices/user-slice';
 
-type RoomProps = {
-  offer: Offer;
-  reviews: Review[];
-}
+const Room = (): JSX.Element => {
+  const status = useAppSelector(selectOfferStatus);
 
-const Room = ({ offer, reviews }: RoomProps): JSX.Element => {
-  const { host: userInfo, images, type, isPremium, title, bedrooms, rating, maxAdults, goods, price, description, id } = offer;
-  const offersForRenderOnMap = offers.slice(0, CARD_AMOUNT);
-  offersForRenderOnMap.push(offer);
+  const singleOffer = useAppSelector(selectSingleOffer);
+  const nearbyOffers = useAppSelector(selectNearbyOffers);
+
+  const isAuth = useAppSelector(getIsAuth);
+
+  const dispatch = useAppDispatch();
+  const offerId = Number(useParams().id);
+
+  useEffect(() => {
+    dispatch(fetchSingleOffer(offerId));
+    dispatch(fetchNearbyOffers(offerId));
+    dispatch(fetchComments(offerId));
+  }, [offerId, dispatch]);
+
+  const sortedComments = useAppSelector(selectSortedComments);
+
+  if (status.isError) {
+    return (
+      <Error />
+    );
+  }
+
+  if (singleOffer === null || status.isLoading) {
+    return (
+      <Spinner />
+    );
+  }
+
+  const {
+    host: userInfo,
+    images,
+    type,
+    isPremium,
+    title,
+    bedrooms,
+    rating,
+    maxAdults,
+    goods,
+    price,
+    description,
+    id
+  } = singleOffer;
 
   return (
     <Layout className="">
       <main className="page__main page__main--property">
         <section className="property">
+
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {
-                images.map((src, i) => {
-                  const keyValue = `${i}-${src}`;
-                  return (
-                    <div key={keyValue} className="property__image-wrapper">
-                      <img className="property__image" src={src} alt={`Photo ${type}`} />
-                    </div>
-                  );
-                })
-              }
+              {images.slice(0, CARD_AMOUNT).map((src) => (
+                <div key={src} className="property__image-wrapper">
+                  <img className="property__image" src={src} alt={type} />
+                </div>
+              ))}
             </div>
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              {
-                isPremium &&
+              {isPremium && (
                 <div className="property__mark">
                   <span>Premium</span>
                 </div>
-              }
-
+              )}
               <div className="property__name-wrapper">
                 <h1 className="property__name">
                   {title}
@@ -77,12 +113,9 @@ const Room = ({ offer, reviews }: RoomProps): JSX.Element => {
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {
-                    goods.map((good, i) => {
-                      const keyValue = `${i}-${good}`;
-                      return <li key={keyValue} className="property__inside-item">{good}</li>;
-                    })
-                  }
+                  {goods.map((good) => (
+                    <li key={good} className="property__inside-item">{good}</li>
+                  ))}
                 </ul>
               </div>
               <div className="property__host">
@@ -105,36 +138,28 @@ const Room = ({ offer, reviews }: RoomProps): JSX.Element => {
                   <p className="property__text">
                     {description}
                   </p>
-                  {/*<p className="property__text">
-                    An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
-                  </p>*/}
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-                <Reviews reviews={reviews} />
-                <ReviewsForm />
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{sortedComments.length}</span></h2>
+                <Reviews reviews={sortedComments} />
+                {isAuth && <ReviewsForm offerId={offerId} />}
               </section>
             </div>
           </div>
-          <Map selectedPointId={id} className="property__map" offers={offersForRenderOnMap}/>
+          <Map height={'height: 500px'} selectedPointId={id} className="property__map" offers={nearbyOffers}/>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {
-                offers.slice(0, CARD_AMOUNT).map((item) =>
-                  (
-                    <OfferCard
-                      key={item.id}
-                      offer={item}
-                      className="near-places__card"
-                      classNameWrapper="near-places__image-wrapper"
-                    />
-                  )
-                )
-              }
+              {nearbyOffers.map((item) => (
+                <OfferCard key={item.id}
+                  offer={item}
+                  className="near-places__card"
+                  classNameWrapper="near-places__image-wrapper"
+                />)
+              )}
             </div>
           </section>
         </div>

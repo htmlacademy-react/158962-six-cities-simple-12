@@ -1,6 +1,6 @@
 import Layout from '../../components/layout/layout';
 import Logo from '../../components/logo/logo';
-import { Offer } from '../../types/Offer';
+import { Offer } from '../../types/offer';
 import OfferCard from '../../components/offer-card/offer-card';
 
 type FavoritesProps = {
@@ -31,7 +31,7 @@ const Favorites = ({ offers }:FavoritesProps): JSX.Element => {
               {
                 groupedOffers.map(([city, relatedOffers]) => (
                   <li className="favorites__locations-items"
-                    key={`${city}`}
+                    key={city}
                   >
                     <div className="favorites__locations locations locations--current">
                       <div className="locations__item">
@@ -44,7 +44,7 @@ const Favorites = ({ offers }:FavoritesProps): JSX.Element => {
                       {
                         relatedOffers.map((item: Offer) => (
                           <OfferCard className="favorites__card"
-                            key={`${city}`}
+                            key={city}
                             classNameWrapper="favorites__image-wrapper"
                             offer={item}
                           />

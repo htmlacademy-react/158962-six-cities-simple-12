@@ -2,7 +2,7 @@ import styles from './login.module.css';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { EMAIL_REGEXP, PASSWORD_REGEXP, LOGIN_FIELDS } from '../../const';
-import { AuthData, loginAction } from '../../store/slices/user-slice';
+import { loginAction } from '../../store/slices/user-slice';
 import cn from 'classnames';
 
 type Field = {
@@ -31,33 +31,27 @@ const LoginForm = () => {
   const dispatch = useAppDispatch();
 
   const isFieldsGroupValid = Object.values(formData)
-    .map((value) => value.error)
-    .every((elem) => !elem);
+    .some((value) => value.error);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    const isValid = (inputValue: string, matchedValue: RegExp) => matchedValue.test(inputValue);
 
     setFormData({
       ...formData,
       [name]: {
         ...formData[name],
-        error: !isValid(value, formData[name].regex),
+        error: !formData[name].regex.test(value),
         value: value,
       }
     });
   };
 
-  const onSubmit = (authData: AuthData) => {
-    dispatch(loginAction(authData));
-  };
-
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    onSubmit({
+    dispatch(loginAction({
       login: formData.email.value,
       password: formData.password.value,
-    });
+    }));
   };
 
   return (
@@ -91,7 +85,7 @@ const LoginForm = () => {
 
       <button
         className="login__submit form__submit button"
-        disabled={!isFieldsGroupValid}
+        disabled={isFieldsGroupValid}
         type="submit"
       >Sign in
       </button>

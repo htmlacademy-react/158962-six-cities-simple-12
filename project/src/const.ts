@@ -1,4 +1,4 @@
-import { Sort } from './types/Sort';
+import { Sort } from './types/sort';
 
 export enum AppRoute {
   Root = '/',
@@ -17,12 +17,15 @@ export enum APIRoute {
   Offers = '/hotels',
   Login = '/login',
   Logout = '/logout',
+  Comments = '/comments',
+  Favorite = '/favorite',
 }
 
 export enum Status {
-  LOADING = 'loading',
-  SUCCESS = 'success',
-  ERROR = 'error',
+  Idle = 'idle',
+  Loading = 'loading',
+  Success = 'success',
+  Error = 'error',
 }
 
 
@@ -76,12 +79,26 @@ export const MAX_RATING = 5;
 export const URL_MARKER_DEFAULT = '/img/pin.svg';
 export const URL_MARKER_CURRENT = '/img/pin-active.svg';
 
-export const CARD_AMOUNT = 3;
+export const CARD_AMOUNT = 6;
+export const REVIEWS_AMOUNT = 10;
 
 export const EMAIL_REGEXP = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
 export const PASSWORD_REGEXP = /^(?=.*[0-9])(?=.*[a-z]){6,}/g;
 
+export const MIN_COMMENT_LENGTH = 50;
+export const MAX_COMMENT_LENGTH = 300;
+
 export const LOGIN_FIELDS:Record<string, string> = {
   email: 'E-mail',
-  password: 'password',
+  password: 'Password',
 };
+
+export enum NameSpace {
+  Offers = 'OFFERS',
+  SingleOffer = 'SINGLE_OFFER',
+  User = 'USER',
+  Sorting = 'SORT',
+  Comments = 'COMMENTS',
+  NearbyOffers = 'NEARBY_OFFERS',
+  Notifications = 'NOTIFICATIONS',
+}

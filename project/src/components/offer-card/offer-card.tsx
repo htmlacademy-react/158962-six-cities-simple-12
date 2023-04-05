@@ -1,4 +1,4 @@
-import { Offer } from '../../types/Offer';
+import { Offer } from '../../types/offer';
 import BookmarkButton from '../bookmark-button/bookmark-button';
 import CardMark from '../card-mark/card-mark';
 import { capitalizeFirstLetter, getRatingWidth } from '../../utils';

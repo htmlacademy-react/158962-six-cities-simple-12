@@ -1,6 +1,6 @@
-import { Offer } from './types/Offer';
+import { Offer } from './types/offer';
 import { SORT_LIST } from './const';
-import { SortItem } from './types/Sort';
+import { SortItem } from './types/sort';
 
 export const getRatingWidth = (rating: number, maxRating: number): number => {
   const num = maxRating / 100;

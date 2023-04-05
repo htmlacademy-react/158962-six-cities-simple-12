@@ -6,37 +6,33 @@ import Room from '../../pages/room/room';
 import PrivateRoute from '../private-route/private-route';
 import Favorites from '../../pages/favorites/favorites';
 import {AppRoute} from '../../const';
-import { Offer } from '../../types/Offer';
-import {Review} from '../../types/Review';
-import { getAuthorizationStatus} from '../../store/slices/user-slice';
-import {useAppSelector} from '../../hooks';
+import {checkAuthAction, selectAuthorizationStatus} from '../../store/slices/user-slice';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {useEffect, Suspense} from 'react';
+import Spinner from '../spinner/spinner';
 
-type AppProps = {
-  offers: Offer[];
-  reviews: Review[];
-}
+const App = (): JSX.Element => {
+  //const authorizationStatus = useAppSelector(selectAuthorizationStatus);
+  const dispatch = useAppDispatch();
 
-const App = ({ offers, reviews }: AppProps): JSX.Element => {
-  const { authorizationStatus } = useAppSelector(getAuthorizationStatus);
+  useEffect( () => {
+    dispatch(checkAuthAction());
+  }, [dispatch]);
 
   return (
-    <BrowserRouter>
+    <Suspense fallback={<Spinner/>}>
       <Routes>
         <Route path={AppRoute.Root} element={<Main />} />
         <Route path={AppRoute.Login} element={<Login />} />
-        <Route path={AppRoute.Offer} element={
-          <Room offer={offers[0]} reviews={reviews} />
-        }
-        />
-        <Route path={AppRoute.Favorite} element={
-          <PrivateRoute authorizationStatus={authorizationStatus}>
-            <Favorites offers={offers} />
-          </PrivateRoute>
-        }
-        />
+        <Route path={AppRoute.Offer} element={<Room />} />
+        {/*<Route path={AppRoute.Favorite} element={
+            <PrivateRoute authorizationStatus={authorizationStatus}>
+              <Favorites offers={offers} />
+            </PrivateRoute>} />*/}
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </BrowserRouter>
+    </Suspense>
+
   );
 };
 

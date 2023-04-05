@@ -1,7 +1,7 @@
 import { getRatingWidth } from '../../utils';
 import { MAX_RATING } from '../../const';
 import dayjs from 'dayjs';
-import { Review } from '../../types/Review';
+import { Review } from '../../types/review';
 
 type ReviewItemProps = {
   review: Review;

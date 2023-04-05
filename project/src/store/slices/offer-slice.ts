@@ -1,10 +1,11 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-//import axios, {AxiosInstance} from 'axios';
-import { RootState, api } from '../store';
-import { Offer } from '../../types/Offer';
-import {APIRoute, DEFAULT, Status } from '../../const';
+import {createSlice, PayloadAction, createAsyncThunk, createSelector} from '@reduxjs/toolkit';
+import {RootState} from '../store';
+import { Offer } from '../../types/offer';
+import {APIRoute, DEFAULT, NameSpace, Status} from '../../const';
+import {ThunkOptions} from '../../types/state';
+import {pushNotification} from './notification-slice';
 
-export type offerSliceState = {
+type offerSliceState = {
   offers: Offer[];
   city: string;
   status: Status;
@@ -13,49 +14,56 @@ export type offerSliceState = {
 const initialState: offerSliceState = {
   offers: [],
   city: DEFAULT,
-  status: Status.LOADING,
+  status: Status.Idle,
 };
 
-export const fetchOffers = createAsyncThunk<Offer[]>(
+
+export const fetchOffers = createAsyncThunk<Offer[], undefined, ThunkOptions>(
   'data/fetchOffers',
-  async () => {
-    const { data } = await api.get<Offer[]>(APIRoute.Offers);
-    return data;
+  async (_arg, {dispatch, extra: api}) => {
+    try {
+      const { data } = await api.get<Offer[]>(APIRoute.Offers);
+      return data;
+    } catch (e) {
+      dispatch(pushNotification({type: 'error', message: 'Cannot get offers'}));
+      throw e;
+    }
   }
 );
 
 export const offerSlice = createSlice( {
-  name: 'offer',
+  name: NameSpace.Offers,
   initialState,
   reducers: {
     changeCity(state, action: PayloadAction<string>) {
       state.city = action.payload;
     },
-
-    setItems(state, action: PayloadAction<Offer[]>) {
-      state.offers = action.payload;
-    },
   },
 
   extraReducers: (builder) => {
     builder.addCase(fetchOffers.pending, (state) => {
-      state.status = Status.LOADING;
-      state.offers = [];
+      state.status = Status.Loading;
     });
 
     builder.addCase(fetchOffers.fulfilled, (state, action) => {
       state.offers = action.payload;
-      state.status = Status.SUCCESS;
+      state.status = Status.Success;
     });
 
     builder.addCase(fetchOffers.rejected, (state) => {
-      state.status = Status.ERROR;
-      state.offers = [];
+      state.status = Status.Error;
     });
   }
 });
 
 export const { changeCity } = offerSlice.actions;
-export const selectOfferCards = (state:RootState) => state.offer;
-export const getOfferLoadingStatus = (state: RootState) => state.offer.status;
+export const selectOfferCards = (state:RootState) => state[NameSpace.Offers].offers;
+export const selectStatus = (state: RootState) => state[NameSpace.Offers].status;
+export const selectOffersCity = (state: RootState) => state[NameSpace.Offers].city;
+
+export const selectOffersStatus = createSelector([selectStatus], (status) => ({
+  isLoading: status === Status.Loading || status === Status.Idle,
+  isError: status === Status.Error,
+  isSuccess: status === Status.Success,
+}));
 export default offerSlice.reducer;

@@ -1,24 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit';
-import {APIRoute, AppRoute, AuthorizationStatus} from '../../const';
+import {APIRoute, AppRoute, AuthorizationStatus, NameSpace} from '../../const';
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {RootState, AppDispatch} from '../store';
-import {AxiosInstance} from 'axios';
+import {RootState} from '../store';
 import {dropToken, saveToken} from '../../services/token';
 import {redirectToRoute} from '../action';
+import {toast} from 'react-toastify';
+import {ThunkOptions} from '../../types/state';
+import {pushNotification} from './notification-slice';
 
 
-export type UserProcess = {
+type UserProcess = {
   authorizationStatus: AuthorizationStatus;
   login: string | null;
   avatar: string;
 };
 
-export type AuthData = {
+type AuthData = {
   login: string;
   password: string;
 };
 
-export type UserData = {
+type UserData = {
   id: number;
   email: string;
   token: string;
@@ -32,46 +34,50 @@ const initialState: UserProcess = {
   avatar: '',
 };
 
-export const checkAuthAction = createAsyncThunk<UserData, undefined, {
-  dispatch: AppDispatch;
-  state: RootState;
-  extra: AxiosInstance;
-}>(
+// dont need status here
+export const checkAuthAction = createAsyncThunk<UserData, undefined, ThunkOptions>(
   'user/checkAuth',
   async (_arg, {dispatch, extra: api}) => {
-    const { data } = await api.get<UserData>(APIRoute.Login);
-    return data;
+    try {
+      const { data } = await api.get<UserData>(APIRoute.Login);
+      return data;
+    } catch (e) {
+      dispatch(pushNotification({type: 'info', message: 'Get more features after authorization'}));
+      throw e;
+    }
   },
 );
 
-export const loginAction = createAsyncThunk<UserData, AuthData, {
-  dispatch: AppDispatch;
-  state: RootState;
-  extra: AxiosInstance;
-}>(
+export const loginAction = createAsyncThunk<UserData, AuthData, ThunkOptions>(
   'user/login',
   async ({login: email, password}, {dispatch, extra: api}) => {
-    const {data} = await api.post<UserData>(APIRoute.Login, {email, password});
-    saveToken(data.token);
-    dispatch(redirectToRoute(AppRoute.Root));
-    return data;
+    try {
+      const {data} = await api.post<UserData>(APIRoute.Login, {email, password});
+      saveToken(data.token);
+      dispatch(redirectToRoute(AppRoute.Root));
+      return data;
+    } catch (e) {
+      dispatch(pushNotification({type: 'error', message: 'Failed login'}));
+      throw e;
+    }
   },
 );
 
-export const logoutAction = createAsyncThunk<void, undefined, {
-  dispatch: AppDispatch;
-  state: RootState;
-  extra: AxiosInstance;
-}>(
+export const logoutAction = createAsyncThunk<void, undefined, ThunkOptions>(
   'user/logout',
   async (_arg, {dispatch, extra: api}) => {
-    await api.delete(APIRoute.Logout);
-    dropToken();
+    try {
+      await api.delete(APIRoute.Logout);
+      dropToken();
+    } catch (e) {
+      toast.error('Failed logout');
+      throw e;
+    }
   },
 );
 
 export const userSlice = createSlice({
-  name: 'user',
+  name: NameSpace.User,
   initialState,
   reducers: {},
 
@@ -95,8 +101,14 @@ export const userSlice = createSlice({
     builder.addCase(logoutAction.fulfilled, (state, action) => {
       state.authorizationStatus = AuthorizationStatus.NoAuth;
     });
+    builder.addCase(logoutAction.rejected, (state, action) => {
+      state.authorizationStatus = AuthorizationStatus.Auth;
+    });
   }
 });
 
-export const getAuthorizationStatus = (state: RootState) => state.user;
+export const selectAuthorizationStatus = (state: RootState) => state[NameSpace.User].authorizationStatus;
+export const selectLogin = (state: RootState) => state[NameSpace.User].login;
+export const selectAvatar = (state: RootState) => state[NameSpace.User].avatar;
+export const getIsAuth = (state: RootState) => state[NameSpace.User].authorizationStatus === AuthorizationStatus.Auth;
 export default userSlice.reducer;

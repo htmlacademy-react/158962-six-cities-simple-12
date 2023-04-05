@@ -11,7 +11,7 @@ import cn from 'classnames';
 import NoPlaces from '../../components/no-places/no-places';
 import { sortOffers } from '../../utils';
 import Spinner from '../../components/spinner/spinner';
-import Error from '../../components/error/error';
+import FullPageError from '../full-page-error/full-page-error';
 
 
 const Main = (): JSX.Element => {
@@ -33,7 +33,7 @@ const Main = (): JSX.Element => {
   const isEmpty = filteredOffers.length === 0;
 
   if (status.isError) {
-    return <Error />;
+    return <FullPageError />;
   }
 
   if (status.isLoading) {

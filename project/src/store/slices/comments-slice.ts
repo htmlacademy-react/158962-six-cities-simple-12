@@ -1,58 +1,49 @@
 import {createSlice, createAsyncThunk, createSelector} from '@reduxjs/toolkit';
-import {RootState, AppDispatch} from '../store';
-import { Review } from '../../types/Review';
+import {RootState} from '../store';
+import { Review } from '../../types/review';
 import {APIRoute, NameSpace, Status} from '../../const';
-import {AxiosInstance} from 'axios';
-import {toast} from 'react-toastify';
-import {sortByDate} from '../../utils';
 import dayjs from 'dayjs';
+import {ThunkOptions} from '../../types/state';
+import {pushNotification} from './notification-slice';
 
-export type commentsSliceState = {
+type CommentsSliceState = {
   comments: Review[];
   status: Status;
 }
 
-export type CommentData = {
+type CommentData = {
   rating: string;
   comment: string;
   id: number;
 }
 
-const initialState: commentsSliceState = {
+const initialState: CommentsSliceState = {
   comments: [],
   status: Status.Idle,
 };
 
 
-export const fetchComments = createAsyncThunk<Review[], number, {
-  dispatch: AppDispatch;
-  state: RootState;
-  extra: AxiosInstance;
-}>(
+export const fetchComments = createAsyncThunk<Review[], number, ThunkOptions>(
   'data/fetchComments',
-  async (offerId, {extra: api}) => {
+  async (offerId, {dispatch, extra: api}) => {
     try {
       const { data } = await api.get<Review[]>(`${APIRoute.Comments}/${offerId}`);
       return data;
     } catch (e) {
-      toast.error('Cannot get comments');
+      dispatch(pushNotification({type: 'error', message: 'Cannot get comments'}));
       throw e;
     }
   }
 );
 
-export const postComment = createAsyncThunk<Review[], CommentData, {
-  dispatch: AppDispatch;
-  state: RootState;
-  extra: AxiosInstance;
-}>(
+export const postComment = createAsyncThunk<Review[], CommentData, ThunkOptions>(
   'data/postComment',
-  async ({rating,comment, id}, {extra: api}) => {
+  async ({rating,comment, id}, {dispatch, extra: api}) => {
     try {
-      const { data } = await api.post<Review[]>(`${APIRoute.Comments}${id}`, {rating, comment});
+      const { data } = await api.post<Review[]>(`${APIRoute.Comments}/${id}`, {rating, comment});
       return data;
     } catch (e) {
-      toast.error('Cannot send comment');
+      dispatch(pushNotification({type: 'error', message: 'Cannot send comment'}));
       throw e;
     }
   }

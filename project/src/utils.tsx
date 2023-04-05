@@ -1,8 +1,6 @@
-import { Offer } from './types/Offer';
+import { Offer } from './types/offer';
 import { SORT_LIST } from './const';
-import { SortItem } from './types/Sort';
-import {Review} from './types/Review';
-import dayjs from 'dayjs';
+import { SortItem } from './types/sort';
 
 export const getRatingWidth = (rating: number, maxRating: number): number => {
   const num = maxRating / 100;
@@ -29,5 +27,3 @@ export const sortOffers = (coll: Offer[], sort: SortItem): Offer[] => {
 };
 
 export const capitalizeFirstLetter = (string: string): string => string.charAt(0).toUpperCase() + string.slice(1);
-
-export const sortByDate = (coll: Review[]) => coll.sort((itemA, itemB) => dayjs(itemB.date).diff(dayjs(itemA.date)));

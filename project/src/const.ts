@@ -1,4 +1,4 @@
-import { Sort } from './types/Sort';
+import { Sort } from './types/sort';
 
 export enum AppRoute {
   Root = '/',
@@ -97,7 +97,8 @@ export enum NameSpace {
   Offers = 'OFFERS',
   SingleOffer = 'SINGLE_OFFER',
   User = 'USER',
-  Sort = 'SORT',
+  Sorting = 'SORT',
   Comments = 'COMMENTS',
   NearbyOffers = 'NEARBY_OFFERS',
+  Notifications = 'NOTIFICATIONS',
 }

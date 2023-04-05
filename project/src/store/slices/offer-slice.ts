@@ -1,11 +1,11 @@
 import {createSlice, PayloadAction, createAsyncThunk, createSelector} from '@reduxjs/toolkit';
-import {RootState, api, AppDispatch} from '../store';
-import { Offer } from '../../types/Offer';
+import {RootState} from '../store';
+import { Offer } from '../../types/offer';
 import {APIRoute, DEFAULT, NameSpace, Status} from '../../const';
-import {AxiosInstance} from 'axios';
-import {toast} from 'react-toastify';
+import {ThunkOptions} from '../../types/state';
+import {pushNotification} from './notification-slice';
 
-export type offerSliceState = {
+type offerSliceState = {
   offers: Offer[];
   city: string;
   status: Status;
@@ -18,18 +18,14 @@ const initialState: offerSliceState = {
 };
 
 
-export const fetchOffers = createAsyncThunk<Offer[], undefined, {
-  dispatch: AppDispatch;
-  state: RootState;
-  extra: AxiosInstance;
-}>(
+export const fetchOffers = createAsyncThunk<Offer[], undefined, ThunkOptions>(
   'data/fetchOffers',
-  async () => {
+  async (_arg, {dispatch, extra: api}) => {
     try {
       const { data } = await api.get<Offer[]>(APIRoute.Offers);
       return data;
     } catch (e) {
-      toast.error('Cannot get offers');
+      dispatch(pushNotification({type: 'error', message: 'Cannot get offers'}));
       throw e;
     }
   }

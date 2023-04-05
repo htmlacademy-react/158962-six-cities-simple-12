@@ -153,9 +153,8 @@ const Room = (): JSX.Element => {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {nearbyOffers.map((item) =>
-                (<OfferCard
-                  key={item.id}
+              {nearbyOffers.map((item) => (
+                <OfferCard key={item.id}
                   offer={item}
                   className="near-places__card"
                   classNameWrapper="near-places__image-wrapper"

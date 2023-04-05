@@ -2,7 +2,7 @@ import cn from 'classnames';
 import React, { useRef, useEffect } from 'react';
 import leaflet, {Icon, Marker} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Offer } from '../../types/Offer';
+import { Offer } from '../../types/offer';
 import useMap from '../../hooks/use-map';
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../const';
 

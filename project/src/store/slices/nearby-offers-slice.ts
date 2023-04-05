@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import {RootState, AppDispatch} from '../store';
-import { Offer } from '../../types/Offer';
+import {RootState} from '../store';
+import { Offer } from '../../types/offer';
 import {APIRoute, NameSpace, Status} from '../../const';
-import {AxiosInstance} from 'axios';
-import {toast} from 'react-toastify';
+import {ThunkOptions} from '../../types/state';
+import {pushNotification} from './notification-slice';
 
-export type nearbyOffersSliceState = {
+type nearbyOffersSliceState = {
   offers: Offer[];
   status: Status;
 }
@@ -16,18 +16,14 @@ const initialState: nearbyOffersSliceState = {
 };
 
 
-export const fetchNearbyOffers = createAsyncThunk<Offer[], number, {
-  dispatch: AppDispatch;
-  state: RootState;
-  extra: AxiosInstance;
-}>(
+export const fetchNearbyOffers = createAsyncThunk<Offer[], number, ThunkOptions>(
   'data/fetchNearbyOffers',
-  async (offerId, {extra: api}) => {
+  async (offerId, {dispatch, extra: api}) => {
     try {
       const { data } = await api.get<Offer[]>(`${APIRoute.Offers}/${offerId}/nearby`);
       return data;
     } catch (e) {
-      toast.error('Cannot get nearby offers');
+      dispatch(pushNotification({type: 'error', message: 'Cannot get nearby offers'}));
       throw e;
     }
   }

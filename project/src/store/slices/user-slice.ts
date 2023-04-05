@@ -1,25 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {APIRoute, AppRoute, AuthorizationStatus, NameSpace} from '../../const';
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {RootState, AppDispatch} from '../store';
-import {AxiosInstance} from 'axios';
+import {RootState} from '../store';
 import {dropToken, saveToken} from '../../services/token';
 import {redirectToRoute} from '../action';
 import {toast} from 'react-toastify';
+import {ThunkOptions} from '../../types/state';
+import {pushNotification} from './notification-slice';
 
 
-export type UserProcess = {
+type UserProcess = {
   authorizationStatus: AuthorizationStatus;
   login: string | null;
   avatar: string;
 };
 
-export type AuthData = {
+type AuthData = {
   login: string;
   password: string;
 };
 
-export type UserData = {
+type UserData = {
   id: number;
   email: string;
   token: string;
@@ -34,28 +35,20 @@ const initialState: UserProcess = {
 };
 
 // dont need status here
-export const checkAuthAction = createAsyncThunk<UserData, undefined, {
-  dispatch: AppDispatch;
-  state: RootState;
-  extra: AxiosInstance;
-}>(
+export const checkAuthAction = createAsyncThunk<UserData, undefined, ThunkOptions>(
   'user/checkAuth',
   async (_arg, {dispatch, extra: api}) => {
     try {
       const { data } = await api.get<UserData>(APIRoute.Login);
       return data;
     } catch (e) {
-      toast.error('Failed authentication');
+      dispatch(pushNotification({type: 'info', message: 'Get more features after authorization'}));
       throw e;
     }
   },
 );
 
-export const loginAction = createAsyncThunk<UserData, AuthData, {
-  dispatch: AppDispatch;
-  state: RootState;
-  extra: AxiosInstance;
-}>(
+export const loginAction = createAsyncThunk<UserData, AuthData, ThunkOptions>(
   'user/login',
   async ({login: email, password}, {dispatch, extra: api}) => {
     try {
@@ -64,17 +57,13 @@ export const loginAction = createAsyncThunk<UserData, AuthData, {
       dispatch(redirectToRoute(AppRoute.Root));
       return data;
     } catch (e) {
-      toast.error('Failed login');
+      dispatch(pushNotification({type: 'error', message: 'Failed login'}));
       throw e;
     }
   },
 );
 
-export const logoutAction = createAsyncThunk<void, undefined, {
-  dispatch: AppDispatch;
-  state: RootState;
-  extra: AxiosInstance;
-}>(
+export const logoutAction = createAsyncThunk<void, undefined, ThunkOptions>(
   'user/logout',
   async (_arg, {dispatch, extra: api}) => {
     try {

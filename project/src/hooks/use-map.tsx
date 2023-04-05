@@ -1,7 +1,7 @@
 import { useEffect, useState, MutableRefObject, useRef } from 'react';
 import { Map } from 'leaflet';
 import leaflet from 'leaflet';
-import { Offer } from '../types/Offer';
+import { Offer } from '../types/offer';
 
 const URL_TEMPLATE = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
 const TILE_LAYER_ATTRIBUTION = '\'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="\'https://carto.com/attributions">CARTO</a>\'';

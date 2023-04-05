@@ -1,6 +1,6 @@
 import Layout from '../../components/layout/layout';
 import Logo from '../../components/logo/logo';
-import { Offer } from '../../types/Offer';
+import { Offer } from '../../types/offer';
 import OfferCard from '../../components/offer-card/offer-card';
 
 type FavoritesProps = {

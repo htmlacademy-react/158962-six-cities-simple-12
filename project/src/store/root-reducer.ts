@@ -6,12 +6,14 @@ import UserSlice from './slices/user-slice';
 import SingleOffer from './slices/single-offer-slice';
 import NearbyOffers from './slices/nearby-offers-slice';
 import CommentsSlice from './slices/comments-slice';
+import NotificationsSlice from './slices/notification-slice';
 
 export const rootReducer = combineReducers({
-  [NameSpace.Sort]: AppSlice,
+  [NameSpace.Sorting]: AppSlice,
   [NameSpace.Offers]: OfferSlice,
   [NameSpace.SingleOffer]: SingleOffer,
   [NameSpace.User]: UserSlice,
   [NameSpace.NearbyOffers]: NearbyOffers,
   [NameSpace.Comments]: CommentsSlice,
+  [NameSpace.Notifications]: NotificationsSlice,
 });

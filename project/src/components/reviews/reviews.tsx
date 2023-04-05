@@ -1,4 +1,4 @@
-import { Review } from '../../types/Review';
+import { Review } from '../../types/review';
 import ReviewItem from '../review-item/review-item';
 import {REVIEWS_AMOUNT} from '../../const';
 

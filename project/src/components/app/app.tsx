@@ -12,7 +12,7 @@ import {useEffect, Suspense} from 'react';
 import Spinner from '../spinner/spinner';
 
 const App = (): JSX.Element => {
-  //const authorizationStatus = useAppSelector(selectAuthorizationStatus);
+  const authorizationStatus = useAppSelector(selectAuthorizationStatus);
   const dispatch = useAppDispatch();
 
   useEffect( () => {
@@ -25,10 +25,10 @@ const App = (): JSX.Element => {
         <Route path={AppRoute.Root} element={<Main />} />
         <Route path={AppRoute.Login} element={<Login />} />
         <Route path={AppRoute.Offer} element={<Room />} />
-        {/*<Route path={AppRoute.Favorite} element={
+        {<Route path={AppRoute.Favorite} element={
             <PrivateRoute authorizationStatus={authorizationStatus}>
-              <Favorites offers={offers} />
-            </PrivateRoute>} />*/}
+              <Favorites />
+            </PrivateRoute>} />}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>

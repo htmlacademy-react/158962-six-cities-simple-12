@@ -7,6 +7,7 @@ import SingleOffer from './slices/single-offer-slice';
 import NearbyOffers from './slices/nearby-offers-slice';
 import CommentsSlice from './slices/comments-slice';
 import NotificationsSlice from './slices/notification-slice';
+import FavoritesSlice from './slices/favorites-slice';
 
 export const rootReducer = combineReducers({
   [NameSpace.Sorting]: AppSlice,
@@ -16,4 +17,5 @@ export const rootReducer = combineReducers({
   [NameSpace.NearbyOffers]: NearbyOffers,
   [NameSpace.Comments]: CommentsSlice,
   [NameSpace.Notifications]: NotificationsSlice,
+  [NameSpace.Favorites]: FavoritesSlice,
 });

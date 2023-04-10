@@ -63,7 +63,11 @@ export const favoritesSlice = createSlice({
     });
 
     builder.addCase(addFavoriteOffer.fulfilled, (state, action) => {
-      state.favoriteOffers = state.favoriteOffers.filter((item) => item.id !== action.payload.id);
+      if(action.payload.isFavorite) {
+        state.favoriteOffers.push(action.payload);
+      } else {
+        state.favoriteOffers = state.favoriteOffers.filter((item) => item.id !== action.payload.id);
+      }
     });
 
   }

@@ -20,7 +20,7 @@ const ReviewsForm = ({offerId}: ReviewsFormProps): JSX.Element => {
       setRating('0');
       setComment('');
     }
-  }, [status])
+  }, [status]);
 
   const isValidTextarea = comment.length >= MIN_COMMENT_LENGTH && comment.length <= MAX_COMMENT_LENGTH;
   const isRatingValid = rating !== '0';

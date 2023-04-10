@@ -10,11 +10,24 @@ type OfferCardProps = {
   className: string;
   classNameWrapper: string;
   offer: Offer;
+  sizeType: 'default' | 'favorite';
   onActiveCardId?: (id: number | null) => void;
 }
 
-const OfferCard = ({ className, classNameWrapper, offer, onActiveCardId }: OfferCardProps): JSX.Element => {
-  const { previewImage, isPremium, price, title, type, isFavorite, rating, id} = offer;
+const sizes = {
+  default: {
+    height: 200,
+    width: 260,
+  },
+  favorite: {
+    height: 110,
+    width: 150,
+  }
+};
+
+const OfferCard = ({ className, classNameWrapper, offer, onActiveCardId, sizeType }: OfferCardProps): JSX.Element => {
+  const { previewImage, isPremium, price, title, type, rating, id} = offer;
+  const size = sizes[sizeType];
 
   return (
     <article className={cn('place-card', className)}>
@@ -29,8 +42,8 @@ const OfferCard = ({ className, classNameWrapper, offer, onActiveCardId }: Offer
         >
           <img className="place-card__image"
             src={previewImage}
-            width="260"
-            height="200"
+            width={size.width}
+            height={size.height}
             alt={title}
           />
         </Link>
@@ -41,7 +54,7 @@ const OfferCard = ({ className, classNameWrapper, offer, onActiveCardId }: Offer
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <BookmarkButton offer={offer} id={id} isFavorite={isFavorite} />
+          <BookmarkButton offer={offer} />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">

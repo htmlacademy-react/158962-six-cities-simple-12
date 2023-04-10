@@ -4,28 +4,29 @@ import { Offer } from '../../types/offer';
 import OfferCard from '../../components/offer-card/offer-card';
 import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../hooks';
-import { selectFavoriteStatus, selectFavoritesItems, fetchFavorites } from '../../store/slices/favorites-slice';
+import { selectFavoriteStatus, selectFavoriteOffers, fetchFavorites } from '../../store/slices/favorites-slice';
 import FullPageError from '../full-page-error/full-page-error';
 import Spinner from '../../components/spinner/spinner';
 import cn from 'classnames';
+import FavoritesEmpty from '../favorites-empty/favorites-empty';
 
 
 const Favorites = (): JSX.Element => {
-  const offers = useAppSelector(selectFavoritesItems);
+  const offers = useAppSelector(selectFavoriteOffers);
   const status = useAppSelector(selectFavoriteStatus);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchFavorites())
+    dispatch(fetchFavorites());
 
   }, [dispatch]);
 
   if (status.isLoading) {
-    return <Spinner />
+    return <Spinner />;
   }
 
   if (status.isError) {
-    return <FullPageError />
+    return <FullPageError />;
   }
 
   const groupFavoriteByCity = (offerCard: Offer[]) => offerCard.reduce<{[key: string]: Offer[]}>((acc, offer) => {
@@ -46,46 +47,40 @@ const Favorites = (): JSX.Element => {
       <main className={cn('page__main page__main--favorites', isEmpty && 'page__main--favorites-empty')}>
         <div className="page__favorites-container container">
           <section className={cn('favorites', isEmpty && 'favorites--empty')}>
-            {isEmpty ? (
-                <>
-                  <h1 className="visually-hidden">Favorites (empty)</h1>
-                  <div className="favorites__status-wrapper">
-                    <b className="favorites__status">Nothing yet saved.</b>
-                    <p className="favorites__status-description">Save properties to narrow down search or plan your future trips.</p>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <h1 className="favorites__title">Saved listing</h1>
-                  <ul className="favorites__list">
-                    {
-                      groupedOffers.map(([city, relatedOffers], index) => (
-                        <li className="favorites__locations-items"
-                            key={city}
-                        >
-                          <div className="favorites__locations locations locations--current">
-                            <div className="locations__item">
-                              <a className="locations__item-link" href="#">
-                                <span>{city}</span>
-                              </a>
-                            </div>
+            {isEmpty ? <FavoritesEmpty/> : (
+              <>
+                <h1 className="favorites__title">Saved listing</h1>
+                <ul className="favorites__list">
+                  {
+                    groupedOffers.map(([city, relatedOffers], index) => (
+                      <li className="favorites__locations-items"
+                        key={city}
+                      >
+                        <div className="favorites__locations locations locations--current">
+                          <div className="locations__item">
+                            <a className="locations__item-link" href="#">
+                              <span>{city}</span>
+                            </a>
                           </div>
-                          <div className="favorites__places">
-                            {
-                              relatedOffers.map((item: Offer) => (
-                                <OfferCard className="favorites__card"
-                                           key={city}
-                                           classNameWrapper="favorites__image-wrapper"
-                                           offer={item}
-                                />
-                              ))
-                            }
-                          </div>
-                        </li>
-                      ))
-                    }
-                  </ul></>
-              )}
+                        </div>
+                        <div className="favorites__places">
+                          {
+                            relatedOffers.map((item: Offer) => (
+                              <OfferCard className="favorites__card"
+                                sizeType='favorite'
+                                key={`${city}-${item.id}`}
+                                classNameWrapper="favorites__image-wrapper"
+                                offer={item}
+                              />
+                            ))
+                          }
+                        </div>
+                      </li>
+                    ))
+                  }
+                </ul>
+              </>
+            )}
           </section>
         </div>
       </main>

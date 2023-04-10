@@ -12,19 +12,25 @@ import NoPlaces from '../../components/no-places/no-places';
 import { sortOffers } from '../../utils';
 import Spinner from '../../components/spinner/spinner';
 import FullPageError from '../full-page-error/full-page-error';
+import { fetchFavorites } from '../../store/slices/favorites-slice';
 
 
 const Main = (): JSX.Element => {
   const [activeCardId, setActiveCardId] = useState<number | null>(null);
+
+  const dispatch = useAppDispatch();
+
   const offers = useAppSelector(selectOfferCards);
   const status = useAppSelector(selectOffersStatus);
   const activeCity = useAppSelector(selectOffersCity);
   const { sort } = useAppSelector(selectSort);
-  const dispatch = useAppDispatch();
+  //const favoriteOffers = useAppSelector(selectFavoriteOffers);
+  // const favoriteOffersAmount = favoriteOffers.length;
 
   useEffect( () => {
     if (!offers.length) {
       dispatch(fetchOffers());
+      dispatch(fetchFavorites());
     }
   }, [dispatch, offers]);
 

@@ -11,6 +11,7 @@ const OffersList = ({ offers, onActiveCardId }: OffersListProps): JSX.Element =>
     {
       offers.map((offer) => (
         <OfferCard
+          sizeType='default'
           key={offer.id}
           onActiveCardId={onActiveCardId}
           offer={offer}

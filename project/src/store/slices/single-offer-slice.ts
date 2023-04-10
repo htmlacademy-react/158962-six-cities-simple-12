@@ -5,6 +5,7 @@ import {APIRoute, Status, NameSpace } from '../../const';
 import {selectNearbyOffersStatus} from './nearby-offers-slice';
 import {ThunkOptions} from '../../types/state';
 import {pushNotification} from './notification-slice';
+import {addFavoriteOffer} from './favorites-slice';
 
 type singleOfferSliceState = {
   offer: Offer | null;
@@ -47,6 +48,12 @@ export const singleOfferSlice = createSlice( {
 
     builder.addCase(fetchSingleOffer.rejected, (state) => {
       state.status = Status.Error;
+    });
+
+    builder.addCase(addFavoriteOffer.fulfilled, (state, action) => {
+      if(state.offer?.id === action.payload.id) {
+        state.offer.isFavorite = action.payload.isFavorite;
+      }
     });
   }
 });

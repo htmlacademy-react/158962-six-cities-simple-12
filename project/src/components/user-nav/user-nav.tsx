@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import { selectFavoriteOffers } from '../../store/slices/favorites-slice';
 import {
   logoutAction,
   selectAvatar,
@@ -13,6 +14,10 @@ const UserNav = () => {
   const login = useAppSelector(selectLogin);
   const avatar = useAppSelector(selectAvatar);
   const isAuth = useAppSelector(getIsAuth);
+  const favoriteOffers = useAppSelector(selectFavoriteOffers);
+  const favoriteOffersAmount = favoriteOffers.length;
+
+  //console.log('favoriteOffers:', favoriteOffers)
 
   return (
     <nav className="header__nav">
@@ -25,7 +30,7 @@ const UserNav = () => {
             {isAuth &&
               <>
                 <span className="header__user-name user__name">{login}</span>
-                <span className="header__favorite-count">3</span>
+                <span className="header__favorite-count">{favoriteOffersAmount}</span>
               </>}
           </Link>
         </li>

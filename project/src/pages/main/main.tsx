@@ -16,11 +16,13 @@ import FullPageError from '../full-page-error/full-page-error';
 
 const Main = (): JSX.Element => {
   const [activeCardId, setActiveCardId] = useState<number | null>(null);
+
+  const dispatch = useAppDispatch();
+
   const offers = useAppSelector(selectOfferCards);
   const status = useAppSelector(selectOffersStatus);
   const activeCity = useAppSelector(selectOffersCity);
   const { sort } = useAppSelector(selectSort);
-  const dispatch = useAppDispatch();
 
   useEffect( () => {
     if (!offers.length) {

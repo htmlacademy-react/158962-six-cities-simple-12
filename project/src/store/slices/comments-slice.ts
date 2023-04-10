@@ -1,25 +1,26 @@
-import {createSlice, createAsyncThunk, createSelector} from '@reduxjs/toolkit';
-import {RootState} from '../store';
+import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit';
+import { RootState } from '../store';
 import { Review } from '../../types/review';
-import {APIRoute, NameSpace, Status} from '../../const';
+import { APIRoute, NameSpace, Status } from '../../const';
 import dayjs from 'dayjs';
-import {ThunkOptions} from '../../types/state';
-import {pushNotification} from './notification-slice';
+import { ThunkOptions } from '../../types/state';
+import { pushNotification } from './notification-slice';
+import { Offer } from '../../types/offer';
 
 type CommentsSliceState = {
   comments: Review[];
-  status: Status;
+  sendCommentStatus: Status;
 }
 
 type CommentData = {
   rating: string;
   comment: string;
-  id: number;
+  id: Offer['id'];
 }
 
 const initialState: CommentsSliceState = {
   comments: [],
-  status: Status.Idle,
+  sendCommentStatus: Status.Idle,
 };
 
 
@@ -55,40 +56,31 @@ export const commentsSlice = createSlice( {
   reducers: {},
 
   extraReducers: (builder) => {
-    builder.addCase(fetchComments.pending, (state) => {
-      state.status = Status.Loading;
-    });
-
     builder.addCase(fetchComments.fulfilled, (state, action) => {
       state.comments = action.payload;
-      state.status = Status.Success;
-    });
-
-    builder.addCase(fetchComments.rejected, (state) => {
-      state.status = Status.Error;
     });
 
     builder.addCase(postComment.pending, (state) => {
-      state.status = Status.Loading;
+      state.sendCommentStatus = Status.Loading;
     });
 
     builder.addCase(postComment.fulfilled, (state, action) => {
       state.comments = action.payload;
-      state.status = Status.Success;
+      state.sendCommentStatus = Status.Success;
     });
 
     builder.addCase(postComment.rejected, (state) => {
-      state.status = Status.Error;
+      state.sendCommentStatus = Status.Error;
     });
   }
 });
 
 
-export const selectStatus = (state: RootState) => state[NameSpace.Comments].status;
+export const selectStatus = (state: RootState) => state[NameSpace.Comments].sendCommentStatus;
 export const selectComments = (state: RootState) => state[NameSpace.Comments].comments;
 
 export const selectCommentsStatus = createSelector([selectStatus], (status) => ({
-  isLoading: status === Status.Loading || status === Status.Idle,
+  isLoading: status === Status.Loading,
   isError: status === Status.Error,
   isSuccess: status === Status.Success,
 }));
@@ -96,4 +88,5 @@ export const selectCommentsStatus = createSelector([selectStatus], (status) => (
 export const selectSortedComments = createSelector([selectComments], (comments) => (
   [...comments].sort((itemA, itemB) => dayjs(itemB.date).diff(dayjs(itemA.date)))
 ));
+
 export default commentsSlice.reducer;

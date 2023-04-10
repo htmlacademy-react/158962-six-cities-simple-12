@@ -1,4 +1,4 @@
-import React, {useState, ChangeEvent, FormEvent} from 'react';
+import React, {useState, ChangeEvent, FormEvent, useEffect} from 'react';
 import { RATING_STARS, MIN_COMMENT_LENGTH, MAX_COMMENT_LENGTH } from '../../const';
 import {postComment, selectCommentsStatus } from '../../store/slices/comments-slice';
 import {useAppDispatch, useAppSelector} from '../../hooks';
@@ -15,21 +15,25 @@ const ReviewsForm = ({offerId}: ReviewsFormProps): JSX.Element => {
 
   const status = useAppSelector(selectCommentsStatus);
 
+  useEffect(() => {
+    if (status.isSuccess) {
+      setRating('0');
+      setComment('');
+    }
+  }, [status]);
+
   const isValidTextarea = comment.length >= MIN_COMMENT_LENGTH && comment.length <= MAX_COMMENT_LENGTH;
   const isRatingValid = rating !== '0';
   const validForm = !isValidTextarea || !isRatingValid || status.isLoading;
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+
     dispatch(postComment({
       rating: rating,
       comment: comment,
       id: offerId,
     }));
-    if (status.isSuccess) {
-      setRating('0');
-      setComment('');
-    }
   };
 
   return (

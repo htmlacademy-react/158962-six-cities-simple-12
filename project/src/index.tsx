@@ -7,7 +7,7 @@ import HistoryRouter from '../src/components/history-route/history-route';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import browserHistory from './browser-history';
-import Notification from './components/notification';
+import Notification from './components/notification/notification';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,

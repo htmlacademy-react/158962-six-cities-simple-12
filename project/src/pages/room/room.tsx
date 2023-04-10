@@ -155,6 +155,7 @@ const Room = (): JSX.Element => {
             <div className="near-places__list places__list">
               {nearbyOffers.map((item) => (
                 <OfferCard key={item.id}
+                  sizeType='default'
                   offer={item}
                   className="near-places__card"
                   classNameWrapper="near-places__image-wrapper"

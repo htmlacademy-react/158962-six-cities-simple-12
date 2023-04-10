@@ -4,6 +4,7 @@ import { Offer } from '../../types/offer';
 import {APIRoute, DEFAULT, NameSpace, Status} from '../../const';
 import {ThunkOptions} from '../../types/state';
 import {pushNotification} from './notification-slice';
+import {addFavoriteOffer} from './favorites-slice';
 
 type offerSliceState = {
   offers: Offer[];
@@ -52,6 +53,14 @@ export const offerSlice = createSlice( {
 
     builder.addCase(fetchOffers.rejected, (state) => {
       state.status = Status.Error;
+    });
+
+    builder.addCase(addFavoriteOffer.fulfilled, (state, action) => {
+      state.offers.forEach((offer) => {
+        if(offer.id === action.payload.id) {
+          offer.isFavorite = action.payload.isFavorite;
+        }
+      });
     });
   }
 });

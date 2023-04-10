@@ -7,6 +7,7 @@ import {redirectToRoute} from '../action';
 import {toast} from 'react-toastify';
 import {ThunkOptions} from '../../types/state';
 import {pushNotification} from './notification-slice';
+import {fetchFavorites} from './favorites-slice';
 
 
 type UserProcess = {
@@ -40,6 +41,7 @@ export const checkAuthAction = createAsyncThunk<UserData, undefined, ThunkOption
   async (_arg, {dispatch, extra: api}) => {
     try {
       const { data } = await api.get<UserData>(APIRoute.Login);
+      dispatch(fetchFavorites());
       return data;
     } catch (e) {
       dispatch(pushNotification({type: 'info', message: 'Get more features after authorization'}));
@@ -55,6 +57,7 @@ export const loginAction = createAsyncThunk<UserData, AuthData, ThunkOptions>(
       const {data} = await api.post<UserData>(APIRoute.Login, {email, password});
       saveToken(data.token);
       dispatch(redirectToRoute(AppRoute.Root));
+      dispatch(fetchFavorites());
       return data;
     } catch (e) {
       dispatch(pushNotification({type: 'error', message: 'Failed login'}));

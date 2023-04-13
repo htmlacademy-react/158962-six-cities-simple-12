@@ -1,7 +1,7 @@
 import {createSlice, nanoid, PayloadAction} from '@reduxjs/toolkit';
-import {Notification} from '../../types/notification';
-import {NameSpace} from '../../const';
-import {RootState} from '../store';
+import {Notification} from '../../../types/notification';
+import {NameSpace} from '../../../const';
+import {RootState} from '../../store';
 
 type NotificationState = {
   notifications: Notification[];

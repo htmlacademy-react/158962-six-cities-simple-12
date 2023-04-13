@@ -6,7 +6,7 @@ import Room from '../../pages/room/room';
 import PrivateRoute from '../private-route/private-route';
 import Favorites from '../../pages/favorites/favorites';
 import {AppRoute} from '../../const';
-import {checkAuthAction, selectAuthorizationStatus} from '../../store/slices/user-slice';
+import {checkAuthAction, selectAuthorizationStatus} from '../../store/slices/user-slice/user-slice';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {useEffect, Suspense} from 'react';
 import Spinner from '../spinner/spinner';

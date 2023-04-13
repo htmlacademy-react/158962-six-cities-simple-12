@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { SORT_LIST } from '../../const';
 import cn from 'classnames';
-import { changeSortType } from '../../store/slices/app-slice';
+import { changeSortType } from '../../store/slices/app-slice/app-slice';
 import { useDispatch } from 'react-redux';
 import { SortItem } from '../../types/sort';
 import useOnClickOutside from '../../hooks/use-on-click-outside';

@@ -1,6 +1,6 @@
 import React, {useState, ChangeEvent, FormEvent, useEffect} from 'react';
 import { RATING_STARS, MIN_COMMENT_LENGTH, MAX_COMMENT_LENGTH } from '../../const';
-import {postComment, selectCommentsStatus } from '../../store/slices/comments-slice';
+import {postComment, selectCommentsStatus } from '../../store/slices/comments-slice/comments-slice';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 
 type ReviewsFormProps = {

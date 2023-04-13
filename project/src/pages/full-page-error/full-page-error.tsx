@@ -1,4 +1,4 @@
-import { fetchOffers } from '../../store/slices/offer-slice';
+import { fetchOffers } from '../../store/slices/offer-slice/offer-slice';
 import { useAppDispatch } from '../../hooks';
 import styles from '../full-page-error/page-error.module.css';
 

@@ -1,18 +1,18 @@
 import {createSlice, PayloadAction, createAsyncThunk, createSelector} from '@reduxjs/toolkit';
-import {RootState} from '../store';
-import { Offer } from '../../types/offer';
-import {APIRoute, DEFAULT, NameSpace, Status} from '../../const';
-import {ThunkOptions} from '../../types/state';
-import {pushNotification} from './notification-slice';
-import {addFavoriteOffer} from './favorites-slice';
+import {RootState} from '../../store';
+import { Offer } from '../../../types/offer';
+import {APIRoute, DEFAULT, NameSpace, Status} from '../../../const';
+import {ThunkOptions} from '../../../types/state';
+import {pushNotification} from '../notification-slice/notification-slice';
+import {addFavoriteOffer} from '../favorites-slice/favorites-slice';
 
-type offerSliceState = {
+export type OfferSliceState = {
   offers: Offer[];
   city: string;
   status: Status;
 }
 
-const initialState: offerSliceState = {
+const initialState: OfferSliceState = {
   offers: [],
   city: DEFAULT,
   status: Status.Idle,

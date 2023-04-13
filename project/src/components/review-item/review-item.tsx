@@ -1,4 +1,4 @@
-import { getRatingWidth } from '../../utils';
+import { getRatingWidth } from '../../utils/utils';
 import { MAX_RATING } from '../../const';
 import dayjs from 'dayjs';
 import { Review } from '../../types/review';

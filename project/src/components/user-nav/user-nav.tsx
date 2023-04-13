@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { selectFavoriteOffers } from '../../store/slices/favorites-slice';
+import { selectFavoriteOffers } from '../../store/slices/favorites-slice/favorites-slice';
 import {
   logoutAction,
   selectAvatar,
   selectLogin,
   getIsAuth
-} from '../../store/slices/user-slice';
+} from '../../store/slices/user-slice/user-slice';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 
 const UserNav = () => {

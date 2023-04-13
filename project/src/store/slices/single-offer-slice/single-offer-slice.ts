@@ -1,18 +1,18 @@
 import {createSlice, createAsyncThunk, createSelector} from '@reduxjs/toolkit';
-import {RootState} from '../store';
-import { Offer } from '../../types/offer';
-import {APIRoute, Status, NameSpace } from '../../const';
-import {selectNearbyOffersStatus} from './nearby-offers-slice';
-import {ThunkOptions} from '../../types/state';
-import {pushNotification} from './notification-slice';
-import {addFavoriteOffer} from './favorites-slice';
+import {RootState} from '../../store';
+import { Offer } from '../../../types/offer';
+import {APIRoute, Status, NameSpace } from '../../../const';
+import {selectNearbyOffersStatus} from '../nearby-offers-slice/nearby-offers-slice';
+import {ThunkOptions} from '../../../types/state';
+import {pushNotification} from '../notification-slice/notification-slice';
+import {addFavoriteOffer} from '../favorites-slice/favorites-slice';
 
-type singleOfferSliceState = {
+export type SingleOfferSliceState = {
   offer: Offer | null;
   status: Status;
 }
 
-const initialState: singleOfferSliceState = {
+const initialState: SingleOfferSliceState = {
   offer: null,
   status: Status.Idle,
 };

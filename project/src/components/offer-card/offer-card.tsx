@@ -1,7 +1,7 @@
 import { Offer } from '../../types/offer';
 import BookmarkButton from '../bookmark-button/bookmark-button';
 import CardMark from '../card-mark/card-mark';
-import { capitalizeFirstLetter, getRatingWidth } from '../../utils';
+import { capitalizeFirstLetter, getRatingWidth } from '../../utils/utils';
 import cn from 'classnames';
 import { generatePath, Link } from 'react-router-dom';
 import { AppRoute, MAX_RATING } from '../../const';

@@ -2,7 +2,7 @@ import styles from './login.module.css';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { EMAIL_REGEXP, PASSWORD_REGEXP, LOGIN_FIELDS } from '../../const';
-import { loginAction } from '../../store/slices/user-slice';
+import { loginAction } from '../../store/slices/user-slice/user-slice';
 import cn from 'classnames';
 
 type Field = {

@@ -2,8 +2,8 @@ import cn from 'classnames';
 import { CITIES } from '../../const';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { changeCity } from '../../store/slices/offer-slice';
-import { changeSortType } from '../../store/slices/app-slice';
+import { changeCity } from '../../store/slices/offer-slice/offer-slice';
+import { changeSortType } from '../../store/slices/app-slice/app-slice';
 import { SORT_LIST } from '../../const';
 
 type LocationTabsProps = {

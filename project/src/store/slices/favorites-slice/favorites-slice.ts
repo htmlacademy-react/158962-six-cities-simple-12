@@ -1,11 +1,11 @@
-import { APIRoute, NameSpace, Status } from '../../const';
-import { Offer } from '../../types/offer';
+import { APIRoute, NameSpace, Status } from '../../../const';
+import { Offer } from '../../../types/offer';
 import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
-import { ThunkOptions } from '../../types/state';
-import { RootState } from '../store';
-import { pushNotification } from './notification-slice';
+import { ThunkOptions } from '../../../types/state';
+import { RootState } from '../../store';
+import { pushNotification } from '../notification-slice/notification-slice';
 
-type FavoritesSliceState = {
+export type FavoritesSliceState = {
   favoriteOffers: Offer[];
   status: Status;
 }

@@ -1,17 +1,17 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import {RootState} from '../store';
-import { Offer } from '../../types/offer';
-import {APIRoute, NameSpace, Status} from '../../const';
-import {ThunkOptions} from '../../types/state';
-import {pushNotification} from './notification-slice';
-import {addFavoriteOffer} from './favorites-slice';
+import {RootState} from '../../store';
+import { Offer } from '../../../types/offer';
+import {APIRoute, NameSpace, Status} from '../../../const';
+import {ThunkOptions} from '../../../types/state';
+import {pushNotification} from '../notification-slice/notification-slice';
+import {addFavoriteOffer} from '../favorites-slice/favorites-slice';
 
-type nearbyOffersSliceState = {
+export type NearbyOffersSliceState = {
   offers: Offer[];
   status: Status;
 }
 
-const initialState: nearbyOffersSliceState = {
+const initialState: NearbyOffersSliceState = {
   offers: [],
   status: Status.Idle,
 };

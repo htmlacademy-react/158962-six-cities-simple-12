@@ -1,16 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../store';
-import { SortItem } from '../../types/sort';
-import {NameSpace} from '../../const';
+import { RootState } from '../../store';
+import { SortItem } from '../../../types/sort';
+import {NameSpace, SORT_LIST} from '../../../const';
 
-type SortSliceState = {
+export type SortSliceState = {
   sort: SortItem;
 }
 
 const initialState: SortSliceState = {
   sort: {
-    name: 'Popular',
-    sortProperty: 'default'
+    name: SORT_LIST.DEFAULT.name,
+    sortProperty: SORT_LIST.DEFAULT.sortProperty
   }
 };
 

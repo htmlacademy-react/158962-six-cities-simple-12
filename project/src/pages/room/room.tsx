@@ -4,17 +4,17 @@ import Layout from '../../components/layout/layout';
 import OfferCard from '../../components/offer-card/offer-card';
 import ReviewsForm from '../../components/reviews-form/reviews-form';
 import Map from '../../components/map/map';
-import { capitalizeFirstLetter, getRatingWidth } from '../../utils';
+import { capitalizeFirstLetter, getRatingWidth } from '../../utils/utils';
 import {MAX_RATING, CARD_AMOUNT} from '../../const';
 import Reviews from '../../components/reviews/reviews';
 import cn from 'classnames';
 import Spinner from '../../components/spinner/spinner';
 import Error from '../../components/error/error';
 import { useAppSelector, useAppDispatch } from '../../hooks';
-import {selectSingleOffer, fetchSingleOffer, selectOfferStatus} from '../../store/slices/single-offer-slice';
-import {fetchNearbyOffers, selectNearbyOffers} from '../../store/slices/nearby-offers-slice';
-import {fetchComments, selectSortedComments} from '../../store/slices/comments-slice';
-import {getIsAuth} from '../../store/slices/user-slice';
+import {selectSingleOffer, fetchSingleOffer, selectOfferStatus} from '../../store/slices/single-offer-slice/single-offer-slice';
+import {fetchNearbyOffers, selectNearbyOffers} from '../../store/slices/nearby-offers-slice/nearby-offers-slice';
+import {fetchComments, selectSortedComments} from '../../store/slices/comments-slice/comments-slice';
+import {getIsAuth} from '../../store/slices/user-slice/user-slice';
 
 const Room = (): JSX.Element => {
   const status = useAppSelector(selectOfferStatus);

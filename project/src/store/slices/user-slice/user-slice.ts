@@ -1,27 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit';
-import {APIRoute, AppRoute, AuthorizationStatus, NameSpace} from '../../const';
+import {APIRoute, AppRoute, AuthorizationStatus, NameSpace} from '../../../const';
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {RootState} from '../store';
-import {dropToken, saveToken} from '../../services/token';
-import {redirectToRoute} from '../action';
+import {RootState} from '../../store';
+import {dropToken, saveToken} from '../../../services/token';
+import {redirectToRoute} from '../../action';
 import {toast} from 'react-toastify';
-import {ThunkOptions} from '../../types/state';
-import {pushNotification} from './notification-slice';
-import {fetchFavorites} from './favorites-slice';
+import {ThunkOptions} from '../../../types/state';
+import {pushNotification} from '../notification-slice/notification-slice';
+import {fetchFavorites} from '../favorites-slice/favorites-slice';
 
 
-type UserProcess = {
+export type UserProcess = {
   authorizationStatus: AuthorizationStatus;
   login: string | null;
   avatar: string;
 };
 
-type AuthData = {
+export type AuthData = {
   login: string;
   password: string;
 };
 
-type UserData = {
+export type UserData = {
   id: number;
   email: string;
   token: string;

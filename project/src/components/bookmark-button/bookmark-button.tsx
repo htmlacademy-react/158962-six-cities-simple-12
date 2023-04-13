@@ -1,8 +1,8 @@
 import cn from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { addFavoriteOffer } from '../../store/slices/favorites-slice';
+import { addFavoriteOffer } from '../../store/slices/favorites-slice/favorites-slice';
 import { Offer } from '../../types/offer';
-import { getIsAuth } from '../../store/slices/user-slice';
+import { getIsAuth } from '../../store/slices/user-slice/user-slice';
 import {useNavigate} from 'react-router-dom';
 import { AppRoute } from '../../const';
 

@@ -5,11 +5,11 @@ import { useState, useEffect } from 'react';
 import LocationTabs from '../../components/location-tabs/location-tabs';
 import Map from '../../components/map/map';
 import { useAppSelector, useAppDispatch } from '../../hooks';
-import { selectOfferCards, fetchOffers, selectOffersCity, selectOffersStatus } from '../../store/slices/offer-slice';
-import { selectSort } from '../../store/slices/app-slice';
+import { selectOfferCards, fetchOffers, selectOffersCity, selectOffersStatus } from '../../store/slices/offer-slice/offer-slice';
+import { selectSort } from '../../store/slices/app-slice/app-slice';
 import cn from 'classnames';
 import NoPlaces from '../../components/no-places/no-places';
-import { sortOffers } from '../../utils';
+import { sortOffers } from '../../utils/utils';
 import Spinner from '../../components/spinner/spinner';
 import FullPageError from '../full-page-error/full-page-error';
 

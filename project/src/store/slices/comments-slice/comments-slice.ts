@@ -1,13 +1,13 @@
 import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit';
-import { RootState } from '../store';
-import { Review } from '../../types/review';
-import { APIRoute, NameSpace, Status } from '../../const';
+import { RootState } from '../../store';
+import { Review } from '../../../types/review';
+import { APIRoute, NameSpace, Status } from '../../../const';
 import dayjs from 'dayjs';
-import { ThunkOptions } from '../../types/state';
-import { pushNotification } from './notification-slice';
-import { Offer } from '../../types/offer';
+import { ThunkOptions } from '../../../types/state';
+import { pushNotification } from '../notification-slice/notification-slice';
+import { Offer } from '../../../types/offer';
 
-type CommentsSliceState = {
+export type CommentsSliceState = {
   comments: Review[];
   sendCommentStatus: Status;
 }

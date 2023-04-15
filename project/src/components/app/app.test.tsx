@@ -5,13 +5,7 @@ import {Provider} from 'react-redux';
 import {createMemoryHistory} from 'history';
 import HistoryRouter from '../history-route/history-route';
 import {AppRoute, AuthorizationStatus, Status, NameSpace, SORT_LIST} from '../../const';
-import {
-  makeFakeNearbyOffers,
-  makeFakeOffer,
-  makeFakeOffers,
-  makeFakeComments,
-  makeFakeUserData
-} from '../../utils/mocks';
+import {makeFakeNearbyOffers, makeFakeOffer, makeFakeOffers, makeFakeComments, makeFakeUserData} from '../../utils/mocks';
 import App from './app';
 import {RootState} from '../../store/store';
 import thunk, {ThunkDispatch} from 'redux-thunk';

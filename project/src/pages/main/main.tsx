@@ -44,7 +44,7 @@ const Main = (): JSX.Element => {
 
   return (
     <Layout className="page--gray page--main">
-      <main className={cn('page__main page__main--index', isEmpty && 'page__main--index-empty')}>
+      <main data-testid="main-page" className={cn('page__main page__main--index', isEmpty && 'page__main--index-empty')}>
         <h1 className="visually-hidden">Cities</h1>
         <LocationTabs activeCity={activeCity} />
         <div className="cities">

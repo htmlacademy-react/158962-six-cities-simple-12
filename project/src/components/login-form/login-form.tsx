@@ -60,12 +60,13 @@ const LoginForm = () => {
       action=""
       onSubmit={handleSubmit}
       method="post"
+      data-testid="form-submit"
     >
 
       {
         Object.entries(LOGIN_FIELDS).map(([name, label]) => (
           <div key={name} className="login__input-wrapper form__input-wrapper">
-            <label className="visually-hidden">{label}</label>
+            <label className="visually-hidden" htmlFor={name}>{label}</label>
             <div className={styles.error}>
               {formData[name].error && (
                 <div className={styles.error}>{formData[name].errorText}</div>
@@ -73,8 +74,10 @@ const LoginForm = () => {
             </div>
             <input className={cn('login__input form__input', { [styles.inputError]: formData[name].error })}
               type={name}
+              id={name}
               name={name}
               value={formData[name].value}
+              data-testid={name}
               onChange={handleInputChange}
               placeholder={label}
               required
@@ -86,6 +89,7 @@ const LoginForm = () => {
       <button
         className="login__submit form__submit button"
         disabled={isFieldsGroupValid}
+        data-testid="login-submit"
         type="submit"
       >Sign in
       </button>

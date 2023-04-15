@@ -3,6 +3,7 @@ import styles from './spinner.module.css';
 const Spinner = (): JSX.Element => (
   <div className={styles.wrapper}>
     <div className="loader loader--style3" title="2">
+      loading...
       <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
         width="40px" height="40px" viewBox="0 0 50 50" xmlSpace="preserve"

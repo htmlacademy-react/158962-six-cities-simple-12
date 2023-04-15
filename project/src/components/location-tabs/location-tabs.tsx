@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { changeCity } from '../../store/slices/offer-slice/offer-slice';
 import { changeSortType } from '../../store/slices/app-slice/app-slice';
 import { SORT_LIST } from '../../const';
+import {Link} from 'react-router-dom';
 
 type LocationTabsProps = {
   activeCity: string;
@@ -21,16 +22,16 @@ const LocationTabs = ({ activeCity }: LocationTabsProps): JSX.Element => {
             <li key={city}
               className="locations__item"
             >
-              <a className={cn('locations__item-link tabs__item', city === activeCity && 'tabs__item--active')}
+              <Link className={cn('locations__item-link tabs__item', city === activeCity && 'tabs__item--active')}
                 onClick={(evt) => {
                   evt.preventDefault();
                   dispatch(changeCity(city));
                   dispatch(changeSortType(SORT_LIST.DEFAULT));
                 }}
-                href="#"
+                to="#/"
               >
                 <span>{city}</span>
-              </a>
+              </Link>
             </li>
           ))
         }

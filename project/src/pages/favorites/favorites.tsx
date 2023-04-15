@@ -5,7 +5,7 @@ import OfferCard from '../../components/offer-card/offer-card';
 import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { selectFavoriteStatus, selectFavoriteOffers, fetchFavorites } from '../../store/slices/favorites-slice/favorites-slice';
-import FullPageError from '../full-page-error/full-page-error';
+import FullPageError from '../../components/full-page-error/full-page-error';
 import Spinner from '../../components/spinner/spinner';
 import cn from 'classnames';
 import FavoritesEmpty from '../favorites-empty/favorites-empty';

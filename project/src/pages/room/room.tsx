@@ -64,7 +64,7 @@ const Room = (): JSX.Element => {
 
   return (
     <Layout className="">
-      <main className="page__main page__main--property">
+      <main className="page__main page__main--property" data-testid="room-page">
         <section className="property">
 
           <div className="property__gallery-container container">

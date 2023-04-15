@@ -3,7 +3,7 @@ import {FavoritesSliceState, fetchFavorites, favoritesSlice, addFavoriteOffer} f
 import { makeFakeOffer, makeFakeOffers } from '../../../utils/mocks';
 import {logoutAction} from '../user-slice/user-slice';
 
-const fakeOffers = makeFakeOffers();
+let fakeOffers = makeFakeOffers();
 
 describe('Reducer: favoritesSlice', () => {
   let state: FavoritesSliceState;
@@ -53,7 +53,7 @@ describe('Reducer: favoritesSlice', () => {
       const fakeNewOffer = makeFakeOffer();
 
       if (fakeNewOffer.isFavorite) {
-        state.favoriteOffers.push(fakeNewOffer);
+        fakeOffers = [...fakeOffers, fakeNewOffer];
       } else {
         fakeOffers.filter((offer) => offer.id !== fakeNewOffer.id);
       }

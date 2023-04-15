@@ -15,6 +15,7 @@ import {selectSingleOffer, fetchSingleOffer, selectOfferStatus} from '../../stor
 import {fetchNearbyOffers, selectNearbyOffers} from '../../store/slices/nearby-offers-slice/nearby-offers-slice';
 import {fetchComments, selectSortedComments} from '../../store/slices/comments-slice/comments-slice';
 import {getIsAuth} from '../../store/slices/user-slice/user-slice';
+import BookmarkButton from '../../components/bookmark-button/bookmark-button';
 
 const Room = (): JSX.Element => {
   const status = useAppSelector(selectOfferStatus);
@@ -87,6 +88,7 @@ const Room = (): JSX.Element => {
                 <h1 className="property__name">
                   {title}
                 </h1>
+                <BookmarkButton isBig offer={singleOffer} className="property__bookmark-icon" />
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">

@@ -35,7 +35,7 @@ const fakeStore = {
   [NameSpace.Favorites]: {
     favoriteOffers: [],
   },
-}
+};
 
 describe('Page: Room', () => {
   it('should render correctly all data received', () => {
@@ -88,8 +88,8 @@ describe('Page: Room', () => {
   it('should render correctly if status is loading', () => {
     const store = mockStore({
       ...fakeStore,
-      [NameSpace.SingleOffer]: {...fakeStore[NameSpace.SingleOffer],  status: Status.Loading,}
-    })
+      [NameSpace.SingleOffer]: {...fakeStore[NameSpace.SingleOffer], status: Status.Loading,}
+    });
 
     window.scrollTo = jest.fn();
 

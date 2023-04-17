@@ -31,4 +31,4 @@ export const capitalizeFirstLetter = (string: string): string => string.charAt(0
 export const getRandomElementFromArray = (arr: string[]): string => {
   const rand = Math.floor(Math.random() * arr.length);
   return arr[rand];
-}
+};

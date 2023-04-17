@@ -20,7 +20,7 @@ const fakeStore = {
     login: '',
     avatar: '',
   },
-}
+};
 
 describe('Page: Favorites', () => {
   it('should render correctly if favoriteOffers are empty', () => {
@@ -47,7 +47,7 @@ describe('Page: Favorites', () => {
         login: fakeUserData.email,
         avatar: fakeUserData.avatarUrl
       }
-    })
+    });
 
     render(
       <Provider store={store}>

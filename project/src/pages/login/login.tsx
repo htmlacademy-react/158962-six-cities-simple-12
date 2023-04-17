@@ -21,8 +21,9 @@ const Login = (): JSX.Element => {
           <section className="locations locations--login locations--current">
             <div className="locations__item">
               <Link className="locations__item-link"
-                    onClick={() => dispatch(changeCity(randomCity))}
-                    to={AppRoute.Root}>
+                onClick={() => dispatch(changeCity(randomCity))}
+                to={AppRoute.Root}
+              >
                 <span data-testid="location-text">{randomCity}</span>
               </Link>
             </div>
@@ -30,7 +31,7 @@ const Login = (): JSX.Element => {
         </div>
       </main>
     </Layout>
-  )
+  );
 };
 
 export default Login;

@@ -27,3 +27,8 @@ export const sortOffers = (coll: Offer[], sort: SortItem): Offer[] => {
 };
 
 export const capitalizeFirstLetter = (string: string): string => string.charAt(0).toUpperCase() + string.slice(1);
+
+export const getRandomElementFromArray = (arr: string[]): string => {
+  const rand = Math.floor(Math.random() * arr.length);
+  return arr[rand];
+}

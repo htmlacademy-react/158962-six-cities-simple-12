@@ -88,6 +88,8 @@ const LoginForm = () => {
 
       <button
         className="login__submit form__submit button"
+        role="button"
+        name="sign-in"
         disabled={isFieldsGroupValid}
         data-testid="login-submit"
         type="submit"

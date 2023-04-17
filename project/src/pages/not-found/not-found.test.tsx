@@ -1,16 +1,14 @@
 import { render, screen } from '@testing-library/react';
-import { createMemoryHistory } from 'history';
-import HistoryRouter from '../../components/history-route/history-route';
 import NotFound from './not-found';
+import { MemoryRouter } from 'react-router-dom';
 
 describe('Component: NotFound', () => {
   it('should render correctly', () => {
-    const history = createMemoryHistory();
 
     render(
-      <HistoryRouter history={history}>
+      <MemoryRouter>
         <NotFound />
-      </HistoryRouter>,
+      </MemoryRouter>,
     );
 
     expect(screen.getByText('Oops, this page does not exists')).toBeInTheDocument();

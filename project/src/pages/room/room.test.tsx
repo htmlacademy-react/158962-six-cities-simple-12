@@ -1,54 +1,53 @@
 import { render, screen } from '@testing-library/react';
-import { createMemoryHistory } from 'history';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { makeFakeOffer, makeFakeOffers, makeFakeComments, makeFakeUserData, makeFakeNearbyOffers } from '../../utils/mocks';
 import { AuthorizationStatus, Status, NameSpace } from '../../const';
-import HistoryRouter from '../../components/history-route/history-route';
 import Room from './room';
+import { MemoryRouter } from 'react-router-dom';
 
 const mockStore = configureMockStore([thunk]);
 
 const fakeOffers = makeFakeOffers();
 const fakeOffer = makeFakeOffer();
-const fakeReviews = makeFakeComments();
 const fakeUserData = makeFakeUserData();
+const fakeReviews = makeFakeComments();
 const fakeNearbyOffers = makeFakeNearbyOffers();
+const fakeStore = {
+  [NameSpace.User]: {
+    authorizationStatus: AuthorizationStatus.NoAuth,
+    login: '',
+    avatar: '',
+  },
+  [NameSpace.SingleOffer]: {
+    status: Status.Success,
+    offer: fakeOffer,
+  },
+  [NameSpace.NearbyOffers]: {
+    status: Status.Success,
+    offers: fakeNearbyOffers,
+  },
+  [NameSpace.Comments]: {
+    comments: fakeReviews,
+    status: Status.Success,
+  },
+  [NameSpace.Favorites]: {
+    favoriteOffers: [],
+  },
+}
 
 describe('Page: Room', () => {
   it('should render correctly all data received', () => {
-    const history = createMemoryHistory();
-    const store = mockStore({
-      [NameSpace.User]: {
-        authorizationStatus: AuthorizationStatus.NoAuth,
-        login: '',
-        avatar: '',
-      },
-      [NameSpace.SingleOffer]: {
-        status: Status.Success,
-        offer: fakeOffer,
-      },
-      [NameSpace.NearbyOffers]: {
-        status: Status.Success,
-        offers: fakeNearbyOffers,
-      },
-      [NameSpace.Comments]: {
-        comments: fakeReviews,
-        status: Status.Success,
-      },
-      [NameSpace.Favorites]: {
-        favoriteOffers: [],
-      },
-    });
+    const store = mockStore(fakeStore);
 
     window.scrollTo = jest.fn();
 
     render(
       <Provider store={store}>
-        <HistoryRouter history={history}>
+        <MemoryRouter>
           <Room />
-        </HistoryRouter>
+        </MemoryRouter>
       </Provider>
     );
 
@@ -58,39 +57,24 @@ describe('Page: Room', () => {
     expect(screen.getByText(/Other places in the neighbourhood/i)).toBeInTheDocument();
   });
 
-  it('should render correctly all data received when to Auth', () => {
-    const history = createMemoryHistory();
+  it('should render correctly all data received when Auth', () => {
     const store = mockStore({
+      ...fakeStore,
       [NameSpace.User]: {
+        ...fakeStore[NameSpace.User],
         authorizationStatus: AuthorizationStatus.Auth,
         login: fakeUserData.email,
-        avatar: fakeUserData.avatarUrl,
+        avatar: fakeUserData.avatarUrl
       },
-      [NameSpace.SingleOffer]: {
-        status: Status.Success,
-        offer: fakeOffer,
-      },
-      [NameSpace.NearbyOffers]: {
-        status: Status.Success,
-        offers: fakeNearbyOffers,
-      },
-      [NameSpace.Comments]: {
-        comments: fakeReviews,
-        status: Status.Success,
-      },
-      [NameSpace.Favorites]: {
-        favoriteOffers: fakeOffers,
-        status: Status.Success,
-      },
-    });
+      [NameSpace.Favorites]: {...fakeStore[NameSpace.Favorites], favoriteOffers: fakeOffers}});
 
     window.scrollTo = jest.fn();
 
     render(
       <Provider store={store}>
-        <HistoryRouter history={history}>
+        <MemoryRouter>
           <Room />
-        </HistoryRouter>
+        </MemoryRouter>
       </Provider>
     );
 
@@ -101,36 +85,19 @@ describe('Page: Room', () => {
     expect(screen.getByText(/Other places in the neighbourhood/i)).toBeInTheDocument();
   });
 
-  it('should render correctly if offers and roomInfo is loading', () => {
-    const history = createMemoryHistory();
+  it('should render correctly if status is loading', () => {
     const store = mockStore({
-      [NameSpace.User]: {
-        authorizationStatus: AuthorizationStatus.NoAuth,
-        login: '',
-        avatar: '',
-      },
-      [NameSpace.SingleOffer]: {
-        status: Status.Loading,
-        offer: fakeOffer,
-      },
-      [NameSpace.NearbyOffers]: {
-        offers: [],
-      },
-      [NameSpace.Comments]: {
-        comments: [],
-      },
-      [NameSpace.Favorites]: {
-        favoriteOffers: [],
-      },
-    });
+      ...fakeStore,
+      [NameSpace.SingleOffer]: {...fakeStore[NameSpace.SingleOffer],  status: Status.Loading,}
+    })
 
     window.scrollTo = jest.fn();
 
     render(
       <Provider store={store}>
-        <HistoryRouter history={history}>
+        <MemoryRouter>
           <Room />
-        </HistoryRouter>
+        </MemoryRouter>
       </Provider>
     );
 

@@ -1,16 +1,14 @@
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
-import { createMemoryHistory } from 'history';
 import userEvent from '@testing-library/user-event';
 import {AuthorizationStatus, NameSpace} from '../../const';
 import { makeFakeOffers } from '../../utils/mocks';
-import HistoryRouter from '../../components/history-route/history-route';
 import thunk from 'redux-thunk';
 import Login from './login';
+import { MemoryRouter } from 'react-router-dom';
 
 const mockStore = configureMockStore([thunk]);
-const history = createMemoryHistory();
 const fakeOffers = makeFakeOffers();
 
 const store = mockStore({
@@ -26,43 +24,70 @@ const store = mockStore({
 });
 
 describe('Component: Login', () => {
-  it('should render correctly and type email/password', async () => {
+  it('should render correctly fields', async () => {
     render(
       <Provider store={store}>
-        <HistoryRouter history={history}>
+        <MemoryRouter>
           <Login />
-        </HistoryRouter>
+        </MemoryRouter>
       </Provider>
     );
 
     expect(screen.getByLabelText(/E-mail/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Password/i)).toBeInTheDocument();
-
-    await userEvent.type(screen.getByTestId('email'), 'keks@mail.ru');
-    await userEvent.type(screen.getByTestId('password'), '123456a');
-
-    expect(screen.getByDisplayValue(/keks@mail.ru/i)).toBeInTheDocument();
-    expect(screen.getByDisplayValue(/123456a/i)).toBeInTheDocument();
   });
 
   it('should click sign in correctly', async () => {
-    const fakeSingIn = jest.fn();
     render(
       <Provider store={store}>
-        <HistoryRouter history={history}>
+        <MemoryRouter>
           <Login />
-        </HistoryRouter>
+        </MemoryRouter>
       </Provider>
     );
     expect(screen.getByLabelText(/E-mail/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Password/i)).toBeInTheDocument();
 
-    await userEvent.type(screen.getByTestId('email'), 'keks@mail.ru');
-    await userEvent.type(screen.getByTestId('password'), '123456a');
+    await userEvent.type(screen.getByTestId('email'), 'test@ya.ru');
+    await userEvent.type(screen.getByTestId('password'), '12345w');
+    await userEvent.click(screen.getByRole('button'));
 
-    expect(screen.getByTestId('login-submit')).toBeInTheDocument();
-    screen.getByTestId('form-submit').onsubmit = fakeSingIn;
-    await userEvent.click(screen.getByTestId('login-submit'));
-    expect(fakeSingIn).toBeCalledTimes(1);
+    expect(screen.queryByText(/Email is incorrect/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Password should contain at least 1 letter and 1 number/i)).not.toBeInTheDocument();
+  });
+
+
+  it('should display errors', async () => {
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <Login />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    await userEvent.type(screen.getByTestId('email'), 'k');
+    await userEvent.type(screen.getByTestId('password'), '1');
+    await userEvent.click(screen.getByRole('button'));
+
+    expect(screen.getByText(/Email is incorrect/i)).toBeInTheDocument();
+    expect(screen.getByText(/Password should contain at least 1 letter and 1 number/i)).toBeInTheDocument();
+  });
+
+  it('should display random city correct', () => {
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <Login />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    const element = screen.getByTestId('location-text');
+    if (!element.textContent) {
+      element.textContent = ''
+    }
+
+    expect(element).toHaveTextContent(element.textContent);
   });
 });

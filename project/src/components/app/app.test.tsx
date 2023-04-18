@@ -1,6 +1,6 @@
 import {Action} from 'redux';
 import {configureMockStore} from '@jedmao/redux-mock-store';
-import {render, screen} from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import {Provider} from 'react-redux';
 import {createMemoryHistory} from 'history';
 import HistoryRouter from '../history-route/history-route';
@@ -80,18 +80,19 @@ describe('Application Routing', () => {
     expect(screen.getByTestId('main-page')).toBeInTheDocument();
   });
 
-  it('should render "RoomPage" when user navigate to "/offer"', () => {
+  it('should render "RoomPage" when user navigate to "/offer"', async () => {
     history.push(generatePath(AppRoute.Offer, {id: `${fakeOffer.id}`}));
     window.scrollTo = jest.fn();
 
     render(fakeApp);
 
-    expect(screen.getByTestId('room-page')).toBeInTheDocument();
-    expect(screen.getByText(/What's inside/i)).toBeInTheDocument();
-    expect(screen.getByText(/Meet the host/i)).toBeInTheDocument();
+    await waitFor(() => expect(screen.getByTestId('room-page')).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText(/What's inside/i)).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText(/Meet the host/i)).toBeInTheDocument());
+
   });
 
-  it('should render "LoginPage" when user navigate to "/login"', () => {
+  it('should render "LoginPage" when user navigate to "/login"', async () => {
     const state = store.getState();
     window.scrollTo = jest.fn();
 
@@ -105,14 +106,15 @@ describe('Application Routing', () => {
 
     render(fakeApp);
 
-    expect(screen.getByTestId('login-page')).toBeInTheDocument();
+    await waitFor(() => expect(screen.getByTestId('login-page')).toBeInTheDocument());
   });
 
-  it('should render "not found page" when user navigate to "*" route', () => {
+  it('should render "not found page" when user navigate to "*" route', async () => {
     history.push('/non-existent_address');
 
     render(fakeApp);
-    expect(screen.getByText('Oops, this page does not exists')).toBeInTheDocument();
-    expect(screen.getByText('Go to main page')).toBeInTheDocument();
+
+    await waitFor(() => expect(screen.getByText('Go to main page')).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText('Oops, this page does not exists')).toBeInTheDocument());
   });
 });

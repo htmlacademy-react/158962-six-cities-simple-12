@@ -11,7 +11,7 @@ import cn from 'classnames';
 import NoPlaces from '../../components/no-places/no-places';
 import { sortOffers } from '../../utils/utils';
 import Spinner from '../../components/spinner/spinner';
-import FullPageError from '../full-page-error/full-page-error';
+import FullPageError from '../../components/full-page-error/full-page-error';
 
 
 const Main = (): JSX.Element => {
@@ -32,7 +32,7 @@ const Main = (): JSX.Element => {
 
   const filteredOffers = offers.filter((item) => item.city.name === activeCity);
   const sortedOffers = sortOffers(filteredOffers, sort);
-  const isEmpty = filteredOffers.length === 0;
+  const isEmpty = offers.length === 0;
 
   if (status.isError) {
     return <FullPageError />;
@@ -44,7 +44,7 @@ const Main = (): JSX.Element => {
 
   return (
     <Layout className="page--gray page--main">
-      <main className={cn('page__main page__main--index', isEmpty && 'page__main--index-empty')}>
+      <main data-testid="main-page" className={cn('page__main page__main--index', isEmpty && 'page__main--index-empty')}>
         <h1 className="visually-hidden">Cities</h1>
         <LocationTabs activeCity={activeCity} />
         <div className="cities">
@@ -61,7 +61,10 @@ const Main = (): JSX.Element => {
 
                   </section>
                   <div className="cities__right-section">
-                    <Map height={'height: 100%'} offers={filteredOffers} className="cities__map" selectedPointId={activeCardId}/>
+                    <Map offers={filteredOffers}
+                      className="cities__map"
+                      selectedPointId={activeCardId}
+                    />
                   </div>
                 </>
               )}

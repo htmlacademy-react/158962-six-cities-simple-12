@@ -50,7 +50,7 @@ describe('Async actions: userData', () => {
   it('should save token and load userData when POST /login', async () => {
     const fakeUser: AuthData = {
       login: 'test@test.ru',
-      password: '123456'};
+      password: '123456h'};
 
     mockAPI
       .onPost(APIRoute.Login)

@@ -52,7 +52,7 @@ export const makeFakeOffer = (): Offer => ({
 });
 
 export const makeFakeOffers = (): Offer[] =>
-  Array.from({ length: 10 }, makeFakeOffer);
+  Array.from({ length: 11 }, makeFakeOffer);
 
 export const makeFakeNearbyOffers = (): Offer[] =>
   Array.from({ length: 3 }, makeFakeOffer);
@@ -75,3 +75,4 @@ export const makeFakeNotification = (): Notification =>
     message: lorem.words(15),
     duration: datatype.number({ min: 2000, max: 3000 }),
   } as Notification);
+

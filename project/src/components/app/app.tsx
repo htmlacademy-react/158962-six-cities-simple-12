@@ -1,24 +1,29 @@
 import {Route, Routes} from 'react-router-dom';
 import Main from '../../pages/main/main';
-import Login from '../../pages/login/login';
-import NotFound from '../../pages/not-found/not-found';
-import Room from '../../pages/room/room';
 import PrivateRoute from '../private-route/private-route';
-import Favorites from '../../pages/favorites/favorites';
-import {AppRoute} from '../../const';
+import {AppRoute, AuthorizationStatus} from '../../const';
 import {checkAuthAction, selectAuthorizationStatus} from '../../store/slices/user-slice/user-slice';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {useEffect, Suspense} from 'react';
+import {useEffect, Suspense, lazy} from 'react';
 import Spinner from '../spinner/spinner';
+
+const Favorites = lazy(() => import('../../pages/favorites/favorites'));
+const Login = lazy(() => import('../../pages/login/login'));
+const Room = lazy(() => import('../../pages/room/room'));
+const NotFound = lazy(() => import('../../pages/not-found/not-found'));
 
 const App = (): JSX.Element => {
   const authorizationStatus = useAppSelector(selectAuthorizationStatus);
   const dispatch = useAppDispatch();
+  const isLoading = authorizationStatus === AuthorizationStatus.Unknown;
 
   useEffect(() => {
     dispatch(checkAuthAction());
   }, [dispatch]);
 
+  if (isLoading) {
+    return <Spinner />;
+  }
   return (
     <Suspense fallback={<Spinner />}>
       <Routes>

@@ -1,6 +1,6 @@
 import { fetchOffers } from '../../store/slices/offer-slice/offer-slice';
 import { useAppDispatch } from '../../hooks';
-import styles from '../full-page-error/page-error.module.css';
+import styles from './page-error.module.css';
 
 const FullPageError = ():JSX.Element => {
   const dispatch = useAppDispatch();

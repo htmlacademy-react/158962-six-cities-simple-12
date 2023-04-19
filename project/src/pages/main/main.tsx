@@ -61,7 +61,10 @@ const Main = (): JSX.Element => {
 
                   </section>
                   <div className="cities__right-section">
-                    <Map height={'height: 100%'} offers={filteredOffers} className="cities__map" selectedPointId={activeCardId}/>
+                    <Map offers={filteredOffers}
+                      className="cities__map"
+                      selectedPointId={activeCardId}
+                    />
                   </div>
                 </>
               )}

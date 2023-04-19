@@ -8,7 +8,7 @@ import { selectFavoriteStatus, selectFavoriteOffers, fetchFavorites } from '../.
 import FullPageError from '../../components/full-page-error/full-page-error';
 import Spinner from '../../components/spinner/spinner';
 import cn from 'classnames';
-import FavoritesEmpty from '../favorites-empty/favorites-empty';
+import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
 
 
 const Favorites = (): JSX.Element => {

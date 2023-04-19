@@ -149,7 +149,10 @@ const Room = (): JSX.Element => {
               </section>
             </div>
           </div>
-          <Map height={'height: 500px'} selectedPointId={id} className="property__map" offers={[...nearbyOffers, singleOffer]}/>
+          <Map selectedPointId={id}
+            className="property__map"
+            offers={[...nearbyOffers, singleOffer]}
+          />
         </section>
         <div className="container">
           <section className="near-places places">

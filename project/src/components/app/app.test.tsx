@@ -1,6 +1,6 @@
 import {Action} from 'redux';
 import {configureMockStore} from '@jedmao/redux-mock-store';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import {Provider} from 'react-redux';
 import {createMemoryHistory} from 'history';
 import HistoryRouter from '../history-route/history-route';
@@ -86,10 +86,9 @@ describe('Application Routing', () => {
 
     render(fakeApp);
 
-    await waitFor(() => expect(screen.getByTestId('room-page')).toBeInTheDocument());
-    await waitFor(() => expect(screen.getByText(/What's inside/i)).toBeInTheDocument());
-    await waitFor(() => expect(screen.getByText(/Meet the host/i)).toBeInTheDocument());
-
+    await screen.findByTestId('room-page');
+    await screen.findByText(/What's inside/i);
+    await screen.findByText(/Meet the host/i);
   });
 
   it('should render "LoginPage" when user navigate to "/login"', async () => {
@@ -106,7 +105,7 @@ describe('Application Routing', () => {
 
     render(fakeApp);
 
-    await waitFor(() => expect(screen.getByTestId('login-page')).toBeInTheDocument());
+    await screen.findByTestId('login-page');
   });
 
   it('should render "not found page" when user navigate to "*" route', async () => {
@@ -114,7 +113,7 @@ describe('Application Routing', () => {
 
     render(fakeApp);
 
-    await waitFor(() => expect(screen.getByText('Go to main page')).toBeInTheDocument());
-    await waitFor(() => expect(screen.getByText('Oops, this page does not exists')).toBeInTheDocument());
+    await screen.findByText('Go to main page');
+    await screen.findByText('Oops, this page does not exists');
   });
 });

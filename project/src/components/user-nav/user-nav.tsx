@@ -17,8 +17,6 @@ const UserNav = () => {
   const favoriteOffers = useAppSelector(selectFavoriteOffers);
   const favoriteOffersAmount = favoriteOffers.length;
 
-  //console.log('favoriteOffers:', favoriteOffers)
-
   return (
     <nav className="header__nav">
       <ul className="header__nav-list">
